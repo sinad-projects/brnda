@@ -46,21 +46,22 @@ Route::get('/home',[
   'as' => 'home',
   'middleware' => ['auth']
 ]);
-Route::post('home/agar/delete',[
-    'uses' => 'HomeController@destroy',
-    'as' => 'agars.delete',
-    'middleware' => ['auth']
-]);
-Route::post('home',[
-    'uses' => 'HomeController@store',
-    'as' => 'agars.store',
-    'middleware' => ['auth']
-]);
 
 //  agars Routes for web...
 Route::get('agars',[
     'uses' => 'agarController@list',
     'as' => 'agars.list',
+    'middleware' => ['auth']
+]);
+Route::post('agars/add',[
+    'uses' => 'agarController@add',
+    'as' => 'agars.add',
+    'middleware' => ['auth']
+]);
+Route::post('agars/delete',[
+    'uses' => 'agarController@delete',
+    'as' => 'agars.delete',
+    'middleware' => ['auth']
 ]);
 // single agar
 Route::get('agars/{agar_id}',[
@@ -79,5 +80,10 @@ Route::get('reservation',[
 ]);
 Route::post('reservation',[
     'uses' => 'reservationController@index',
+    'middleware' => ['auth']
+]);
+Route::post('reservation/add',[
+    'uses' => 'reservationController@add_Reservation',
+    'as' => 'reservation.add',
     'middleware' => ['auth']
 ]);

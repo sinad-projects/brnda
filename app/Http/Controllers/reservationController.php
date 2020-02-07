@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Resources\reservation as reservationResource;
+use App\Reservation;
 use Auth;
 
 class reservationController extends Controller
@@ -25,6 +26,21 @@ class reservationController extends Controller
       return view('reservation.index')
               ->with('reservations',$reservations);
     }
+
+    // to add new reservation
+    public function add_Reservation(Request $request){
+      Reservation::create([
+        'agar_id' => $request->agar_id,
+        'user_id' => Auth::user()->id,
+        'start_date' => $request->start_date,
+        'end_date' => $request->end_date
+      ]);
+      return redirect()->back()->with('info','تم ارسال طلب الحجز');
+    }
+
+    # =========================================================================#
+
+    #==================== for mobile only =====================#
     // get all reservation for spacific user
     public function get_reserv_with_user_id($user_id){
       $reservations = Reservation::where('user_id',$user_id)
@@ -57,14 +73,18 @@ class reservationController extends Controller
     }
 
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
-        //
+      Reservation::create([
+        'agar_id' => $request->agar_id,
+        'user_id' => Auth::user()->id,
+        'start_date' => $request->start_date,
+        'end_date' => $request->end_date
+      ]);
+      return response()->json([
+        'code' => '200',
+        'message' => 'تم ارسال طلب الحجز'
+      ]);
     }
 
 

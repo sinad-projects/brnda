@@ -10,10 +10,16 @@ use App\B_extra;
 use App\Sf_extra;
 use App\AgarExtra;
 use App\AgarCond;
-use DB;
+use App\AgarCalendar;
+use App\AgarPrice;
+use App\Location;
+use App\Reservation;
+use Auth;
 
 class AgarController extends Controller
 {
+
+  #========= for web only ============#
     public function list()
     {
       $agars = Agar::where('status',1)
@@ -81,7 +87,7 @@ class AgarController extends Controller
           ]);
           return redirect()->back()->with('info','تم تحديث المميزات الخاصة');
       }
-      
+
       if($request->has('save_cond')){
         $cond_extra = json_encode($request->cond_extra,JSON_UNESCAPED_UNICODE);
         AgarExtra::where('agar_id',$request->agar_id)
@@ -93,7 +99,63 @@ class AgarController extends Controller
       }
 
     }
+    // to add new agar
+    public function add(Request $request){
+      $this->validate($request,[
+        'agar_name'        => 'required|string',
+        'area'             => 'required|string',
+        'rooms_number'     => 'required|integer',
+        'bathrooms_number' => 'required|integer',
+        'agar_desc'        => 'required|string'
+      ]);
+      // add agar location
+      $location = Location::create([
+        'state_id' => $request->state_id,
+        'city_id'  => $request->city_id,
+        'area'     => $request->area
+      ]);
+      // add new agar
+      $agar = Agar::create([
+        'agar_name' => $request->agar_name,
+        'type_id' => $request->type_id,
+        'floor_id' => $request->floor_id,
+        'geo_loc_id' => $location->id,
+        'rooms_number' => $request->rooms_number,
+        'bathrooms_number' => $request->bathrooms_number,
+        'agar_desc' => $request->agar_desc,
+        'owner_id' => Auth::user()->id,
+        'status' => 0
+      ]);
+      // add agar extra
+      AgarExtra::create([
+        'agar_id' => $agar->id
+      ]);
+      // add agar price
+      AgarPrice::create([
+        'agar_id' => $agar->id,
+        'day' => $request->day,
+        'week' => $request->week,
+        'month' => $request->month,
+        'currency' => $request->currency
+      ]);
+      // add agar calender
+      AgarCalendar::create([
+        'agar_id' => $agar->id,
+        'start_date' => $request->start_date,
+        'end_date' => $request->end_date
+      ]);
+      return redirect()->back()->with('info','تم تسجيل العقار بنجاح');
+    }
 
+    // to delete agar
+    public function delete(Request $request){
+      $delete = Agar::where('id',$request->agar_id)->delete();
+      return redirect()->back()->with('info','تم حذف العقار بنجاح');
+    }
+
+    # =========================================================================#
+
+    #============ for mobile api only ===============#
     // get all agars for spacific user
     public function get_agar_with_user_id($user_id){
       $agars = Agar::where('status',1)
@@ -124,14 +186,10 @@ class AgarController extends Controller
       return agarResource::collection($agars);
     }
 
-    public function create()
-    {
-        //
-    }
 
     public function store(Request $request)
     {
-        //
+      //
     }
 
     public function show($id)

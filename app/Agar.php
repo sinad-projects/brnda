@@ -20,7 +20,7 @@ class Agar extends Model
     ];
 
     public function location(){
-        return $this->hasOne(Location::class,'geo_loc_id');
+        return $this->hasOne(Location::class,'geo_loc_id','geo_loc_id');
     }
 
     public function type(){

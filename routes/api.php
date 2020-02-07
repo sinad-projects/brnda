@@ -55,3 +55,5 @@ Route::get('/reserv/new/{user_id}', 'reservationController@get_new_reserv_with_u
 Route::get('/reserv/accepted/{user_id}', 'reservationController@get_accepted_reserv_with_user_id');
 # ========== list confirmable reservation for user ==============#
 Route::get('/reserv/confirmable/{user_id}', 'reservationController@get_confirmable_reserv_with_user_id');
+# ========== to add new reservation ==============#
+Route::get('/reserv/add', 'reservationController@store');
