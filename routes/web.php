@@ -10,10 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', 'HomeController@index')->name('home');
-Route::get('/home', 'HomeController@index')->name('home');
-
 //Auth::routes();
 
 //Login Routes...
@@ -37,4 +33,51 @@ Route::get('register',[
 ]);
 Route::post('register',[
     'uses' => '\App\Http\Controllers\Auth\RegisterController@register',
+]);
+
+// home page routes
+Route::get('/',[
+  'uses' => 'HomeController@index',
+  'as' => 'home',
+  'middleware' => ['auth']
+]);
+Route::get('/home',[
+  'uses' => 'HomeController@index',
+  'as' => 'home',
+  'middleware' => ['auth']
+]);
+Route::post('home/agar/delete',[
+    'uses' => 'HomeController@destroy',
+    'as' => 'agars.delete',
+    'middleware' => ['auth']
+]);
+Route::post('home',[
+    'uses' => 'HomeController@store',
+    'as' => 'agars.store',
+    'middleware' => ['auth']
+]);
+
+//  agars Routes for web...
+Route::get('agars',[
+    'uses' => 'agarController@list',
+    'as' => 'agars.list',
+]);
+// single agar
+Route::get('agars/{agar_id}',[
+    'uses' => 'agarController@single',
+    'as' => 'agars.single',
+]);
+Route::post('agars/{agar_id}',[
+    'uses' => 'agarController@postSingle',
+]);
+
+// reservation Routes...
+Route::get('reservation',[
+    'uses' => 'reservationController@index',
+    'as' => 'reservation.index',
+    'middleware' => ['auth']
+]);
+Route::post('reservation',[
+    'uses' => 'reservationController@index',
+    'middleware' => ['auth']
 ]);

@@ -9,9 +9,6 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 
-
-
-
 class authController extends Controller
 {
     public function signup(Request $request)
