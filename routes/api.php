@@ -55,5 +55,10 @@ Route::get('/reserv/new/{user_id}', 'reservationController@get_new_reserv_with_u
 Route::get('/reserv/accepted/{user_id}', 'reservationController@get_accepted_reserv_with_user_id');
 # ========== list confirmable reservation for user ==============#
 Route::get('/reserv/confirmable/{user_id}', 'reservationController@get_confirmable_reserv_with_user_id');
+
+# ========== get single reservation for spacific user  ==============#
+Route::get('/reserv/{user_id}/{id}', 'reservationController@show');
 # ========== to add new reservation ==============#
-Route::get('/reserv/add', 'reservationController@store');
+Route::post('/reserv/add', 'reservationController@store');
+# ========== to destroy single reservation ==============#
+Route::delete('/reserv/delete/{id}', 'reservationController@destroy');

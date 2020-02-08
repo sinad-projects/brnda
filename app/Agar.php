@@ -43,7 +43,7 @@ class Agar extends Model
 
     public function calendar()
     {
-        return $this->hasOne(AgarCalendar::class,'agar_id');
+        return $this->hasMany(AgarCalendar::class,'agar_id');
     }
 
     public function agar_extra()

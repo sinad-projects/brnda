@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Resources\reservation as reservationResource;
-use App\Reservation;
 use Auth;
 
 class reservationController extends Controller
@@ -77,7 +76,7 @@ class reservationController extends Controller
     {
       Reservation::create([
         'agar_id' => $request->agar_id,
-        'user_id' => Auth::user()->id,
+        'user_id' => $request->user_id,
         'start_date' => $request->start_date,
         'end_date' => $request->end_date
       ]);
@@ -88,9 +87,11 @@ class reservationController extends Controller
     }
 
 
-    public function show($id)
+    public function show($user_id,$id)
     {
-      $reservation = Reservation::where('id',$id)->first();
+      $reservation = Reservation::where('user_id',$user_id)
+                                ->where('status',1)
+                                ->where('id',$id)->first();
       return new reservationResource($reservation);
     }
 

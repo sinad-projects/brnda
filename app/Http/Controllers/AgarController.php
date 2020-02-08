@@ -14,6 +14,11 @@ use App\AgarCalendar;
 use App\AgarPrice;
 use App\Location;
 use App\Reservation;
+use App\AgarType;
+use App\AgarFloor;
+use App\State;
+use App\City;
+
 use Auth;
 
 class AgarController extends Controller
@@ -23,9 +28,23 @@ class AgarController extends Controller
     public function list()
     {
       $agars = Agar::where('status',1)
+                    ->where('owner_id',Auth::user()->id)
                     ->get();
+      // get agar type
+      $agarType = AgarType::where('status',1)->get();
+      // get agar floor
+      $agarFloor = AgarFloor::where('status',1)->get();
+      // get states info
+      $states = State::where('status',1)->get();
+      // get citys info
+      $citys = City::where('status',1)->get();
+
       return view('agars.list')
-              ->with('agars',$agars);
+              ->with('agars',$agars)
+              ->with('agarType',$agarType)
+              ->with('agarFloor',$agarFloor)
+              ->with('states',$states)
+              ->with('citys',$citys);
     }
 
     public function single($agar_id){
@@ -98,6 +117,41 @@ class AgarController extends Controller
           return redirect()->back()->with('info','تم تحديث شروط السكن');
       }
 
+      if($request->has('save_price')){
+        AgarPrice::where('agar_id',$request->agar_id)
+          ->update([
+            'day' => $request->day,
+            'week' => $request->week,
+            'month' => $request->month,
+            'currency' => $request->currency
+          ]);
+          return redirect()->back()->with('info','تم تحديث بيانات السعر');
+      }
+
+      if($request->has('save_calendar')){
+        AgarCalendar::create([
+            'agar_id' => $request->agar_id,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date
+          ]);
+          return redirect()->back()->with('info','تمت اضافة التقويم بنجاح');
+      }
+
+      if($request->has('delete_agar_calendar')){
+        AgarCalendar::where('id',$request->calendar_id)->delete();
+        return redirect()->back()->with('info','تم حذف التقويم بنجاح');
+      }
+
+      if($request->has('edit_calendar')){
+        AgarCalendar::where('id',$request->calendar_id)
+          ->update([
+            'agar_id' => $request->agar_id,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date
+          ]);
+          return redirect()->back()->with('info','تم تحديث بيانات العقار بنجاح');
+      }
+
     }
     // to add new agar
     public function add(Request $request){
@@ -132,18 +186,9 @@ class AgarController extends Controller
       ]);
       // add agar price
       AgarPrice::create([
-        'agar_id' => $agar->id,
-        'day' => $request->day,
-        'week' => $request->week,
-        'month' => $request->month,
-        'currency' => $request->currency
+        'agar_id' => $agar->id
       ]);
-      // add agar calender
-      AgarCalendar::create([
-        'agar_id' => $agar->id,
-        'start_date' => $request->start_date,
-        'end_date' => $request->end_date
-      ]);
+
       return redirect()->back()->with('info','تم تسجيل العقار بنجاح');
     }
 
@@ -151,6 +196,37 @@ class AgarController extends Controller
     public function delete(Request $request){
       $delete = Agar::where('id',$request->agar_id)->delete();
       return redirect()->back()->with('info','تم حذف العقار بنجاح');
+    }
+
+    // to edit agar info
+    public function edit(Request $request){
+      if($request->has('edit_agar')){
+        $this->validate($request,[
+          'agar_name'        => 'required|string',
+          'area'             => 'required|string',
+          'rooms_number'     => 'required|integer',
+          'bathrooms_number' => 'required|integer',
+          'agar_desc'        => 'required|string'
+        ]);
+        $agar = Agar::where('id',$request->agar_id)
+          ->update([
+            'agar_name' => $request->agar_name,
+            'type_id' => $request->type_id,
+            'floor_id' => $request->floor_id,
+            //'geo_loc_id' => $location->id,
+            'rooms_number' => $request->rooms_number,
+            'bathrooms_number' => $request->bathrooms_number,
+            'agar_desc' => $request->agar_desc
+          ]);
+
+          /*$location = Location::create([
+            'state_id' => $request->state_id,
+            'city_id'  => $request->city_id,
+            'area'     => $request->area
+          ]);*/
+
+          return redirect()->back()->with('info','تم تحديث بيانات العقار');
+      }
     }
 
     # =========================================================================#
@@ -198,10 +274,6 @@ class AgarController extends Controller
       return new agarResource($agar);
     }
 
-    public function edit($id)
-    {
-        //
-    }
 
     public function update(Request $request, $id)
     {

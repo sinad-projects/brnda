@@ -58,6 +58,11 @@ Route::post('agars/add',[
     'as' => 'agars.add',
     'middleware' => ['auth']
 ]);
+Route::post('agars/edit',[
+    'uses' => 'agarController@edit',
+    'as' => 'agars.edit',
+    'middleware' => ['auth']
+]);
 Route::post('agars/delete',[
     'uses' => 'agarController@delete',
     'as' => 'agars.delete',

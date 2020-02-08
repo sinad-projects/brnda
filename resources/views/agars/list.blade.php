@@ -20,45 +20,8 @@
 <body class="">
 
 <!-- Top container -->
-<div class="w3-bar w3-large w3-border-bottom" style="z-index:4; height: 100px">
-    <button class="w3-bar-item w3-button w3-hover-none
-      w3-hover-text-grey w3-xxlarge" style="padding: 20px"
-            onclick="w3_open();">
-        <i class="fa fa-bars"></i></button>
-    <!--span class="w3-bar-item w3-left">برندة</span-->
-        <span class="w3-bar-item w3-left" style="padding: 20px;">
-        <img height="60px" width="60px" src="{{ asset('images/branda_logo.png') }}" alt="شعار برندة" /></span>
-</div>
 
-<!-- Sidebar/menu -->
-<nav class="w3-sidebar  w3-animate-right" style="z-index:3;width:300px; display: none" id="mySidebar"><br>
-    <div class="w3-container w3-row">
-        <div class="w3-col s4">
-            <img src="{{ asset('images/avatar2.png') }}" class="w3-circle w3-margin-right" style="width:46px">
-        </div>
-
-        <div class="w3-col s8 w3-bar">
-            <span class="w3-bar-item">مرحباُ يا, <strong>أحمد تبن</strong></span><br>
-            <a href="logout.php" class="w3-bar-item w3-btn"><i class="fa fa-sign-out-alt"></i></a>
-            <a href="settings.php" class="w3-bar-item w3-btn"><i class="fa fa-cog"></i></a>
-        </div>
-    </div>
-    <hr>
-    <div class="w3-bar-block">
-        <a href="#" class="w3-bar-item w3-btn w3-padding-16 w3-hide-large1 w3-dark-grey w3-hover-black"
-           onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  اغلق القائمة</a>
-        <a href="cpanel.php" class="w3-bar-item w3-btn w3-padding
-        "><i class="fa fa-eye fa-fw
-        "></i> الرئيسية </a>
-        <a href="agar.php" class="w3-bar-item w3-btn w3-padding
-         w3-flat-belize-hole w3-animate-zoom"><i class="fa fa-hands-helping fa-fw
-         w3-spin"></i>  عقاراتي</a>
-        <a href="account.php" class="w3-bar-item w3-btn w3-padding
-        "><i class="fa fa-briefcase fa-fw
-        "></i>  العقارات</a>
-
-    </div>
-</nav>
+@include('layouts/aside')
 
 
 <!-- Overlay effect when opening sidebar on small screens -->
@@ -69,7 +32,7 @@
     <div class="w3-container w3-margin-top">
         <div class="w3-card-4">
             <header class="w3-bar w3-padding " style="position: relative">
-                <span class="w3-bar-item w3-right"> <h5><strong><i class="fa fa-building-o"></i> &nbsp;عقاراتي</strong></h5></span>
+                <span class="w3-bar-item w3-right"> <h5><strong><i class="fa fa-building-o"></i> &nbsp; عقاراتي</strong></h5></span>
                 <span id="addNewAgar" onclick="document.getElementById('NEW_AGAR_FORM').style.display='block'" class=" w3-large w3-hover-light-gray w3-display-left w3-margin-left w3-white w3-border w3-border-gray w3-round w3-text-gray" style="padding: 7px 15px">
                     <i style="font-weight: 50;" class="fa fa-plus"></i>
                 </span>
@@ -96,7 +59,7 @@
                                 <tbody class="w3-text-dark-grey">
                                   @foreach($agars as $agar)
                                     <tr>
-                                        <td>{{ $agar->agar_id }}</td>
+                                        <td>{{ $agar->id }}</td>
                                         <td> {{ $agar->agar_name }} </td>
                                         <td>{{ $agar->type_id }}</td>
                                         <td>{{ $agar->floor_id }}</td>
@@ -107,15 +70,20 @@
                                         <td>
                                             <div class="w3-center">
                                                 <div class="w3-bar">
-                                                    <a href="{{ route('agars.single',['agar_id' => $agar->agar_id]) }}"
+                                                    <a href="{{ route('agars.single',['agar_id' => $agar->id]) }}"
                                                        class="w3-bar-item w3-btn w3-mobile"><i class="fa fa-info"></i></a>
-                                                    <a href="agar.php?tab=New&agar_id=17&status=1"
-                                                       class="w3-bar-item w3-btn w3-mobile"><i class="fa fa-edit"></i></a>
-                                                    <button type="button" onclick="document.getElementById('delete_agar_confirm_{{ $agar->agar_id }}').style.display='block'"
+                                                    <a href="javascript::void()" onclick="document.getElementById('edit_agar_{{ $agar->id }}').style.display='block'" class="w3-bar-item w3-btn w3-mobile"><i class="fa fa-edit"></i></a>
+                                                    <button type="button" onclick="document.getElementById('delete_agar_confirm_{{ $agar->id }}').style.display='block'"
                                                             class="w3-bar-item w3-btn w3-mobile"><i class="fa fa-trash-o"></i></button>
                                                 </div>
                                             </div>
                                         </td>
+
+                                        <!-- edit agar info -->
+                                        <div id="edit_agar_{{ $agar->id }}" class="w3-modal" style="display: none">
+                                          @include('layouts/editAgar')
+                                        </div> <!-- END edit agar info -->
+
                                     </tr>
                                   @endforeach
                                 </tbody>
@@ -141,19 +109,19 @@
     </div>
     <br>
     <!-- START MODALS -->
-    
+
     <div id="NEW_AGAR_FORM" class="w3-modal" style="display: none"><!-- START NEW_AGAR_FORM -->
       @include('layouts/addAgar')
     </div> <!-- END NEW_AGAR_FORM -->
 
+
 <div><!-- START delete_agar_confirm_ MODALS -->
   @foreach($agars as $agar)
-    <div id="delete_agar_confirm_{{ $agar->agar_id }}" class="w3-modal">
+    <div id="delete_agar_confirm_{{ $agar->id }}" class="w3-modal">
         <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:480px">
 
             <header class="w3-container w3-border-bottom">
-                <span onclick="document.getElementById('delete_agar_confirm_{{ $agar->agar_id }}').style.display='none'"
-                                                                  class="w3-btn w3-display-topleft">&times;</span>
+                <span onclick="document.getElementById('delete_agar_confirm_{{ $agar->id }}').style.display='none'" class="w3-btn w3-display-topleft">&times;</span>
                 <h4>حذف</h4>
             </header>
 
@@ -181,12 +149,12 @@
 
             <footer class="w3-container">
                 <div class="w3-margin-top w3-margin-bottom w3-left">
-                    <form id="delete_agar_form_1" action="{{ route('agars.delete') }}" method="post">
+                    <form id="delete_agar_form_{{ $agar->id }}" action="{{ route('agars.delete') }}" method="post">
                         @csrf
-                        <input type="hidden" name="agar_id" value="{{ $agar->agar_id }}"/>
-                        <button type="submit" form="delete_agar_form_1" autofocus type="submit" name="delete_agar" value="موافق"
+                        <input type="hidden" name="agar_id" value="{{ $agar->id }}"/>
+                        <button type="submit" form="delete_agar_form_{{ $agar->id }}" autofocus type="submit" name="delete_agar" value="موافق"
                             class="w3-button w3-white w3-border w3-border-gray w3-round w3-text-gray w3-hover-light-gray w3-hover-text-gray" style="padding: 7px 15px"><i class="fa fa-check-square"></i> موافق</button>
-                        <button type="button" onclick="document.getElementById('delete_agar_confirm_1').style.display='none'"
+                        <button type="button" onclick="document.getElementById('delete_agar_confirm_{{ $agar->id }}').style.display='none'"
                             class="w3-button w3-white w3-border w3-border-gray w3-round w3-text-gray w3-hover-light-gray w3-hover-text-gray" style="padding: 7px 15px"><i class="fa fa-arrow-right"></i> إلغاء</button>
                     </form>
                 </div>

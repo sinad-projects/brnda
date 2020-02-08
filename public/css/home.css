@@ -5,7 +5,7 @@ html {
   font-family: JF-Flat-regular;
   font-style: normal;
   font-weight: 400;
-  src: url("fonts/Flat_Font_Jozoor/JF-Flat-regular.ttf");
+  src: url("../fonts/Flat_Font_Jozoor/JF-Flat-regular.ttf");
 }
 html,body,h1,h2,h3,h4,h5,h6 {
   font-family: JF-Flat-regular, sans-serif;
@@ -307,7 +307,7 @@ brnda-padding{
     box-shadow: 0 1px 3px 0 rgba(19, 19, 19, 0.23), 0 1px 8px 0 rgba(0, 0, 0, 0.17);
 }
 a{
-text-decoration: none;    
+text-decoration: none;
 }
 #addNewAgar:hover {
   cursor: pointer;

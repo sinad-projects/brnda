@@ -274,7 +274,11 @@
                         <td class="w3-center">{{ $agar->price->day }}</td>
                         <td class="w3-center">{{ $agar->price->week }}</td>
                         <td class="w3-center">{{ $agar->price->month }}</td>
-                        <td class="w3-center">{{ $agar->price->currency }}</td>
+                        @if($agar->price->currency == 1)
+                          <td class="w3-center">جنيه</td>
+                        @elseif($agar->price->currency == 2)
+                          <td class="w3-center">دولار</td>
+                        @endif
                     </tr>
                 </tbody>
               </table>
@@ -300,22 +304,86 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td class="w3-center">{{ $agar->calendar->start_date }}</td>
-                          <td class="w3-center">{{ $agar->calendar->end_date }}</td>
-                          <td class="w3-center">{{ $agar->calendar->created_at->diffForHumans() }}</td>
-                          <td class="w3-center">
-                              <div class="w3-center">
-                                  <div class="w3-bar">
-                                      <a href="view_agar.php?agar_id=1&calendar_id=1&calendar_action=edit"
-                                         class="w3-bar-item w3-btn w3-mobile"><i class="fa fa-edit"></i></a>
-                                      <button type="button" onclick="document.getElementById('delete_agar_calendar_confirm_1').style.display='block'"
-                                              class="w3-bar-item w3-btn w3-mobile"><i class="fa fa-trash-o"></i>
-                                      </button>
+                        @foreach($agar->calendar as $calendar)
+                          <tr>
+                            <td class="w3-center">{{ $calendar->start_date }}</td>
+                            <td class="w3-center">{{ $calendar->end_date }}</td>
+                            <td class="w3-center">{{ $calendar->created_at->diffForHumans() }}</td>
+                            <td class="w3-center">
+                                <div class="w3-center">
+                                    <div class="w3-bar">
+                                        <button type="button" onclick="document.getElementById('calendar_edit_{{$calendar->id}}').style.display='block'" class="w3-bar-item w3-btn w3-mobile"><i class="fa fa-edit"></i></button>
+                                        <button type="button" onclick="document.getElementById('delete_agar_calendar_confirm_{{ $calendar->id }}').style.display='block'" class="w3-bar-item w3-btn w3-mobile"><i class="fa fa-trash-o"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                            <!-- delete calender model -->
+                              <div id="delete_agar_calendar_confirm_{{ $calendar->id }}" class="w3-modal">
+                                  <div class="w3-modal-content brnda-card-4 w3-animate-zoom" style="max-width:480px">
+                                      <header class="w3-container brnda-card">
+                                          <span onclick="document.getElementById('delete_agar_calendar_confirm_{{ $calendar->id }}').style.display='none'" class="w3-btn w3-display-topleft">&times;</span>
+                                          <h4> حذف</h4>
+                                      </header>
+                                      <div class="w3-container">
+                                          <div class="w3-section">
+                                              <p><i class="fa fa-2x w3-padding fa-trash-o w3-text-flat-midnight-blue"></i><span> هل أنت متأكد من أنك تريد حذف هذا العنصر؟، هذه العملية لا يمكن التراجع عنها.</span></p>
+                                          </div>
+                                      </div>
+                                      <footer class="w3-container ">
+                                          <div class="w3-margin-top w3-margin-bottom w3-left">
+                                              <form id="delete_agar_calendar_form_{{ $calendar->id }}" action="{{ route('agars.single',['agar_id' => $agar->id]) }}" method="post">
+                                                  @csrf
+                                                  <input type="hidden" name="calendar_id" value="{{ $calendar->id }}"/>
+                                                  <button form="delete_agar_calendar_form_{{ $calendar->id }}" autofocus type="submit" name="delete_agar_calendar" value="موافق"
+                                                      class="w3-border w3-btn brnda-card w3-ripple w3-margin-left"><i class="fa fa-check-square"></i> موافق</button>
+                                                  <button type="button" onclick="document.getElementById('delete_agar_calendar_confirm_{{ $calendar->id }}').style.display='none'"
+                                                       class="w3-button w3-border w3-hover-light-gray w3-text-gray w3-round" style="padding: 7px 15px;"><i class="fa fa-arrow-right"></i> إلغاء</button>
+                                              </form>
+                                          </div>
+                                      </footer>
                                   </div>
-                              </div>
-                          </td>
-                      </tr>
+                              </div><!-- END delete_agar_confirm MODAL -->
+
+                              <!-- Edit CALENDAR FORM data -->
+                              <div id="calendar_edit_{{$calendar->id}}" class="w3-modal">
+                                <!-- START CALENDAR_FORM -->
+                                  <div class="w3-modal-content w3-border-bottom w3-animate-zoom" style="max-width:400px">
+                                      <header class="w3-container w3-border-bottom">
+                                          <h4><i class="fa fa-calendar-o"></i>التقويم</h4>
+                                          <a href="javascript::void()" onclick="document.getElementById('calendar_edit_{{$calendar->id}}').style.display='none'" class="w3-btn w3-display-topleft">×</a>
+                                      </header>
+                                      <form id="calendar_edit_form_{{ $calendar->id }}" action="{{ route('agars.single',['agar_id' => $agar->id]) }}" method="post" class="w3-padding-16">
+                                        @csrf
+                                        <div class="w3-container">
+                                          <input type="hidden" name="agar_id" value="{{ $agar->id }}">
+                                          <input type="hidden" name="calendar_id" value="{{ $calendar->id }}">
+                                          <div class="w3-row-padding">
+                                              <div class="w3-margin-bottom w3-half">
+                                                  <label for="start_date" class="w3-text-gray">من</label>
+                                                  <input id="start_date"  name="start_date" class="w3-input" type="date"
+                                                         placeholder="من" required value="{{ $calendar->start_date }}">
+                                              </div>
+                                              <div class="w3-margin-bottom w3-half">
+                                                  <label for="end_date" class="w3-text-gray">إلى</label>
+                                                  <input id="end_date"  name="end_date" class="w3-input" type="date"
+                                                         placeholder="إلى" required value="{{ $calendar->end_date }}">
+                                              </div>
+                                          </div>
+                                        </div>
+                                        <footer class="w3-container ">
+                                            <div class="w3-section w3-left">
+                                                <button form="calendar_edit_form_{{ $calendar->id }}" type="submit" name="edit_calendar" value="حفظ" class="w3-button w3-white w3-border w3-border-gray w3-round w3-text-gray w3-hover-light-gray w3-hover-text-gray" style="padding: 7px 15px">
+                                                <i class="fa fa-save w3-margin-left-8 w3-text-gray"></i> حفظ</button>
+                                                <button class="w3-button w3-border w3-hover-light-gray w3-text-gray w3-round" style="padding: 7px 15px;"><a href="view_agar.php?agar_id=1" onclick="document.getElementById('CALENDAR_FORM').style.display='none'" class=""><i class="fa fa-close"></i> إلغاء</a></button>
+                                            </div>
+                                        </footer>
+                                      </form>
+                                  </div>
+                              </div><!-- END Edit CALENDARFORM -->
+
+                          </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -422,10 +490,11 @@
                 <input type="hidden" name="agar_id" value="{{ $agar->id }}">
                 @foreach($agar_b_extra as $b_extra)
                   <div class="w3-bar-block">
-                      <label onclick="statusToggle(event)" for="bb_8" class="w3-btn w3-bar-item w3-animate-color" />
-                      <span class="w3-right w3-text-gray"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $b_extra->name }}</span>
-                      <input id="bb_8" name="b_extra[]" value="{{ $b_extra->name }}" class="w3-left" type="checkbox"/>
-                      <div class="w3-clear"></div>
+                    <label onclick="statusToggle(event)" for="b_extra_{{ $b_extra->id }}" class="w3-btn w3-bar-item w3-animate-color" />
+                    <span class="w3-right w3-text-gray"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $b_extra->name }}</span>
+                    <i class="fa fa-check-circle-o w3-left w3-text-gray"></i>
+                    <input id="b_extra_{{ $b_extra->id }}" name="b_extra[]" value="{{ $b_extra->name }}" class="w3-hide" type="checkbox">
+                    <div class="w3-clear"></div>
                   </div>
                 @endforeach
               </div>
@@ -456,10 +525,11 @@
                 <input type="hidden" name="agar_id" value="{{ $agar->id }}">
                 @foreach($agar_a_extra as $a_extra)
                   <div class="w3-bar-block">
-                      <label onclick="statusToggle(event)" for="aa_8" class="w3-btn w3-bar-item w3-animate-color" />
-                      <span class="w3-right w3-text-gray"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $a_extra->name }}</span>
-                      <input id="aa_8" name="a_extra[]" value="{{ $a_extra->name }}" class="w3-left" type="checkbox"/>
-                      <div class="w3-clear"></div>
+                    <label onclick="statusToggle(event)" for="a_extra_{{ $a_extra->id }}" class="w3-btn w3-bar-item w3-animate-color" />
+                    <span class="w3-right w3-text-gray"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $a_extra->name }}</span>
+                    <i class="fa fa-check-circle-o w3-left w3-text-gray"></i>
+                    <input id="a_extra_{{ $a_extra->id }}" name="a_extra[]" value="{{ $a_extra->name }}" class="w3-hide" type="checkbox">
+                    <div class="w3-clear"></div>
                   </div>
                 @endforeach
               </div>
@@ -488,10 +558,11 @@
                 <input type="hidden" name="agar_id" value="{{ $agar->id }}">
                 @foreach($agar_s_extra as $s_extra)
                 <div class="w3-bar-block">
-                    <label onclick="statusToggle(event)" for="cond_8" class="w3-btn w3-bar-item w3-animate-color" />
-                    <span class="w3-right w3-text-gray"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $s_extra->name }}</span>
-                    <input id="cond_8" name="sf_extra[]" value="{{ $s_extra->name }}" class="w3-left" type="checkbox"/>
-                    <div class="w3-clear"></div>
+                  <label onclick="statusToggle(event)" for="s_extra_{{ $s_extra->id }}" class="w3-btn w3-bar-item w3-animate-color" />
+                  <span class="w3-right w3-text-gray"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $s_extra->name }}</span>
+                  <i class="fa fa-check-circle-o w3-left w3-text-gray"></i>
+                  <input id="s_extra_{{ $s_extra->id }}" name="sf_extra[]" value="{{ $s_extra->name }}" class="w3-hide" type="checkbox">
+                  <div class="w3-clear"></div>
                 </div>
                 @endforeach
               </div>
@@ -521,10 +592,11 @@
                   <input type="hidden" name="agar_id" value="{{ $agar->id }}">
                   @foreach($agar_cond as $cond)
                     <div class="w3-bar-block">
-                        <label onclick="statusToggle(event)" for="cond_8" class="w3-btn w3-bar-item w3-animate-color" />
-                        <span class="w3-right w3-text-gray"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $cond->name }}</span>
-                        <input id="cond_8" name="cond_extra[]" value="{{ $cond->name }}" class="w3-left" type="checkbox"/>
-                        <div class="w3-clear"></div>
+                      <label onclick="statusToggle(event)" for="cond_extra_{{ $cond->id }}" class="w3-btn w3-bar-item w3-animate-color" />
+                      <span class="w3-right w3-text-gray"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $cond->name }}</span>
+                      <i class="fa fa-check-circle-o w3-left w3-text-gray"></i>
+                      <input id="cond_extra_{{ $cond->id }}" name="cond_extra[]" value="{{ $cond->name }}" class="w3-hide" type="checkbox">
+                      <div class="w3-clear"></div>
                     </div>
                   @endforeach
               </div>
@@ -548,26 +620,27 @@
                 <span onclick="document.getElementById('PRICE_FORM').style.display='none'" class="w3-btn w3-display-topleft">×</span>
             </header>
             <div class="w3-container">
-                <form id="price_form" action="handle_agar.php?agar_id=1" method="post" class="w3-padding-large">
-                    <input type="hidden" name="agar_id" value="1">
-                    <input type="hidden" name="price_id" value="1">
+                <form id="price_form" action="{{ route('agars.single',['agar_id' => $agar->id]) }}" method="post" class="w3-padding-large">
+                    @csrf
+                    <input type="hidden" name="agar_id" value="{{ $agar->id }}">
+                    <input type="hidden" name="price_id" value="{{ $agar->price->price_id }}">
                     <div class="w3-row">
                       <div class="w3-margin-bottom w3-third">
                         <label for="day" class="w3-text-gray">اليوم</label>
                         <input id="day"  name="day" class="w3-input" type="number"
-                               placeholder="اليوم" required value="1000"
+                               placeholder="اليوم" required value="{{ $agar->price->day }}"
                                value="" class="w3-text-gray">
                       </div>
                       <div class="w3-margin-bottom w3-third">
                           <label for="week" class="w3-text-gray">الأسبوع</label>
                           <input id="week"  name="week" class="w3-input" type="text"
-                                 placeholder="الأسبوع" required value="6000"
+                                 placeholder="الأسبوع" required value="{{ $agar->price->week }}"
                                  value="" class="w3-text-gray">
                       </div>
                       <div class="w3-margin-bottom w3-third">
                           <label for="month" class="w3-text-gray">الشهر</label>
                           <input id="month"  name="month" class="w3-input" type="text"
-                                 placeholder="الشهر" required value="22000"
+                                 placeholder="الشهر" required value="{{ $agar->price->month }}"
                                  value="" class="w3-text-gray">
                       </div>
                     </div>
@@ -599,9 +672,9 @@
                 <a href="view_agar.php?agar_id=1" onclick="document.getElementById('CALENDAR_FORM').style.display='none'" class="w3-btn w3-display-topleft">×</a>
             </header>
             <div class="w3-container">
-                <form id="calendar_form" action="handle_agar.php?agar_id=1" method="post" class="w3-padding-16">
-                    <input type="hidden" name="agar_id" value="1">
-                    <input type="hidden" name="calendar_id" value="">
+                <form id="calendar_form" action="{{ route('agars.single',['agar_id' => $agar->id]) }}" method="post" class="w3-padding-16">
+                    @csrf
+                    <input type="hidden" name="agar_id" value="{{ $agar->id }}">
                     <div class="w3-row-padding">
                         <div class="w3-margin-bottom w3-half">
                             <label for="start_date" class="w3-text-gray">من</label>
@@ -628,32 +701,8 @@
         </div>
     </div><!-- END CALENDAR_FORM -->
 
-      <div id="delete_agar_calendar_confirm_{{ $agar->id }}" class="w3-modal">
-          <div class="w3-modal-content brnda-card-4 w3-animate-zoom" style="max-width:480px">
-              <header class="w3-container brnda-card">
-                  <span onclick="document.getElementById('delete_agar_calendar_confirm_1').style.display='none'"
-                                                                class="w3-btn w3-display-topleft">&times;</span>
-                  <h4>حذف</h4>
-              </header>
-              <div class="w3-container">
-                  <div class="w3-section">
-                      <p><i class="fa fa-2x w3-padding fa-trash-o w3-text-flat-midnight-blue"></i><span> هل أنت متأكد من أنك تريد حذف هذا العنصر؟، هذه العملية لا يمكن التراجع عنها.</span></p>
-                  </div>
-              </div>
 
-              <footer class="w3-container ">
-                  <div class="w3-margin-top w3-margin-bottom w3-left">
-                      <form id="delete_agar_calendar_form_1" action="handle_agar.php?agar_id=1" method="post">
-                          <input type="hidden" name="calendar_id" value="1"/>
-                      </form>
-                      <button form="delete_agar_calendar_form_1" autofocus type="submit" name="delete_agar_calendar" value="موافق"
-                              class="w3-border w3-btn brnda-card w3-ripple w3-margin-left"><i class="fa fa-check-square"></i> موافق</button>
-                      <button type="button" onclick="document.getElementById('delete_agar_calendar_confirm_1').style.display='none'"
-                               class="w3-button w3-border w3-hover-light-gray w3-text-gray w3-round" style="padding: 7px 15px;"><i class="fa fa-arrow-right"></i> إلغاء</button>
-                  </div>
-              </footer>
-          </div>
-      </div><!-- END delete_agar_confirm MODAL -->
+
     <br>
     <!-- END MODALS -->
 
