@@ -92,3 +92,8 @@ Route::post('reservation/add',[
     'as' => 'reservation.add',
     'middleware' => ['auth']
 ]);
+
+
+
+// dropzone backend implementation
+Route::post('dropzone/store', 'DropzoneController@dropzoneStore')->name('dropzone.store');

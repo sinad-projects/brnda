@@ -4,8 +4,9 @@
     <title>  برندة    </title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ asset('lib/dropzone/dropzone.css') }}" type="text/css">
+
     <link rel="stylesheet"  href="{{ asset('lib/lightslider-master/src/css/lightslider.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('lib/dropzone/dropzone.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/w3.css') }}">
     <link rel="stylesheet" href="{{ asset('css/w3-colors-windows.css') }}">
     <link rel="stylesheet" href="{{ asset('css/w3-colors-flat.css') }}">
@@ -13,6 +14,8 @@
           href="{{ asset('lib/fontawesome-free-5.0.13/web-fonts-with-css/css/fontawesome-all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+
+
 </head>
 <body class="">
 
@@ -81,7 +84,7 @@
                     @foreach($agar->image as $image)
                     <div class="w3-col l2 m3 s4 w3-mobile">
                         <div class="w3-display-container w3-tooltip">
-                            <img width="100%" class="w3-hover-grayscale" src="{{ asset($image->img_wide) }}" alt="{{$image->img_wide}}" height="150px" width="100%">
+                            <img width="100%" class="w3-hover-grayscale" src="{{ asset('agar/images/'.$image->img_wide) }}" alt="{{$image->img_wide}}" height="150px" width="100%">
                             <a onclick="document.getElementById('delete_agar_img_confirm_96').style.display='block'"
                              class="w3-btn w3-block w3-text w3-display-bottommiddle w3-flat-pomegranate"><i class="fa fa-trash-o"></i></a>
                         </div>
@@ -397,33 +400,17 @@
                     <h6><i class="fa fa-image w3-margin-left-8"></i>صور العقار</h6>
                     <span onclick="document.getElementById('AGAR_IMG_FORM').style.display='none'" class="w3-btn w3-display-topleft">×</span>
                 </header>
-                <div class="w3-container w3-section">
-                    <div class="w3-panel w3-light-gray w3-leftbar w3-rightbar w3-border-black">
-                        <ol class="w3-">
-                            <li>أقصى حجم مسموح به للصورة الواحدة هو <strong dir="ltr">5 MB</strong></li>
-                            <li>أقصى عدد مسموح به من الصور للرفع في مرة واحدة هو 15 صورة</li>
-                        </ol>
+
+                <div class="">
+                    <form multiple action="{{ route('dropzone.store') }}" method="post" class="dropzone" id="image-upload" enctype="multipart/form-data">
+                      @csrf
+                    <div>
+                        <h3> اضغط على الصندوق لتحميل صور العقار </h3>
                     </div>
-                    <div id="msg"></div>
-                    <div class="w3-section">
-                        <div class="dropzone dz-clickable" id="myDrop">
-                            <div class="dz-default dz-message" data-dz-message="">
-                                <span>أفلت الصور هنا لرفعها</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!--div class="form-group">
-                        <button type="submit" id="add_file" class="w3-btn brnda-card" name="submit"><i class="fa fa-upload"></i> رفع الصور</button>
-                    </div-->
+                    <input type="hidden" value="{{ $agar->id }}" name="agar_id" />
+                  </form>
                 </div>
-                <footer class="w3-container ">
-                    <div class="w3-section w3-left">
-                        <button tabindex="1" id="add_agar_img" title="رفع الصور" type="submit" name="save_agar_img" value="رفع الصور"  class="w3-button w3-border w3-hover-light-gray w3-text-gray w3-round" style="padding: 7px 15px;">
-                            <i class="fa fa-upload w3-margin-left-8"></i><span>رفع الصور</span></button>
-                    <span tabindex="2" title="إلغاء" onclick="document.getElementById('AGAR_IMG_FORM').style.display='none'" class="w3-button w3-border w3-hover-light-gray w3-text-gray w3-round" style="padding: 7px 15px;">
-                        <i class="fa fa-window-close w3-margin-left-8"></i><span>إغلاق</span></span>
-                    </div>
-                </footer>
+
             </div>
         </div>
     </div><!-- END AGAR_IMG_FORM -->
@@ -435,7 +422,7 @@
         <div class="w3-modal-content brnda-card-4 w3-animate-zoom" style="max-width:480px">
 
             <header class="w3-container w3-border-bottom">
-                <span onclick="document.getElementById('delete_agar_confirm_1').style.display='none'" class="w3-btn w3-display-topleft">&times;</span>
+                <span onclick="document.getElementById('delete_agar_confirm_{{ $agar->id }}').style.display='none'" class="w3-btn w3-display-topleft">&times;</span>
                 <h4>حذف</h4>
             </header>
 
@@ -747,42 +734,16 @@
 
 <!--Only these JS files are necessary-->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script src="lib/dropzone/dropzone.js"></script>
-<script>
-    //Dropzone script
-    Dropzone.autoDiscover = false;
-    var myDropzone = new Dropzone("div#myDrop",
-        {
-            paramName: "files", // The name that will be used to transfer the file
-            addRemoveLinks: true,
-            uploadMultiple: true,
-            autoProcessQueue: false,
-            parallelUploads: 50,
-            maxFilesize: 2, // MB
-            acceptedFiles: ".png, .jpeg, .jpg, .gif",
-            url: "delete.ajax.php?agar_id=1",
-        });
+<script src="{{ asset('lib/dropzone/jquery-plugin.js') }}"></script>
+<script src="{{ asset('lib/dropzone/dropzone.js') }}"></script>
 
-
-    /* Add Files Script*/
-    myDropzone.on("success", function(file, images){
-        //$("#msg").html(message);
-        $("#agar_images").html(images);
-        //setTimeout(function(){window.location.href="index.php"},800);
-    });
-
-    myDropzone.on("error", function (data) {
-        $("#msg").html('<div class="alert alert-danger">There is some thing wrong, Please try again!</div>');
-    });
-
-    myDropzone.on("complete", function(file) {
-        myDropzone.removeFile(file);
-    });
-
-    $("#add_agar_img").on("click",function (){
-        myDropzone.processQueue();
-    });
+<script type="text/javascript">
+        Dropzone.options.imageUpload = {
+            maxFilesize         :       1,
+            acceptedFiles: ".jpeg,.jpg,.png,.gif"
+        };
 </script>
+
 <script src="lib/lightslider-master/src/js/lightslider.js"></script>
 <script>
     //$(document).ready(function() {

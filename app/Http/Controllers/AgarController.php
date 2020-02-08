@@ -213,17 +213,17 @@ class AgarController extends Controller
             'agar_name' => $request->agar_name,
             'type_id' => $request->type_id,
             'floor_id' => $request->floor_id,
-            //'geo_loc_id' => $location->id,
             'rooms_number' => $request->rooms_number,
             'bathrooms_number' => $request->bathrooms_number,
             'agar_desc' => $request->agar_desc
           ]);
 
-          /*$location = Location::create([
-            'state_id' => $request->state_id,
-            'city_id'  => $request->city_id,
-            'area'     => $request->area
-          ]);*/
+          $location = Location::where('geo_loc_id',$request->geo_loc_id)
+            ->update([
+              'state_id' => $request->state_id,
+              'city_id'  => $request->city_id,
+              'area'     => $request->area
+            ]);
 
           return redirect()->back()->with('info','تم تحديث بيانات العقار');
       }

@@ -79,6 +79,7 @@
             </div>
 
             <input type="hidden" name="agar_id" value="{{ $agar->id }}" />
+            <input type="hidden" name="geo_loc_id" value="{{ $agar->geo_loc_id }}" />
         </form>
     </div>
     <footer class="w3-container">
