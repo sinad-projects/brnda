@@ -248,7 +248,14 @@ class AgarController extends Controller
 
     // get agar without pagination
     public function get_agar_without_paginate(){
-      $agars = Agar::where('status',1)->get();
+      $agars = Agar::with('type')
+                    ->with('location')
+                    ->with('floor')
+                    ->with('calendar')
+                    ->with('image')
+                    ->with('price')
+                    ->with('agar_extra')
+                    ->where('status',1)->get();
       // Return collection of agar's as a resource
       return agarResource::collection($agars);
     }
@@ -261,7 +268,6 @@ class AgarController extends Controller
       // Return collection of agar's as a resource
       return agarResource::collection($agars);
     }
-
 
     public function store(Request $request)
     {

@@ -32,7 +32,7 @@ Route::get('/user/verifi/{phone}','AuthController@verifiction');
 #====== Update user info  ======#
 Route::put('/user/update/{id}','ProfileController@update');
 // ==============================================//
-
+ 
 #====== List All agar's ======#
 Route::get('/agar/list/with_paginate', 'AgarController@get_agar_with_paginate');
 Route::get('/agar/list/without_paginate', 'AgarController@get_agar_without_paginate');
