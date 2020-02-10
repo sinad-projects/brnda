@@ -68,15 +68,22 @@
                                         <td>{{ $agar->bathrooms_number }}</td>
                                         <td> {{ $agar->agar_desc }} </td>                                                                                                           </td>
                                         <td>
-                                            <div class="w3-center">
-                                                <div class="w3-bar">
-                                                    <a href="{{ route('agars.single',['agar_id' => $agar->id]) }}"
-                                                       class="w3-bar-item w3-btn w3-mobile"><i class="fa fa-info"></i></a>
-                                                    <a href="javascript::void()" onclick="document.getElementById('edit_agar_{{ $agar->id }}').style.display='block'" class="w3-bar-item w3-btn w3-mobile"><i class="fa fa-edit"></i></a>
-                                                    <button type="button" onclick="document.getElementById('delete_agar_confirm_{{ $agar->id }}').style.display='block'"
-                                                            class="w3-bar-item w3-btn w3-mobile"><i class="fa fa-trash-o"></i></button>
-                                                </div>
-                                            </div>
+                                          <div class="w3-center">
+                                            @if(Auth::user()->id == $agar->owner_id)
+                                              <div class="w3-bar">
+                                                  <a href="{{ route('agars.single',['agar_id' => $agar->id]) }}"
+                                                   class="w3-bar-item w3-btn w3-mobile"><i class="fa fa-info"></i></a>
+                                                  <a href="javascript::void()" onclick="document.getElementById('edit_agar_{{ $agar->id }}').style.display='block'" class="w3-bar-item w3-btn w3-mobile"><i class="fa fa-edit"></i></a>
+                                                  <button type="button" onclick="document.getElementById('delete_agar_confirm_{{ $agar->id }}').style.display='block'"
+                                                        class="w3-bar-item w3-btn w3-mobile"><i class="fa fa-trash-o"></i></button>
+                                              </div>
+                                              @else
+                                              <div class="w3-bar">
+                                                  <a href="{{ route('agars.single',['agar_id' => $agar->id]) }}"
+                                                   class="w3-bar-item w3-btn w3-mobile w3-text-blue"> اعرف اكثر </a>
+                                              </div>
+                                              @endif
+                                          </div>
                                         </td>
 
                                         <!-- edit agar info -->

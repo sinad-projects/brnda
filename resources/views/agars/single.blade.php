@@ -74,47 +74,62 @@
 
             <!-- begin agars images -->
             <div class="w3-animate-zoom w3-margin-bottom w3-responsive">
+                @if(Auth::user()->id == $agar->owner_id)
+                  <div class="w3-margin-bottom">
+                      <span title="إضافة" onclick="document.getElementById('AGAR_IMG_FORM').style.display='block'" class="w3-btn w3-text-flat-peter-black">
+                        <i class="fa w3-large fa-plus-square-o w3-margin-left-8"></i>
+                        <span>إضافة</span>
+                    </span>
+                  </div>
+                @else
                 <div class="w3-margin-bottom">
-                    <span title="إضافة" onclick="document.getElementById('AGAR_IMG_FORM').style.display='block'" class="w3-btn w3-text-flat-peter-black">
-                      <i class="fa w3-large fa-plus-square-o w3-margin-left-8"></i>
-                      <span>إضافة</span>
+                    <span title="ارسال طلب حجز" onclick="document.getElementById('Reservation_FORM').style.display='block'" class="w3-btn w3-text-flat-peter-black">
+                      <i class="fa w3-large fa-send-o w3-margin-left-8"></i>
+                      <span>ارسال طلب حجز</span>
                   </span>
                 </div>
+                @endif
                   <div id="agar_images" class="w3-row w3-stretch w3-responsive">
                     @foreach($agar->image as $image)
-                    <div class="w3-col l2 m3 s4 w3-mobile">
-                        <div class="w3-display-container w3-tooltip">
-                            <img width="100%" class="w3-hover-grayscale" src="{{ asset('agar/images/'.$image->img_wide) }}" alt="{{$image->img_wide}}" height="150px" width="100%">
-                            <a onclick="document.getElementById('delete_agar_img_confirm_96').style.display='block'"
-                             class="w3-btn w3-block w3-text w3-display-bottommiddle w3-flat-pomegranate"><i class="fa fa-trash-o"></i></a>
-                        </div>
-                    </div>
-                    <div id="delete_agar_img_confirm_{{ $image->id }}" class="w3-modal"><!-- START delete_agar_img_confirm MODAL -->
-                      <div class="w3-modal-content brnda-card-4 w3-animate-zoom" style="max-width:480px">
-                          <header class="w3-container brnda-card">
-                              <span onclick="document.getElementById('delete_agar_img_confirm_{{ $image->id }}').style.display='none'"
-                                class="w3-btn w3-display-topleft">&times;</span>
-                              <h4>حذف</h4>
-                          </header>
-                          <div class="w3-container">
-                              <div class="w3-section">
-                                  <p><i class="fa fa-2x w3-padding fa-trash-o w3-text-flat-midnight-blue w3-text-gray"></i><span> هل أنت متأكد من أنك تريد حذف هذا العنصر؟، هذه العملية لا يمكن التراجع عنها.</span></p>
-                              </div>
-                              <div class="w3-section">
-                                  <img width="100%" class="w3-border w3-round" src="{{ asset('images/x.png') }}" alt="x.png" height="150px">
-                              </div>
+                      <div class="w3-col l2 m3 s4 w3-mobile">
+                          <div class="w3-display-container w3-tooltip">
+                              <img width="100%" class="w3-hover-grayscale" src="{{ asset('agar/images/'.$image->img_wide) }}" alt="{{$image->img_wide}}" height="150px" width="100%">
+                              @if(Auth::user()->id == $agar->owner_id)
+                                <a onclick="document.getElementById('delete_agar_img_confirm_{{ $image->id }}').style.display='block'"
+                                  class="w3-btn w3-block w3-text w3-display-bottommiddle w3-flat-pomegranate"><i class="fa fa-trash-o"></i></a>
+                              @endif
                           </div>
-
-                          <footer class="w3-container ">
-                              <div class="w3-margin-top w3-margin-bottom w3-left">
-                                  <button onclick="delete_a_img({{ $image->id }});" value="موافق"
-                                          class="w3-btn brnda-card w3-ripple w3-margin-left"><i class="fa fa-check-square"></i> موافق</button>
-                                  <button type="button" onclick="document.getElementById('delete_agar_img_confirm_{{ $image->id }}').style.display='none'"
-                                          class="w3-btn w3-white w3-ripple"><i class="fa fa-arrow-right"></i> إلغاء</button>
-                              </div>
-                          </footer>
                       </div>
-                  </div><!-- END delete_agar_img_confirm MODAL -->
+                      <div id="delete_agar_img_confirm_{{ $image->id }}" class="w3-modal"><!-- START delete_agar_img_confirm MODAL -->
+                        <div class="w3-modal-content brnda-card-4 w3-animate-zoom" style="max-width:480px">
+                            <header class="w3-container brnda-card">
+                                <span onclick="document.getElementById('delete_agar_img_confirm_{{ $image->id }}').style.display='none'"
+                                  class="w3-btn w3-display-topleft">&times;</span>
+                                <h4>حذف</h4>
+                            </header>
+                            <form action="{{ route('agars.single',['agar_id' => $agar->id]) }}" method="post">
+                              @csrf
+                              <div class="w3-container">
+                                  <div class="w3-section">
+                                      <p><i class="fa fa-2x w3-padding fa-trash-o w3-text-flat-midnight-blue w3-text-gray"></i><span> هل أنت متأكد من أنك تريد حذف هذا العنصر؟، هذه العملية لا يمكن التراجع عنها.</span></p>
+                                  </div>
+                                  <div class="w3-section">
+                                      <img width="100%" class="w3-border w3-round" src="{{ asset('agar/images/'.$image->img_wide) }}" alt="x.png" height="150px">
+                                  </div>
+                              </div>
+
+                              <footer class="w3-container ">
+                                  <div class="w3-margin-top w3-margin-bottom w3-left">
+                                      <input type="hidden" value="{{ $image->id }}" name="image_id" />
+                                      <button onclick="delete_a_img({{ $image->id }});" name="delete_agar_image" value="موافق"
+                                              class="w3-btn brnda-card w3-ripple w3-margin-left"><i class="fa fa-check-square"></i> موافق</button>
+                                      <button type="button" onclick="document.getElementById('delete_agar_img_confirm_{{ $image->id }}').style.display='none'"
+                                              class="w3-btn w3-white w3-ripple"><i class="fa fa-arrow-right"></i> إلغاء</button>
+                                  </div>
+                              </footer>
+                            </form>
+                        </div>
+                    </div><!-- END delete_agar_img_confirm MODAL -->
                 @endforeach
               </div>
             </div>
@@ -169,12 +184,14 @@
             </header><!-- END HEADER -->
 
             <div class="w3-bar w3-margin-bottom"> <!-- START B -->
-                <div class="w3-margin-bottom">
-                    <span title="تعديل" onclick="document.getElementById('NEW_B_FORM').style.display='block'" class="w3-btn w3-text-flat-peter-black">
-                      <i class="fa w3-large fa-edit w3-margin-left-8"></i>
-                      <span>تعديل</span>
-                    </span>
-                </div>
+                @if(Auth::user()->id == $agar->owner_id)
+                  <div class="w3-margin-bottom">
+                      <span title="تعديل" onclick="document.getElementById('NEW_B_FORM').style.display='block'" class="w3-btn w3-text-flat-peter-black">
+                        <i class="fa w3-large fa-edit w3-margin-left-8"></i>
+                        <span>تعديل</span>
+                      </span>
+                  </div>
+                @endif
                 <div class="w3-panel w3-light-gray w3-leftbar w3-rightbar w3-border-black w3-padding">
                   <?php if($agar->agar_extra->b_extra != null): ?>
                     <?php $b_extra = json_decode($agar->agar_extra->b_extra); foreach ($b_extra as $b_extra):?>
@@ -190,12 +207,14 @@
                 <span class="w3-bar-item w3-right" style="padding-right: 0"><i class="fas fa-info-circle"></i> المرافق الإضافية</span>
             </header><!-- END HEADER -->
             <div class="w3-bar w3-margin-bottom"> <!-- START A -->
-                <div class="w3-margin-bottom">
-                    <span title="تعديل" onclick="document.getElementById('NEW_A_FORM').style.display='block'" class="w3-btn w3-text-flat-peter-black">
-                          <i class="fa w3-large fa-edit w3-margin-left-8"></i>
-                      <span>تعديل</span>
-                    </span>
-                </div>
+                @if(Auth::user()->id == $agar->owner_id)
+                  <div class="w3-margin-bottom">
+                      <span title="تعديل" onclick="document.getElementById('NEW_A_FORM').style.display='block'" class="w3-btn w3-text-flat-peter-black">
+                            <i class="fa w3-large fa-edit w3-margin-left-8"></i>
+                        <span>تعديل</span>
+                      </span>
+                  </div>
+                @endif
                 <br />
               <div class="w3-panel w3-light-gray w3-leftbar w3-rightbar w3-border-black">
                 <?php if($agar->agar_extra->a_extra != null): ?>
@@ -212,12 +231,14 @@
                 <span class="w3-bar-item w3-right" style="padding-right: 0"><i class="fas fa-info-circle"></i> مميزات خاصة</span>
             </header><!-- END HEADER -->
             <div class="w3-bar w3-margin-bottom"> <!-- START SF -->
-                <div class="w3-margin-bottom">
-                    <span title="تعديل" onclick="document.getElementById('NEW_SF_FORM').style.display='block'" class="w3-btn w3-text-flat-peter-black">
-                        <i class="fa w3-large fa-edit w3-margin-left-8"></i>
-                        <span>تعديل</span>
-                    </span>
-                </div>
+                @if(Auth::user()->id == $agar->owner_id)
+                  <div class="w3-margin-bottom">
+                      <span title="تعديل" onclick="document.getElementById('NEW_SF_FORM').style.display='block'" class="w3-btn w3-text-flat-peter-black">
+                          <i class="fa w3-large fa-edit w3-margin-left-8"></i>
+                          <span>تعديل</span>
+                      </span>
+                  </div>
+                @endif
                 <br />
                 <div class="w3-panel w3-light-gray w3-leftbar w3-rightbar w3-border-black">
                   <?php if($agar->agar_extra->sf_extra != null): ?>
@@ -234,13 +255,15 @@
                 <span class="w3-bar-item w3-right" style="padding-right: 0"><i class="fas fa-info-circle"></i> شروط السكن</span>
             </header><!-- END HEADER -->
             <div class="w3-bar w3-margin-bottom"> <!-- START COND -->
-                <div class="w3-margin-bottom">
-                    <span title="تعديل" onclick="document.getElementById('NEW_COND_FORM').style.display='block'"
-                          class="w3-btn w3-text-flat-peter-black">
-                          <i class="fa w3-large fa-edit w3-margin-left-8"></i>
-                          <span>تعديل</span>
-                    </span>
-                  </div>
+                @if(Auth::user()->id == $agar->owner_id)
+                  <div class="w3-margin-bottom">
+                      <span title="تعديل" onclick="document.getElementById('NEW_COND_FORM').style.display='block'"
+                            class="w3-btn w3-text-flat-peter-black">
+                            <i class="fa w3-large fa-edit w3-margin-left-8"></i>
+                            <span>تعديل</span>
+                      </span>
+                    </div>
+                  @endif
                 <br />
                 <div class="w3-panel w3-light-gray w3-leftbar w3-rightbar w3-border-black">
                   <?php if($agar->agar_extra->cond_extra != null): ?>
@@ -257,12 +280,14 @@
                 <span class="w3-bar-item w3-right" style="padding-right: 0"><i class="fas fa-info-circle"></i> تفاصيل السعر</span>
             </header><!-- END HEADER -->
             <div class="w3-animate-zoom w3-margin-bottom w3-responsive">
-                <div class="w3-margin-bottom">
-                    <span title="تعديل" onclick="document.getElementById('PRICE_FORM').style.display='block'" class="w3-btn w3-text-flat-peter-black">
-                      <i class="fa w3-large fa-edit w3-margin-left-8"></i>
-                      <span>تعديل</span>
-                    </span>
-                </div>
+                @if(Auth::user()->id == $agar->owner_id)
+                  <div class="w3-margin-bottom">
+                      <span title="تعديل" onclick="document.getElementById('PRICE_FORM').style.display='block'" class="w3-btn w3-text-flat-peter-black">
+                        <i class="fa w3-large fa-edit w3-margin-left-8"></i>
+                        <span>تعديل</span>
+                      </span>
+                  </div>
+                @endif
                 <table class="w3-table w3-striped">
                   <thead>
                     <tr class="brnda-card">
@@ -291,12 +316,14 @@
                 <span class="w3-bar-item w3-right" style="padding-right: 0"><i class="fas fa-info-circle"></i> التقويم</span>
             </header><!-- END HEADER -->
             <div class="w3-animate-zoom w3-margin-bottom w3-responsive">
-                <div class="w3-margin-bottom">
-                    <span title="إضافة" onclick="document.getElementById('CALENDAR_FORM').style.display='block'" class="w3-btn w3-text-flat-peter-black">
-                      <i class="fa w3-large fa-edit w3-margin-left-8"></i>
-                      <span>إضافة</span>
-                    </span>
-                </div>
+                @if(Auth::user()->id == $agar->owner_id)
+                  <div class="w3-margin-bottom">
+                      <span title="إضافة" onclick="document.getElementById('CALENDAR_FORM').style.display='block'" class="w3-btn w3-text-flat-peter-black">
+                        <i class="fa w3-large fa-edit w3-margin-left-8"></i>
+                        <span>إضافة</span>
+                      </span>
+                  </div>
+                @endif
                     <table class="w3-table w3-striped">
                       <thead>
                         <tr class="brnda-card">
@@ -414,6 +441,46 @@
             </div>
         </div>
     </div><!-- END AGAR_IMG_FORM -->
+
+
+    <!-- START Add Reservation MODALS -->
+    <div id="Reservation_FORM" class="w3-modal" style="display: none">
+        <!-- START Reservation_FORM -->
+          <div class="w3-modal-content w3-border-bottom w3-animate-zoom" style="max-width:400px">
+              <header class="w3-container w3-border-bottom">
+                  <h4><i class="fa fa-bed"></i> طلب حجز جديد</h4>
+                  <a href="javascript::void()" onclick="document.getElementById('Reservation_FORM').style.display='none'" class="w3-btn w3-display-topleft">×</a>
+              </header>
+              <div class="w3-container">
+                  <form id="reservation_form" action="{{ route('reservation.add') }}" method="post" class="w3-padding-16">
+                      @csrf
+                      <input type="hidden" name="agar_id" value="{{ $agar->id }}">
+                      <div class="w3-row-padding">
+                          <div class="w3-margin-bottom w3-half">
+                              <label for="start_date" class="w3-text-gray">من</label>
+                              <input id="start_date"  name="start_date" class="w3-input" type="date"
+                                     placeholder="من" required value=""
+                                     value="">
+                          </div>
+                          <div class="w3-margin-bottom w3-half">
+                              <label for="end_date" class="w3-text-gray">إلى</label>
+                              <input id="end_date"  name="end_date" class="w3-input" type="date"
+                                     placeholder="إلى" required value=""
+                                     value="">
+                          </div>
+                      </div>
+                  </form>
+              </div>
+              <footer class="w3-container ">
+                  <div class="w3-section w3-left">
+                      <button form="reservation_form" type="submit" name="save_reservation" value="حفظ" class="w3-button w3-white w3-border w3-border-gray w3-round w3-text-gray w3-hover-light-gray w3-hover-text-gray" style="padding: 7px 15px">
+                      <i class="fa fa-save w3-margin-left-8 w3-text-gray"></i> حفظ</button>
+                      <button class="w3-button w3-border w3-hover-light-gray w3-text-gray w3-round" style="padding: 7px 15px;"><a href="javascript::void()" onclick="document.getElementById('Reservation_FORM').style.display='none'" class=""><i class="fa fa-close"></i> إلغاء</a></button>
+                  </div>
+              </footer>
+          </div>
+      </div>
+      <!-- END Reservation_FORM -->
 
 
 
@@ -656,7 +723,7 @@
         <div class="w3-modal-content w3-border-bottom w3-animate-zoom" style="max-width:400px">
             <header class="w3-container w3-border-bottom">
                 <h4><i class="fa fa-calendar-o"></i>التقويم</h4>
-                <a href="view_agar.php?agar_id=1" onclick="document.getElementById('CALENDAR_FORM').style.display='none'" class="w3-btn w3-display-topleft">×</a>
+                <a href="javascript::void()" onclick="document.getElementById('CALENDAR_FORM').style.display='none'" class="w3-btn w3-display-topleft">×</a>
             </header>
             <div class="w3-container">
                 <form id="calendar_form" action="{{ route('agars.single',['agar_id' => $agar->id]) }}" method="post" class="w3-padding-16">
@@ -682,7 +749,7 @@
                 <div class="w3-section w3-left">
                     <button form="calendar_form" type="submit" name="save_calendar" value="حفظ" class="w3-button w3-white w3-border w3-border-gray w3-round w3-text-gray w3-hover-light-gray w3-hover-text-gray" style="padding: 7px 15px">
                     <i class="fa fa-save w3-margin-left-8 w3-text-gray"></i> حفظ</button>
-                    <button class="w3-button w3-border w3-hover-light-gray w3-text-gray w3-round" style="padding: 7px 15px;"><a href="view_agar.php?agar_id=1" onclick="document.getElementById('CALENDAR_FORM').style.display='none'" class=""><i class="fa fa-close"></i> إلغاء</a></button>
+                    <button class="w3-button w3-border w3-hover-light-gray w3-text-gray w3-round" style="padding: 7px 15px;"><a href="javascript::void()" onclick="document.getElementById('CALENDAR_FORM').style.display='none'" class=""><i class="fa fa-close"></i> إلغاء</a></button>
                 </div>
             </footer>
         </div>

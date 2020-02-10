@@ -50,4 +50,9 @@ class Agar extends Model
     {
         return $this->hasOne(AgarExtra::class,'agar_id');
     }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class,'agar_id');
+    }
 }

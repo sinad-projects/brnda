@@ -22,8 +22,16 @@ class reservationController extends Controller
       // to list all reservation
       $reservations = Reservation::where('user_id',Auth::user()->id)
                     ->get();
+      $accepted_reservations = Reservation::where('user_id',Auth::user()->id)
+                                  ->where('status',1)
+                                  ->get();
+      $confirmable_reservations = Reservation::where('user_id',Auth::user()->id)
+                                  ->where('status',2)
+                                  ->get();
       return view('reservation.index')
-              ->with('reservations',$reservations);
+              ->with('reservations',$reservations)
+              ->with('accepted_reservations',$accepted_reservations)
+              ->with('confirmable_reservations',$confirmable_reservations);
     }
 
     // to add new reservation

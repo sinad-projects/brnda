@@ -26,17 +26,23 @@
     </div>
     <hr>
     <div class="w3-bar-block">
-        <a href="#" class="w3-bar-item w3-btn w3-padding-16 w3-hide-large1 w3-dark-grey w3-hover-black"
-           onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  اغلق القائمة</a>
-        <a href="cpanel.php" class="w3-bar-item w3-btn w3-padding
-        "><i class="fa fa-eye fa-fw
-        "></i> الرئيسية </a>
-        <a href="{{ route('agars.list') }}" class="w3-bar-item w3-btn w3-padding
-         w3-flat-belize-hole w3-animate-zoom"><i class="fa fa-hands-helping fa-fw
-         w3-spin"></i>  عقاراتي</a>
-        <a href="{{ route('home') }}" class="w3-bar-item w3-btn w3-padding
-        "><i class="fa fa-briefcase fa-fw
-        "></i>  العقارات</a>
+        <a href="#" class="w3-bar-item w3-btn w3-padding-16 w3-hide-large1 w3-dark-grey w3-hover-black"onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  اغلق القائمة</a>
+
+        <a href="cpanel.php" class="w3-bar-item w3-btn w3-padding">
+          <i class="fa fa-eye fa-fw"></i> الرئيسية
+        </a>
+
+        <a href="{{ route('agars.list') }}" class="w3-bar-item w3-btn w3-padding w3-flat-belize-hole w3-animate-zoom">
+          <i class="fa fa-hands-helping fa-fw w3-spin"></i>  عقاراتي
+        </a>
+
+        <a href="{{ route('reservation.index') }}" class="w3-bar-item w3-btn w3-padding w3-flat-belize-hole w3-animate-zoom">
+          <i class="fa fa-hands-helping fa-fw w3-spin"></i> طلبات الايجار
+        </a>
+
+        <a href="{{ route('home') }}" class="w3-bar-item w3-btn w3-padding">
+          <i class="fa fa-briefcase fa-fw"></i>  العقارات
+        </a>
 
     </div>
 </nav>

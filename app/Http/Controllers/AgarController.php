@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\agar as agarResource;
+use Illuminate\Support\Facades\File;
 use App\Agar;
 use App\A_extra;
 use App\B_extra;
@@ -16,6 +17,7 @@ use App\Location;
 use App\Reservation;
 use App\AgarType;
 use App\AgarFloor;
+use App\AgarImg;
 use App\State;
 use App\City;
 
@@ -152,6 +154,15 @@ class AgarController extends Controller
           return redirect()->back()->with('info','تم تحديث بيانات العقار بنجاح');
       }
 
+      if($request->has('delete_agar_image')){
+        // to delete agar image file
+        $image = AgarImg::find($request->image_id);
+        File::delete('agar/images/'.$image->img_wide);
+        File::delete('agar/images/'.$image->thumbnail);
+        AgarImg::where('id',$request->image_id)->delete();
+        return redirect()->back()->with('info','تم حذف الصورة بنجاح');
+      }
+
     }
     // to add new agar
     public function add(Request $request){
@@ -259,6 +270,7 @@ class AgarController extends Controller
       // Return collection of agar's as a resource
       return agarResource::collection($agars);
     }
+
 
     // last added
     public function lastAdded(){

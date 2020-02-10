@@ -83,6 +83,8 @@ Route::get('reservation',[
     'as' => 'reservation.index',
     'middleware' => ['auth']
 ]);
+
+
 Route::post('reservation',[
     'uses' => 'reservationController@index',
     'middleware' => ['auth']
