@@ -12,11 +12,10 @@ use Auth;
 
 class HomeController extends Controller
 {
- 
+
     public function index()
     {
-      $agars = Agar::where('status',1)
-                    ->get();
+      $agars = Agar::where('status',1)->get();
       // get agar type
       $agarType = AgarType::where('status',1)->get();
       // get agar floor

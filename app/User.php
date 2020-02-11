@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Reservation::class,'user_id');
     }
+
+    public function agar()
+    {
+        return $this->hasMany(Agar::class,'owner_id');
+    }
 }

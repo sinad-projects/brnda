@@ -70,7 +70,26 @@ class AgarController extends Controller
               ->with('agar_s_extra',$agar_s_extra);
     }
 
-    public function postSingle(Request $request){
+    public function getDashboard($agar_id){
+      $agar = Agar::where('id',$agar_id)->first();
+      // get agar basic extract
+      $agar_b_extra = B_extra::where('status',1)->get();
+      // get agar addithonal extract
+      $agar_a_extra = A_extra::where('status',1)->get();
+      // get special extra
+      $agar_s_extra = Sf_extra::where('status',1)->get();
+      // get agar condation
+      $agar_cond = AgarCond::where('status',1)->get();
+
+      return view('agars.dashboard')
+              ->with('agar',$agar)
+              ->with('agar_b_extra',$agar_b_extra)
+              ->with('agar_a_extra',$agar_a_extra)
+              ->with('agar_cond',$agar_cond)
+              ->with('agar_s_extra',$agar_s_extra);
+    }
+
+    public function postDashboard(Request $request){
 
       if($request->has('delete_agar_btn')){
         Agar::where('id',$agar_id)

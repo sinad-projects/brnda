@@ -76,7 +76,14 @@ Route::get('agars/{agar_id}',[
 Route::post('agars/{agar_id}',[
     'uses' => 'agarController@postSingle',
 ]);
-
+// agar control panel
+Route::get('agar/dashboard/{agar_id}',[
+    'uses' => 'agarController@getDashboard',
+    'as' => 'agar.dashboard',
+]);
+Route::post('agar/dashboard/{agar_id}',[
+    'uses' => 'agarController@postDashboard',
+]);
 // reservation Routes...
 Route::get('reservation',[
     'uses' => 'reservationController@index',
@@ -95,7 +102,51 @@ Route::post('reservation/add',[
     'middleware' => ['auth']
 ]);
 
-
-
 // dropzone backend implementation
 Route::post('dropzone/store', 'DropzoneController@dropzoneStore')->name('dropzone.store');
+
+
+
+# ======================= admin panel ==============#
+Route::get('dashboard_',[
+    'uses' => 'dashboardController@index',
+    'as' => 'dashboard.index',
+    'middleware' => ['isAdmin']
+]);
+Route::post('dashboard',[
+    'uses' => 'dashboardController@index',
+    'middleware' => ['isAdmin']
+]);
+
+// dashboard - users
+Route::get('dashboard/users',[
+    'uses' => 'dashboardController@getUsers',
+    'as' => 'dashboard.users',
+    'middleware' => ['isAdmin']
+]);
+Route::post('dashboard/users',[
+    'uses' => 'dashboardController@postUsers',
+    'middleware' => ['isAdmin']
+]);
+
+// dashboard - agars
+Route::get('dashboard/agars',[
+    'uses' => 'dashboardController@getAgars',
+    'as' => 'dashboard.agars',
+    'middleware' => ['isAdmin']
+]);
+Route::post('dashboard/agars',[
+    'uses' => 'dashboardController@postAgars',
+    'middleware' => ['isAdmin']
+]);
+
+// dashboard - reservations
+Route::get('dashboard/reservations',[
+    'uses' => 'dashboardController@getReservations',
+    'as' => 'dashboard.reservations',
+    'middleware' => ['isAdmin']
+]);
+Route::post('dashboard/reservations',[
+    'uses' => 'dashboardController@postReservations',
+    'middleware' => ['isAdmin']
+]);

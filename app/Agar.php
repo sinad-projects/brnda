@@ -19,6 +19,11 @@ class Agar extends Model
       'status'
     ];
 
+    public function user()
+    {
+      return $this->belongsTo(User::class,'owner_id');
+    }
+
     public function location(){
         return $this->hasOne(Location::class,'geo_loc_id','geo_loc_id');
     }
