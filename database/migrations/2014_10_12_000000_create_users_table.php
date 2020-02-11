@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('verifi_code');
             $table->integer('role');
+            $table->integer('status')->nullable();
             $table->string('phone_verified')->nullable();
             $table->rememberToken();
             $table->timestamps();

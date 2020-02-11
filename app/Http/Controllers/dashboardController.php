@@ -39,7 +39,8 @@ class dashboardController extends Controller
     }
 
     public function postUsers(Request $request){
-      User::where('id',$request->user_id)->delete();
+      //User::where('id',$request->user_id)->delete();
+      User::where('id',$request->user_id)->update(['status' => 0]);
       return redirect()->back()->with('info','تم حذف المستخدم بنجاح');
     }
 
@@ -51,7 +52,8 @@ class dashboardController extends Controller
     }
 
     public function postAgars(Request $request){
-        Agar::where('id',$request->agar_id)->delete();
+        Agar::where('id',$request->agar_id)->update(['status' => 0]);
+        /*Agar::where('id',$request->agar_id)->delete();
         AgarExtra::where('agar_id',$request->agar_id)->delete();
         AgarPrice::where('agar_id',$request->agar_id)->delete();
         AgarCalendar::where('agar_id',$request->agar_id)->delete();
@@ -61,7 +63,7 @@ class dashboardController extends Controller
           File::delete('agar/images/'.$image->thumbnail);
         }
         AgarImg::where('agar_id',$request->agar_id)->delete();
-        Reservation::where('agar_id',$request->agar_id)->delete();
+        Reservation::where('agar_id',$request->agar_id)->delete();*/
         return redirect()->back()->with('info','تم الحذف بنجاح');
     }
 

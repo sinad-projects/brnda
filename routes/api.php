@@ -45,7 +45,7 @@ Route::get('/agar/lastAdded','AgarController@lastAdded');
 #===== add new agar =============#
 Route::post('/agar/add','AgarController@store');
 #===== delete agar =============#
-Route::delete('/agar/delete/{agar_id}/{user_id}','AgarController@destroy');
+Route::delete('/agar/delete','AgarController@destroy');
 #===== udate agar  info=============#
 Route::put('/agar/update','AgarController@update');
 #===== update agar b_extra info=============#

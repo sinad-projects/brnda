@@ -92,7 +92,8 @@ class AgarController extends Controller
     public function postDashboard(Request $request){
 
       if($request->has('delete_agar_btn')){
-        Agar::where('id',$agar_id)->where('owner_id',$user_id)->delete();
+        Agar::where('id',$agar_id)->where('owner_id',$user_id)->update(['status' => 0]);
+        /*Agar::where('id',$agar_id)->where('owner_id',$user_id)->delete();
          AgarExtra::where('agar_id',$agar_id)->delete();
          AgarPrice::where('agar_id',$agar_id)->delete();
          AgarCalendar::where('agar_id',$agar_id)->delete();
@@ -104,7 +105,7 @@ class AgarController extends Controller
          }
          AgarImg::where('agar_id',$agar_id)->delete();
          Reservation::where('agar_id',$agar_id)->delete();
-        $agars = Agar::where('status',1)->where('owner_id',Auth::user()->id)->get();
+        $agars = Agar::where('status',1)->where('owner_id',Auth::user()->id)->get();*/
         return view('agars.list')->with('agars',$agars);
       }
 
@@ -236,7 +237,8 @@ class AgarController extends Controller
 
     // to delete agar
     public function delete(Request $request){
-      $delete = Agar::where('id',$request->agar_id)->delete();
+      Agar::where('id',$agar_id)->where('owner_id',$user_id)->update(['status' => 0]);
+    //  $delete = Agar::where('id',$request->agar_id)->delete();
       return redirect()->back()->with('info','تم حذف العقار بنجاح');
     }
 
@@ -574,18 +576,12 @@ class AgarController extends Controller
 
     public function destroy($agar_id,$user_id)
     {
-       Agar::where('id',$agar_id)
-            ->where('owner_id',$user_id)
-            ->delete();
-
-        AgarExtra::where('agar_id',$agar_id)
-             ->delete();
-        AgarPrice::where('agar_id',$agar_id)
-            ->delete();
-        AgarCalendar::where('agar_id',$agar_id)
-            ->delete();
-        AgarCalendar::where('agar_id',$agar_id)
-                ->delete();
+      Agar::where('id',$request->agar_id)->where('owner_id',$request->user_id)->update(['status' => 0]);
+       /*Agar::where('id',$agar_id)->where('owner_id',$user_id)->delete();
+        AgarExtra::where('agar_id',$agar_id)->delete();
+        AgarPrice::where('agar_id',$agar_id)->delete();
+        AgarCalendar::where('agar_id',$agar_id)->delete();
+        AgarCalendar::where('agar_id',$agar_id)->delete();
 
         $images = AgarImg::where('agar_id',$agar_id)->get();
         foreach ($images as $image) {
@@ -597,7 +593,7 @@ class AgarController extends Controller
 
         Reservation::where('agar_id',$agar_id)
                 ->delete();
-
+        */
         return response()->json([
           'code' => 200,
           'message' => 'تم حذف العقار بنجاح'

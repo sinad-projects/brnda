@@ -80,21 +80,14 @@
                       <span>إضافة</span>
                   </span>
                 </div>
-                <!--<div class="w3-margin-bottom">
-                    <span title="ارسال طلب حجز" onclick="document.getElementById('Reservation_FORM').style.display='block'" class="w3-btn w3-text-flat-peter-black">
-                      <i class="fa w3-large fa-send-o w3-margin-left-8"></i>
-                      <span>ارسال طلب حجز</span>
-                  </span>
-                </div>-->
-                  <div id="agar_images" class="w3-row w3-stretch w3-responsive">
+
+                <div id="agar_images" class="w3-row w3-stretch w3-responsive">
                     @foreach($agar->image as $image)
                       <div class="w3-col l2 m3 s4 w3-mobile">
                           <div class="w3-display-container w3-tooltip">
                               <img width="100%" class="w3-hover-grayscale" src="{{ asset('agar/images/'.$image->img_wide) }}" alt="{{$image->img_wide}}" height="150px" width="100%">
-                              @if(Auth::user()->id == $agar->owner_id)
                                 <a onclick="document.getElementById('delete_agar_img_confirm_{{ $image->id }}').style.display='block'"
                                   class="w3-btn w3-block w3-text w3-display-bottommiddle w3-flat-pomegranate"><i class="fa fa-trash-o"></i></a>
-                              @endif
                           </div>
                       </div>
                       <div id="delete_agar_img_confirm_{{ $image->id }}" class="w3-modal"><!-- START delete_agar_img_confirm MODAL -->
@@ -426,47 +419,6 @@
             </div>
         </div>
     </div><!-- END AGAR_IMG_FORM -->
-
-
-    <!-- START Add Reservation MODALS -->
-    <div id="Reservation_FORM" class="w3-modal" style="display: none">
-        <!-- START Reservation_FORM -->
-          <div class="w3-modal-content w3-border-bottom w3-animate-zoom" style="max-width:400px">
-              <header class="w3-container w3-border-bottom">
-                  <h4><i class="fa fa-bed"></i> طلب حجز جديد</h4>
-                  <a href="javascript::void()" onclick="document.getElementById('Reservation_FORM').style.display='none'" class="w3-btn w3-display-topleft">×</a>
-              </header>
-              <div class="w3-container">
-                  <form id="reservation_form" action="{{ route('reservation.add') }}" method="post" class="w3-padding-16">
-                      @csrf
-                      <input type="hidden" name="agar_id" value="{{ $agar->id }}">
-                      <div class="w3-row-padding">
-                          <div class="w3-margin-bottom w3-half">
-                              <label for="start_date" class="w3-text-gray">من</label>
-                              <input id="start_date"  name="start_date" class="w3-input" type="date"
-                                     placeholder="من" required value=""
-                                     value="">
-                          </div>
-                          <div class="w3-margin-bottom w3-half">
-                              <label for="end_date" class="w3-text-gray">إلى</label>
-                              <input id="end_date"  name="end_date" class="w3-input" type="date"
-                                     placeholder="إلى" required value=""
-                                     value="">
-                          </div>
-                      </div>
-                  </form>
-              </div>
-              <footer class="w3-container ">
-                  <div class="w3-section w3-left">
-                      <button form="reservation_form" type="submit" name="save_reservation" value="حفظ" class="w3-button w3-white w3-border w3-border-gray w3-round w3-text-gray w3-hover-light-gray w3-hover-text-gray" style="padding: 7px 15px">
-                      <i class="fa fa-save w3-margin-left-8 w3-text-gray"></i> حفظ</button>
-                      <button class="w3-button w3-border w3-hover-light-gray w3-text-gray w3-round" style="padding: 7px 15px;"><a href="javascript::void()" onclick="document.getElementById('Reservation_FORM').style.display='none'" class=""><i class="fa fa-close"></i> إلغاء</a></button>
-                  </div>
-              </footer>
-          </div>
-      </div>
-      <!-- END Reservation_FORM -->
-
 
 
     <!-- START delete_agar_confirm_ MODALS -->
