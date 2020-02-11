@@ -92,29 +92,19 @@ class AgarController extends Controller
     public function postDashboard(Request $request){
 
       if($request->has('delete_agar_btn')){
-        Agar::where('id',$agar_id)
-             ->where('owner_id',$user_id)
-             ->delete();
-         AgarExtra::where('agar_id',$agar_id)
-              ->delete();
-         AgarPrice::where('agar_id',$agar_id)
-             ->delete();
-         AgarCalendar::where('agar_id',$agar_id)
-             ->delete();
-         AgarCalendar::where('agar_id',$agar_id)
-                 ->delete();
+        Agar::where('id',$agar_id)->where('owner_id',$user_id)->delete();
+         AgarExtra::where('agar_id',$agar_id)->delete();
+         AgarPrice::where('agar_id',$agar_id)->delete();
+         AgarCalendar::where('agar_id',$agar_id)->delete();
+         AgarCond::where('agar_id',$agar_id)->delete();
          $images = AgarImg::where('agar_id',$agar_id)->get();
          foreach ($images as $image) {
            File::delete('agar/images/'.$image->img_wide);
            File::delete('agar/images/'.$image->thumbnail);
          }
-         AgarImg::where('agar_id',$agar_id)
-                 ->delete();
-         Reservation::where('agar_id',$agar_id)
-                 ->delete();
-        $agars = Agar::where('status',1)
-                      ->where('owner_id',Auth::user()->id)
-                      ->get();
+         AgarImg::where('agar_id',$agar_id)->delete();
+         Reservation::where('agar_id',$agar_id)->delete();
+        $agars = Agar::where('status',1)->where('owner_id',Auth::user()->id)->get();
         return view('agars.list')->with('agars',$agars);
       }
 

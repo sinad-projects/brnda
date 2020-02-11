@@ -3,9 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use App\User;
-use App\agar;
+use App\Agar;
+use App\AgarExtra;
+use App\AgarCalendar;
+use App\AgarPrice;
+use App\Location;
 use App\Reservation;
+use App\AgarType;
+use App\AgarFloor;
+use App\AgarImg;
+use App\State;
+use App\City;
 
 class dashboardController extends Controller
 {
@@ -29,7 +39,8 @@ class dashboardController extends Controller
     }
 
     public function postUsers(Request $request){
-      dd($request->user_id);
+      User::where('id',$request->user_id)->delete();
+      return redirect()->back()->with('info','تم حذف المستخدم بنجاح');
     }
 
     // manage agars
@@ -40,7 +51,18 @@ class dashboardController extends Controller
     }
 
     public function postAgars(Request $request){
-      dd($request->agar_id);
+        Agar::where('id',$request->agar_id)->delete();
+        AgarExtra::where('agar_id',$request->agar_id)->delete();
+        AgarPrice::where('agar_id',$request->agar_id)->delete();
+        AgarCalendar::where('agar_id',$request->agar_id)->delete();
+        $images = AgarImg::where('agar_id',$request->agar_id)->get();
+        foreach ($images as $image) {
+          File::delete('agar/images/'.$image->img_wide);
+          File::delete('agar/images/'.$image->thumbnail);
+        }
+        AgarImg::where('agar_id',$request->agar_id)->delete();
+        Reservation::where('agar_id',$request->agar_id)->delete();
+        return redirect()->back()->with('info','تم الحذف بنجاح');
     }
 
     // manage reservation
@@ -51,6 +73,8 @@ class dashboardController extends Controller
     }
 
     public function postReservations(Request $request){
-      dd($request->reservation_id);
+      Reservation::where('id',$request->reservation_id)
+                    ->delete();
+      return redirect()->back()->with('info','تم الحذف بنجاح');
     }
 }
