@@ -6,6 +6,7 @@ use App\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Resources\reservation as reservationResource;
 use Auth;
+use Validator;
 
 class reservationController extends Controller
 {
@@ -13,6 +14,13 @@ class reservationController extends Controller
     // for web only
     public function index(Request $request)
     {
+      if($request->has('accept_reserv')){
+        Reservation::where('id',$request->reserv_id)
+                    ->update([
+                      'status' => 1
+                    ]);
+        return redirect()->back()->with('info','تم تحديث حالة الطلب');
+      }
       // to delete reservation
       if($request->has('delete_reserv')){
         Reservation::where('id',$request->reserv_id)
@@ -82,17 +90,30 @@ class reservationController extends Controller
 
     public function store(Request $request)
     {
-      Reservation::create([
-        'agar_id' => $request->agar_id,
-        'user_id' => $request->user_id,
-        'start_date' => $request->start_date,
-        'end_date' => $request->end_date
+      $validator = Validator::make($request->all(),[
+          'start_date' => 'required|date',
+          'end_date'   => 'required|date'
       ]);
+
+      if ($validator->passes()) {
+        Reservation::create([
+          'agar_id' => $request->agar_id,
+          'user_id' => $request->user_id,
+          'start_date' => $request->start_date,
+          'end_date' => $request->end_date
+        ]);
+        return response()->json([
+          'code' => '200',
+          'message' => 'تم ارسال طلب الحجز'
+        ]);
+      }
       return response()->json([
-        'code' => '200',
-        'message' => 'تم ارسال طلب الحجز'
+        'code' => 400,
+        'error'=>$validator->errors()->all()
       ]);
+
     }
+
 
 
     public function show($user_id,$id)
@@ -103,19 +124,20 @@ class reservationController extends Controller
       return new reservationResource($reservation);
     }
 
-    public function edit($id)
+
+    public function update(Request $request)
     {
-        //
+      Reservation::where('id',$request->reserv_id)
+                  ->update(['status' => 1]);
+      return response()->json([
+        'code' => 200,
+        'message' => 'تم تحديث بيانات طلب الحجز بنجاح'
+      ]);
     }
 
-    public function update(Request $request, $id)
+    public function destroy(Request $request)
     {
-        //
-    }
-
-    public function destroy($id)
-    {
-        $reservation = Reservation::where('id',$id)->delete();
+        $reservation = Reservation::where('id',$request->reserv_id)->delete();
         return response()->json([
           'code' => 200,
           'message' => 'تم حذف الطلب بنجاح'

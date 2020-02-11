@@ -30,9 +30,9 @@ Route::group([
 #====== phone verifiction ======#
 Route::get('/user/verifi/{phone}','AuthController@verifiction');
 #====== Update user info  ======#
-Route::put('/user/update/{id}','ProfileController@update');
+Route::put('/user/update','ProfileController@update');
 // ==============================================//
- 
+
 #====== List All agar's ======#
 Route::get('/agar/list/with_paginate', 'AgarController@get_agar_with_paginate');
 Route::get('/agar/list/without_paginate', 'AgarController@get_agar_without_paginate');
@@ -42,9 +42,35 @@ Route::get('/agar/list/{user_id}','AgarController@get_agar_with_user_id');
 Route::get('/agar/{id}','AgarController@show');
 #====== List Last added agar ======#
 Route::get('/agar/lastAdded','AgarController@lastAdded');
+#===== add new agar =============#
+Route::post('/agar/add','AgarController@store');
 #===== delete agar =============#
-Route::delete('/agar/delete/{agar_id}','AgarController@destroy');
+Route::delete('/agar/delete/{agar_id}/{user_id}','AgarController@destroy');
+#===== udate agar  info=============#
+Route::put('/agar/update','AgarController@update');
+#===== update agar b_extra info=============#
+Route::put('/agar/update/b_extra','AgarController@agar_update_b_extra');
+#===== update agar a_extra info=============#
+Route::put('/agar/update/a_extra','AgarController@agar_update_a_extra');
+#===== update agar sf_extra info=============#
+Route::put('/agar/update/sf_extra','AgarController@agar_update_sf_extra');
+#===== update agar condition info=============#
+Route::put('/agar/update/agar_condition','AgarController@agar_update_condition');
+#===== update agar price info=============#
+Route::put('/agar/update/price','AgarController@agar_update_price');
+#===== update agar calendar info=============#
+Route::post('/agar/add/calendar','AgarController@agar_add_calendar');
+Route::put('/agar/update/calendar','AgarController@agar_update_calendar');
+Route::delete('/agar/delete/calendar','AgarController@agar_delete_calendar');
+#========= delete agar image  ====== #
+Route::delete('/agar/delete/image','AgarController@agar_delete_image');
+#========= add agar image  ====== #
+Route::post('/agar/add/image','AgarController@agar_add_image');
 
+
+#======= search agar by name ==========#
+Route::get('/agar/list/search/{query}','AgarController@search_by_name_api');
+Route::post('/agar/list/fillter','AgarController@agar_fillter_api');
 // ===========================================================//
 
 # ========== list reservation for user ==============#
@@ -60,5 +86,7 @@ Route::get('/reserv/confirmable/{user_id}', 'reservationController@get_confirmab
 Route::get('/reserv/{user_id}/{id}', 'reservationController@show');
 # ========== to add new reservation ==============#
 Route::post('/reserv/add', 'reservationController@store');
+# ========== to update single reservation to be accepted ==============#
+Route::put('/reserv/update', 'reservationController@update');
 # ========== to destroy single reservation ==============#
-Route::delete('/reserv/delete/{id}', 'reservationController@destroy');
+Route::delete('/reserv/delete', 'reservationController@destroy');

@@ -21,6 +21,7 @@ use App\AgarImg;
 use App\State;
 use App\City;
 
+use Validator;
 use Auth;
 
 class AgarController extends Controller
@@ -72,7 +73,26 @@ class AgarController extends Controller
     public function postSingle(Request $request){
 
       if($request->has('delete_agar_btn')){
-        Agar::where('id',$request->agar_id)->delete();
+        Agar::where('id',$agar_id)
+             ->where('owner_id',$user_id)
+             ->delete();
+         AgarExtra::where('agar_id',$agar_id)
+              ->delete();
+         AgarPrice::where('agar_id',$agar_id)
+             ->delete();
+         AgarCalendar::where('agar_id',$agar_id)
+             ->delete();
+         AgarCalendar::where('agar_id',$agar_id)
+                 ->delete();
+         $images = AgarImg::where('agar_id',$agar_id)->get();
+         foreach ($images as $image) {
+           File::delete('agar/images/'.$image->img_wide);
+           File::delete('agar/images/'.$image->thumbnail);
+         }
+         AgarImg::where('agar_id',$agar_id)
+                 ->delete();
+         Reservation::where('agar_id',$agar_id)
+                 ->delete();
         $agars = Agar::where('status',1)
                       ->where('owner_id',Auth::user()->id)
                       ->get();
@@ -156,9 +176,11 @@ class AgarController extends Controller
 
       if($request->has('delete_agar_image')){
         // to delete agar image file
-        $image = AgarImg::find($request->image_id);
-        File::delete('agar/images/'.$image->img_wide);
-        File::delete('agar/images/'.$image->thumbnail);
+        $images = AgarImg::where($request->image_id)->get();
+        foreach ($images as $image) {
+          File::delete('agar/images/'.$image->img_wide);
+          File::delete('agar/images/'.$image->thumbnail);
+        }
         AgarImg::where('id',$request->image_id)->delete();
         return redirect()->back()->with('info','تم حذف الصورة بنجاح');
       }
@@ -281,9 +303,93 @@ class AgarController extends Controller
       return agarResource::collection($agars);
     }
 
+    public function search_by_name_api($query){
+      $agars = Agar::where('agar_name', 'LIKE' , "%$query%")
+            ->where('status',1)
+            ->get();
+      return agarResource::collection($agars);
+    }
+
+    public function agar_fillter_api(Request $request){
+    /*  $comments = News::find(123)->with(['comments' => function ($query) {
+          $query->where('trashed', '<>', 1);
+      }])->get();
+
+      $news = News::find(123);
+      $comments = $news->comments()->where('trashed', '<>', 1)->get();
+      */
+      $agars = Agar::where('status',1)->get();
+      foreach ($agars as $agar) {
+        $agars_[] = $agar->price()->whereBetween('day',[$request->min_price,$request->max_price])
+                                  ->orWhereBetween('week',[$request->min_price,$request->max_price])
+                                  ->orWhereBetween('month',[$request->min_price,$request->max_price])
+                                  ->get();
+      }
+      /*$agars = Agar::whereBetween('price',[$request->min_price,$request->max_price])
+                    ->whereDate('start_date',$request->date)
+                    ->where('rooms_number', $request->rooms_number)
+                    ->where('bathrooms_number', $request->bathrooms_number)
+                    ->where('status',1)
+                    ->get();*/
+      return agarResource::collection($agars_);
+    }
+
     public function store(Request $request)
     {
-      //
+      $validator = Validator::make($request->all(),[
+        'agar_name'        => 'required|string',
+        'area'             => 'required|string',
+        'rooms_number'     => 'required|integer',
+        'bathrooms_number' => 'required|integer',
+        'agar_desc'        => 'required|string',
+        'state_id'        => 'required|integer',
+        'city_id'         => 'required|integer',
+        'area'            => 'required|string',
+        'type_id'         => 'required|integer',
+        'floor_id'        => 'required|integer',
+        'geo_loc_id'        => 'required|integer',
+        'rooms_number'        => 'required|integer',
+        'bathrooms_number'        => 'required|integer'
+      ]);
+
+      if ($validator->passes()) {
+      // add agar location
+        $location = Location::create([
+          'state_id' => $request->state_id,
+          'city_id'  => $request->city_id,
+          'area'     => $request->area
+        ]);
+        // add new agar
+        $agar = Agar::create([
+          'agar_name' => $request->agar_name,
+          'type_id' => $request->type_id,
+          'floor_id' => $request->floor_id,
+          'geo_loc_id' => $location->id,
+          'rooms_number' => $request->rooms_number,
+          'bathrooms_number' => $request->bathrooms_number,
+          'agar_desc' => $request->agar_desc,
+          'owner_id' => $request->user_id,
+          'status' => 0
+        ]);
+        // add agar extra
+        AgarExtra::create([
+          'agar_id' => $agar->id
+        ]);
+        // add agar price
+        AgarPrice::create([
+          'agar_id' => $agar->id
+        ]);
+
+        return response()->json([
+          'code' => 200,
+          'message' => 'تمت اضافة العقار بنجاح'
+        ]);
+      }
+      return response()->json([
+        'code' => 400,
+        'error'=>$validator->errors()->all()
+      ]);
+
     }
 
     public function show($id)
@@ -293,14 +399,196 @@ class AgarController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+      $validator = Validator::make($request->all(),[
+        'agar_name'        => 'required|string',
+        'area'             => 'required|string',
+        'rooms_number'     => 'required|integer',
+        'bathrooms_number' => 'required|integer',
+        'agar_desc'        => 'required|string'
+      ]);
+
+      if ($validator->passes()) {
+        $agar = Agar::where('id',$request->agar_id)
+          ->update([
+            'agar_name' => $request->agar_name,
+            'type_id' => $request->type_id,
+            'floor_id' => $request->floor_id,
+            'rooms_number' => $request->rooms_number,
+            'bathrooms_number' => $request->bathrooms_number,
+            'agar_desc' => $request->agar_desc
+          ]);
+
+          $location = Location::where('geo_loc_id',$request->geo_loc_id)
+            ->update([
+              'state_id' => $request->state_id,
+              'city_id'  => $request->city_id,
+              'area'     => $request->area
+            ]);
+
+          return response()->json([
+            'code' => 200,
+            'message' => 'تم تحديث البيانات بنجاح'
+          ]);
+
+        }
+        return response()->json([
+          'code' => 400,
+          'error'=>$validator->errors()->all()
+        ]);
     }
 
-    public function destroy($agar_id)
+    public function agar_update_b_extra(Request $request){
+      //$b_extra = json_encode($request->b_extra,JSON_UNESCAPED_UNICODE);
+      AgarExtra::where('agar_id',$request->agar_id)
+        ->update([
+          'agar_id' => $request->agar_id,
+          'b_extra' => $request->b_extra
+        ]);
+        return response()->json([
+          'code' => 200,
+          'message' => 'تم تحديث البيانات بنجاح'
+        ]);
+    }
+
+    public function agar_update_a_extra(Request $request){
+      AgarExtra::where('agar_id',$request->agar_id)
+        ->update([
+          'agar_id' => $request->agar_id,
+          'a_extra' => $request->a_extra
+        ]);
+        return response()->json([
+          'code' => 200,
+          'message' => 'تم تحديث البيانات بنجاح'
+        ]);
+    }
+
+    public function agar_update_sf_extra(Request $request){
+      AgarExtra::where('agar_id',$request->agar_id)
+        ->update([
+          'agar_id' => $request->agar_id,
+          'sf_extra' => $request->sf_extra
+        ]);
+        return response()->json([
+          'code' => 200,
+          'message' => 'تم تحديث البيانات بنجاح'
+        ]);
+    }
+
+    public function agar_update_condition(Request $request){
+      AgarExtra::where('agar_id',$request->agar_id)
+        ->update([
+          'agar_id' => $request->agar_id,
+          'cond_extra' => $request->cond_extra
+        ]);
+        return response()->json([
+          'code' => 200,
+          'message' => 'تم تحديث البيانات بنجاح'
+        ]);
+    }
+
+    public function agar_update_price(Request $request){
+      AgarPrice::where('agar_id',$request->agar_id)
+        ->update([
+          'day' => $request->day,
+          'week' => $request->week,
+          'month' => $request->month,
+          'currency' => $request->currency
+        ]);
+        return response()->json([
+          'code' => 200,
+          'message' => 'تم تحديث البيانات بنجاح'
+        ]);
+    }
+
+    public function agar_add_calendar(Request $request){
+      AgarCalendar::create([
+          'agar_id' => $request->agar_id,
+          'start_date' => $request->start_date,
+          'end_date' => $request->end_date
+        ]);
+        return response()->json([
+          'code' => 200,
+          'message' => 'تمت اضافة التقويم بنجاح'
+        ]);
+    }
+
+    public function agar_update_calendar(Request $request){
+      AgarCalendar::where('id',$request->calendar_id)
+        ->update([
+          'agar_id' => $request->agar_id,
+          'start_date' => $request->start_date,
+          'end_date' => $request->end_date
+        ]);
+        return response()->json([
+          'code' => 200,
+          'message' => 'تم تحديث البيانات بنجاح'
+        ]);
+    }
+
+    public function agar_delete_calendar(Request $request){
+      AgarCalendar::where('id',$request->calendar_id)->delete();
+      return response()->json([
+        'code' => 200,
+        'message' => 'تم حذف التقويم بنجاح'
+      ]);
+    }
+
+    public function agar_add_image(Request $request){
+      // to be reviewed
+      foreach ($request->images as $image) {
+        AgarImg::create([
+          'agar_id' => $request->agar_id,
+          'img_wide' => $image->img_wide,
+          'thumbnail' => $image->thumbnail
+        ]);
+      }
+      return response()->json([
+        'code' => 200,
+        'message' => 'تمت اضافة الصورة بنجاح'
+      ]);
+    }
+
+    public function agar_delete_image(Request $request){
+      $images = AgarImg::where('id',$request->image_id)->get();
+      foreach ($images as $image) {
+        File::delete('agar/images/'.$image->img_wide);
+        File::delete('agar/images/'.$image->thumbnail);
+      }
+      AgarImg::where('id',$request->image_id)->delete();
+      return response()->json([
+        'code' => 200,
+        'message' => 'تم حذف الصورة بنجاح'
+      ]);
+    }
+
+    public function destroy($agar_id,$user_id)
     {
-        $delete = Agar::where('id',$agar_id)->delete();
+       Agar::where('id',$agar_id)
+            ->where('owner_id',$user_id)
+            ->delete();
+
+        AgarExtra::where('agar_id',$agar_id)
+             ->delete();
+        AgarPrice::where('agar_id',$agar_id)
+            ->delete();
+        AgarCalendar::where('agar_id',$agar_id)
+            ->delete();
+        AgarCalendar::where('agar_id',$agar_id)
+                ->delete();
+
+        $images = AgarImg::where('agar_id',$agar_id)->get();
+        foreach ($images as $image) {
+          File::delete('agar/images/'.$image->img_wide);
+          File::delete('agar/images/'.$image->thumbnail);
+        }
+        AgarImg::where('agar_id',$agar_id)
+                ->delete();
+
+        Reservation::where('agar_id',$agar_id)
+                ->delete();
+
         return response()->json([
           'code' => 200,
           'message' => 'تم حذف العقار بنجاح'

@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use Validator;
 
 class authController extends Controller
 {
     public function signup(Request $request)
     {
-        $valid = $request->validate([
+        $validator = Validator::make($request->all(),[
             'name'     => 'required|string',
             'username' => 'required|string',
             'email'    => 'required|email|unique:users',
@@ -21,20 +22,28 @@ class authController extends Controller
             'password' => 'required|string|confirmed'
         ]);
 
-        $code = rand(1000, 9999); //generate random code
+        if ($validator->passes()) {
+          $code = rand(1000, 9999); //generate random code
 
-        $user = new User([
-            'name'      => $request->name,
-            'username'  => $request->username,
-            'email'     => $request->email,
-            'phone'     => $request->phone,
-            'verifi_code' => $code,
-            'password'  => Hash::make($request->password)
-        ]);
-        $user->save();
+          $user = new User([
+              'name'      => $request->name,
+              'username'  => $request->username,
+              'email'     => $request->email,
+              'phone'     => $request->phone,
+              'verifi_code' => $code,
+              'password'  => Hash::make($request->password)
+          ]);
+          $user->save();
+          return response()->json([
+              'code' => 200,
+              'message' => 'Successfully created user!'
+          ]);
+        }
         return response()->json([
-            'message' => 'Successfully created user!'
-        ], 201);
+          'code' => 400, 
+          'error'=>$validator->errors()->all()
+        ]);
+
     }
 
     public function test(Request $request){
