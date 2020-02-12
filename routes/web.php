@@ -108,7 +108,7 @@ Route::post('dropzone/store', 'DropzoneController@dropzoneStore')->name('dropzon
 
 
 # ======================= admin panel ==============#
-Route::get('dashboard_',[
+Route::get('admin-dashboard',[
     'uses' => 'dashboardController@index',
     'as' => 'dashboard.index',
     'middleware' => ['isAdmin']
@@ -148,5 +148,115 @@ Route::get('dashboard/reservations',[
 ]);
 Route::post('dashboard/reservations',[
     'uses' => 'dashboardController@postReservations',
+    'middleware' => ['isAdmin']
+]);
+
+// dashboard - payment
+Route::get('dashboard/payment',[
+    'uses' => 'dashboardController@getPayment',
+    'as' => 'dashboard.payment',
+    'middleware' => ['isAdmin']
+]);
+Route::post('dashboard/payment',[
+    'uses' => 'dashboardController@postPayment',
+    'middleware' => ['isAdmin']
+]);
+
+// dashboard - settings
+Route::get('dashboard/settings',[
+    'uses' => 'dashboardController@getSettings',
+    'as' => 'dashboard.settings',
+    'middleware' => ['isAdmin']
+]);
+Route::post('dashboard/settings',[
+    'uses' => 'dashboardController@postSettings',
+    'middleware' => ['isAdmin']
+]);
+
+// b_extra manage
+Route::get('dashboard/b_extra',[
+    'uses' => 'dashboardController@getB_extra',
+    'as' => 'dashboard.b_extra',
+    'middleware' => ['isAdmin']
+]);
+Route::post('dashboard/b_extra',[
+    'uses' => 'dashboardController@postB_extra',
+    'middleware' => ['isAdmin']
+]);
+
+// a_extra manage
+Route::get('dashboard/a_extra',[
+    'uses' => 'dashboardController@getA_extra',
+    'as' => 'dashboard.a_extra',
+    'middleware' => ['isAdmin']
+]);
+Route::post('dashboard/a_extra',[
+    'uses' => 'dashboardController@postA_extra',
+    'middleware' => ['isAdmin']
+]);
+
+// sf_extra manage
+Route::get('dashboard/sf_extra',[
+    'uses' => 'dashboardController@getSf_extra',
+    'as' => 'dashboard.sf_extra',
+    'middleware' => ['isAdmin']
+]);
+Route::post('dashboard/sf_extra',[
+    'uses' => 'dashboardController@postSf_extra',
+    'middleware' => ['isAdmin']
+]);
+
+// condition manage
+Route::get('dashboard/agar_condition',[
+    'uses' => 'dashboardController@getCond',
+    'as' => 'dashboard.agar_condition',
+    'middleware' => ['isAdmin']
+]);
+Route::post('dashboard/agar_condition',[
+    'uses' => 'dashboardController@postCond',
+    'middleware' => ['isAdmin']
+]);
+
+// agar type manage
+Route::get('dashboard/agar_type',[
+    'uses' => 'dashboardController@getAgar_type',
+    'as' => 'dashboard.agar_type',
+    'middleware' => ['isAdmin']
+]);
+Route::post('dashboard/agar_type',[
+    'uses' => 'dashboardController@postAgar_type',
+    'middleware' => ['isAdmin']
+]);
+
+// agar floor
+Route::get('dashboard/agar_floor',[
+    'uses' => 'dashboardController@getAgar_floor',
+    'as' => 'dashboard.agar_floor',
+    'middleware' => ['isAdmin']
+]);
+Route::post('dashboard/agar_floor',[
+    'uses' => 'dashboardController@postAgar_floor',
+    'middleware' => ['isAdmin']
+]);
+
+// state info
+Route::get('dashboard/states',[
+    'uses' => 'dashboardController@getStates',
+    'as' => 'dashboard.states',
+    'middleware' => ['isAdmin']
+]);
+Route::post('dashboard/states',[
+    'uses' => 'dashboardController@postStates',
+    'middleware' => ['isAdmin']
+]);
+
+// cities info
+Route::get('dashboard/cities',[
+    'uses' => 'dashboardController@getCities',
+    'as' => 'dashboard.cities',
+    'middleware' => ['isAdmin']
+]);
+Route::post('dashboard/cities',[
+    'uses' => 'dashboardController@postCities',
     'middleware' => ['isAdmin']
 ]);

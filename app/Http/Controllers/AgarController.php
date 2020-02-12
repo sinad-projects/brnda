@@ -221,7 +221,7 @@ class AgarController extends Controller
         'bathrooms_number' => $request->bathrooms_number,
         'agar_desc' => $request->agar_desc,
         'owner_id' => Auth::user()->id,
-        'status' => 0
+        'status' => 1
       ]);
       // add agar extra
       AgarExtra::create([
@@ -380,7 +380,7 @@ class AgarController extends Controller
           'bathrooms_number' => $request->bathrooms_number,
           'agar_desc' => $request->agar_desc,
           'owner_id' => $request->user_id,
-          'status' => 0
+          'status' => 1
         ]);
         // add agar extra
         AgarExtra::create([

@@ -19,7 +19,7 @@
   <!-- Nav Item - Pages Collapse Menu -->
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-      <i class="fas fa-fw fa-cog"></i>
+      <i class="fas fa-fw fa-folder"></i>
       <span>جداول الموقع</span>
     </a>
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -34,15 +34,39 @@
 
   <!-- Divider -->
   <hr class="sidebar-divider">
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+      <i class="fas fa-fw fa-folder"></i>
+      <span>ادارة بيانات العقارات</span>
+    </a>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header text-right"> بيانات العقارات  </h6>
+        <a class="collapse-item text-right" href="{{ route('dashboard.b_extra') }}"> ادارة المرافق الاساسية  </a>
+        <a class="collapse-item text-right" href="{{ route('dashboard.a_extra') }}">ادارة المرافق الاضافية  </a>
+        <a class="collapse-item text-right" href="{{  route('dashboard.fs_extra') }}">ادارة المرافق الخاصة </a>
+        <a class="collapse-item text-right" href="{{  route('dashboard.agar_floor') }}">ادارة الطوابق  </a>
+        <a class="collapse-item text-right" href="{{  route('dashboard.agar_type') }}"> ادارة انواع العقارات  </a>
+        <a class="collapse-item text-right" href="{{  route('dashboard.agar_condition') }}">ادارة شروط السكن  </a>
+        <a class="collapse-item text-right" href="{{  route('dashboard.states') }}"> ادارة الولايات  </a>
+        <a class="collapse-item text-right" href="{{  route('dashboard.cities') }}"> ادارة المدن </a>
+      </div>
+    </div>
+  </li>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider">
+
   <!-- Nav Item - Pages Collapse Menu -->
   <li class="nav-item">
-    <a class="nav-link" href="#">
-      <i class="fas fa-fw fa-folder"></i>
+    <a class="nav-link" href="{{ route('dashboard.payment') }}">
+      <i class="fas fa-fw fa-credit-card"></i>
       <span class="text-right">ادارة عمليات الدفع</span>
     </a>
 
-    <a class="nav-link" href="#">
-      <i class="fas fa-fw fa-folder"></i>
+    <a class="nav-link" href="{{ route('dashboard.settings') }}">
+      <i class="fas fa-fw fa-cogs"></i>
       <span class="text-right">اعدادات الموقع</span>
     </a>
 
