@@ -25,7 +25,10 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary text-right"> جدول المدن </h6>
+              <h6 class="m-0 font-weight-bold text-primary text-right">
+                 جدول المدن
+                 <a class="w3-text-red" style="text-decoration: underline" href="{{ route('dashboard.add_cities') }}" >اضافة مدينة جديدة  </a>
+               </h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -47,12 +50,12 @@
                   <tbody>
                     @foreach($cities as $city)
                       <tr class="text-right">
-                        <td>{{ $city->name }}</td>
+                        <td>{{ $city->city_name }}</td>
                         <td>{{ $city->status }}</td>
                         <td>
                           <form action="{{ route('dashboard.cities') }}" method="post">
                             @csrf
-                            <input type="hidden" name="id" value="{{ $city->id }}" />
+                            <input type="hidden" name="id" value="{{ $city->city_id }}" />
                             <button type="submit" name="delete_btn" class="btn btn-danger" > حذف المدينة</button>
                             <!--
                             <button class="btn btn-info" type="submit">تعديل الصلاحية</button>

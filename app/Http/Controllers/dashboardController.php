@@ -10,7 +10,6 @@ use App\AgarExtra;
 use App\B_extra;
 use App\A_extra;
 use App\AgarCond;
-use App\AgarType;
 use App\Sf_extra;
 use App\AgarCalendar;
 use App\AgarPrice;
@@ -111,6 +110,9 @@ class dashboardController extends Controller
       $b_extra = B_extra::get();
       return view('dashboard.b_extra')->with('b_extra',$b_extra);
     }
+    public function add_B_extra(){
+      return view('dashboard.add_B_extra');
+    }
     public function postB_extra(Request $request){
       if($request->has('delete_btn')){
         B_extra::where('id',$request->id)->delete();
@@ -121,6 +123,7 @@ class dashboardController extends Controller
           'name' => $request->name,
           'status' => $request->status
         ]);
+        return redirect()->back()->with('info','تمت الاضافة بنجاح');
       }
     }
 
@@ -128,6 +131,9 @@ class dashboardController extends Controller
     public function getA_extra(){
       $a_extra = A_extra::get();
       return view('dashboard.a_extra')->with('a_extra',$a_extra);
+    }
+    public function add_A_extra(){
+      return view('dashboard.add_A_extra');
     }
     public function postA_extra(Request $request){
       if($request->has('delete_btn')){
@@ -140,12 +146,16 @@ class dashboardController extends Controller
           'status' => $request->status
         ]);
       }
+      return redirect()->back()->with('info','تمت الاضافة بنجاح');
     }
 
     // mange sf_extra info
     public function getSf_extra(){
       $sf_extra = Sf_extra::get();
       return view('dashboard.sf_extra')->with('sf_extra',$sf_extra);
+    }
+    public function add_sf_extra(){
+      return view('dashboard.add_sf_extra');
     }
     public function postSf_extra(Request $request){
       if($request->has('delete_btn')){
@@ -158,12 +168,16 @@ class dashboardController extends Controller
           'status' => $request->status
         ]);
       }
+      return redirect()->back()->with('info','تمت الاضافة بنجاح');
     }
 
     // mange agars condition info
     public function getCond(){
       $condition = AgarCond::get();
-      return view('dashboard.condition')->with('condition',$condition);
+      return view('dashboard.agar_condition')->with('condition',$condition);
+    }
+    public function addCond(){
+      return view('dashboard.add_agar_condition');
     }
     public function postCond(Request $request){
       if($request->has('delete_btn')){
@@ -176,6 +190,7 @@ class dashboardController extends Controller
           'status' => $request->status
         ]);
       }
+      return redirect()->back()->with('info','تمت الاضافة بنجاح');
     }
 
     // mange agars type info
@@ -183,9 +198,12 @@ class dashboardController extends Controller
       $agar_type = AgarType::get();
       return view('dashboard.agar_type')->with('agar_type',$agar_type);
     }
+    public function AddAgar_type (){
+      return view('dashboard.add_agar_type');
+    }
     public function postAgar_type(Request $request){
       if($request->has('delete_btn')){
-        AgarType::where('id',$request->id)->delete();
+        AgarType::where('type_id',$request->id)->delete();
         return redirect()->back()->with('info','تم الحذف بنجاح');
       }
       if($request->has('add_btn')){
@@ -194,6 +212,7 @@ class dashboardController extends Controller
           'status' => $request->status
         ]);
       }
+      return redirect()->back()->with('info','تمت الاضافة بنجاح');
     }
 
     // mange agars floor info
@@ -201,9 +220,12 @@ class dashboardController extends Controller
       $agar_floor = AgarFloor::get();
       return view('dashboard.agar_floor')->with('agar_floor',$agar_floor);
     }
+    public function AddAgar_floor(){
+      return view('dashboard.add_agar_floor');
+    }
     public function postAgar_floor(Request $request){
       if($request->has('delete_btn')){
-        AgarFloor::where('id',$request->id)->delete();
+        AgarFloor::where('floor_id',$request->id)->delete();
         return redirect()->back()->with('info','تم الحذف بنجاح');
       }
       if($request->has('add_btn')){
@@ -212,6 +234,7 @@ class dashboardController extends Controller
           'status' => $request->status
         ]);
       }
+      return redirect()->back()->with('info','تمت الاضافة بنجاح');
     }
 
     // mange state info
@@ -219,9 +242,12 @@ class dashboardController extends Controller
       $states = State::get();
       return view('dashboard.states')->with('states',$states);
     }
+    public function AddStates(){
+      return view('dashboard.add_states');
+    }
     public function postStates(Request $request){
       if($request->has('delete_btn')){
-        State::where('id',$request->id)->delete();
+        State::where('state_id',$request->id)->delete();
         return redirect()->back()->with('info','تم الحذف بنجاح');
       }
       if($request->has('add_btn')){
@@ -230,6 +256,7 @@ class dashboardController extends Controller
           'status' => $request->status
         ]);
       }
+      return redirect()->back()->with('info','تمت الاضافة بنجاح');
     }
 
     // mange cities info
@@ -237,9 +264,13 @@ class dashboardController extends Controller
       $cities = City::get();
       return view('dashboard.cities')->with('cities',$cities);
     }
+    public function AddCities(){
+      $states = State::get();
+      return view('dashboard.add_cities')->with('states',$states);
+    }
     public function postCities(Request $request){
       if($request->has('delete_btn')){
-        City::where('id',$request->id)->delete();
+        City::where('city_id',$request->id)->delete();
         return redirect()->back()->with('info','تم الحذف بنجاح');
       }
       if($request->has('add_btn')){
@@ -249,6 +280,7 @@ class dashboardController extends Controller
           'status' => $request->status
         ]);
       }
+      return redirect()->back()->with('info','تمت الاضافة بنجاح');
     }
 
     // manage site Settings

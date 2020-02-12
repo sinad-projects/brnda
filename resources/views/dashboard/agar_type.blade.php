@@ -25,7 +25,10 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary text-right"> جدول انواع العقارات </h6>
+              <h6 class="m-0 font-weight-bold text-primary text-right">
+                 جدول انواع العقارات
+                 <a class="w3-text-red" style="text-decoration: underline" href="{{ route('dashboard.add_agar_type') }}" >اضافة نوع عقار جديد </a>
+               </h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -45,14 +48,14 @@
                     </tr>
                   </tfoot>
                   <tbody>
-                    @foreach($a_extra as $extra)
+                    @foreach($agar_type as $agar_type)
                       <tr class="text-right">
                         <td>{{ $agar_type->type_name }}</td>
                         <td>{{ $agar_type->status }}</td>
                         <td>
                           <form action="{{ route('dashboard.agar_type') }}" method="post">
                             @csrf
-                            <input type="hidden" name="id" value="{{ $agar_type->id }}" />
+                            <input type="hidden" name="id" value="{{ $agar_type->type_id }}" />
                             <button type="submit" name="delete_btn" class="btn btn-danger" > حذف النوع</button>
                             <!--
                             <button class="btn btn-info" type="submit">تعديل الصلاحية</button>

@@ -25,7 +25,10 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary text-right"> جدول الطوابق</h6>
+              <h6 class="m-0 font-weight-bold text-primary text-right">
+                 جدول الطوابق
+                 <a class="w3-text-red" style="text-decoration: underline" href="{{ route('dashboard.add_agar_floor') }}" >اضافة طابق جديد   </a>
+               </h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -45,14 +48,14 @@
                     </tr>
                   </tfoot>
                   <tbody>
-                    @foreach($floor as $floor)
+                    @foreach($agar_floor as $floor)
                       <tr class="text-right">
                         <td>{{ $floor->floor_name }}</td>
                         <td>{{ $floor->status }}</td>
                         <td>
                           <form action="{{ route('dashboard.agar_floor') }}" method="post">
                             @csrf
-                            <input type="hidden" name="id" value="{{ $floor->id }}" />
+                            <input type="hidden" name="id" value="{{ $floor->floor_id }}" />
                             <button type="submit" name="delete_btn" class="btn btn-danger" > حذف الطابق</button>
                             <!--
                             <button class="btn btn-info" type="submit">تعديل الصلاحية</button>

@@ -25,7 +25,10 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary text-right"> جدول المرافق الخاصة</h6>
+              <h6 class="m-0 font-weight-bold text-primary text-right">
+                جدول المرافق الخاصة
+                <a class="w3-text-red" style="text-decoration: underline" href="{{ route('dashboard.add_sf_extra') }}" >اضافة مرفق جديد</a>
+              </h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">

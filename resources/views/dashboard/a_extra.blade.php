@@ -25,7 +25,10 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary text-right"> جدول المرافق الاضافية</h6>
+              <h6 class="m-0 font-weight-bold text-primary text-right">
+                جدول المرافق الاضافية
+                <a class="w3-text-red" style="text-decoration: underline" href="{{ route('dashboard.add_a_extra') }}" >اضافة مرفق جديد</a>
+              </h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -50,7 +53,7 @@
                         <td>{{ $extra->name }}</td>
                         <td>{{ $extra->status }}</td>
                         <td>
-                          <form action="{{ route('dashboard.b_extra') }}" method="post">
+                          <form action="{{ route('dashboard.a_extra') }}" method="post">
                             @csrf
                             <input type="hidden" name="id" value="{{ $extra->id }}" />
                             <button type="submit" name="delete_btn" class="btn btn-danger" > حذف المرفق</button>

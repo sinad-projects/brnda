@@ -25,7 +25,10 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary text-right"> جدول شروط السكن </h6>
+              <h6 class="m-0 font-weight-bold text-primary text-right">
+                 جدول شروط السكن
+                 <a class="w3-text-red" style="text-decoration: underline" href="{{ route('dashboard.add_agar_condition') }}" >اضافة شرط جديد </a>
+              </h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -50,7 +53,7 @@
                         <td>{{ $condition->name }}</td>
                         <td>{{ $condition->status }}</td>
                         <td>
-                          <form action="{{ route('dashboard.condition') }}" method="post">
+                          <form action="{{ route('dashboard.agar_condition') }}" method="post">
                             @csrf
                             <input type="hidden" name="id" value="{{ $condition->id }}" />
                             <button type="submit" name="delete_btn" class="btn btn-danger" > حذف الشرط</button>

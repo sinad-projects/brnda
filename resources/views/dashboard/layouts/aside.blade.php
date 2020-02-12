@@ -18,11 +18,11 @@
 
   <!-- Nav Item - Pages Collapse Menu -->
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseTwo">
       <i class="fas fa-fw fa-folder"></i>
       <span>جداول الموقع</span>
     </a>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+    <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header text-right"> جداول الموقع </h6>
         <a class="collapse-item text-right" href="{{ route('dashboard.users') }}"> جدول المستخدمين </a>
@@ -45,7 +45,7 @@
         <h6 class="collapse-header text-right"> بيانات العقارات  </h6>
         <a class="collapse-item text-right" href="{{ route('dashboard.b_extra') }}"> ادارة المرافق الاساسية  </a>
         <a class="collapse-item text-right" href="{{ route('dashboard.a_extra') }}">ادارة المرافق الاضافية  </a>
-        <a class="collapse-item text-right" href="{{  route('dashboard.fs_extra') }}">ادارة المرافق الخاصة </a>
+        <a class="collapse-item text-right" href="{{  route('dashboard.sf_extra') }}">ادارة المرافق الخاصة </a>
         <a class="collapse-item text-right" href="{{  route('dashboard.agar_floor') }}">ادارة الطوابق  </a>
         <a class="collapse-item text-right" href="{{  route('dashboard.agar_type') }}"> ادارة انواع العقارات  </a>
         <a class="collapse-item text-right" href="{{  route('dashboard.agar_condition') }}">ادارة شروط السكن  </a>
