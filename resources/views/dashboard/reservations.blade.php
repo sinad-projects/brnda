@@ -62,7 +62,7 @@
                           <form action="{{ route('dashboard.reservations') }}" method="post">
                             @csrf
                             <input type="hidden" name="reservation_id" value="{{ $reservation->id }}" />
-                            <button type="submit" class="btn btn-danger" >خذف الطلب</button>
+                            <button type="submit" class="btn btn-warning" > تعطيل عرض الطلب </button>
                             <!--
                             <button class="btn btn-info" type="submit">تعديل الصلاحية</button>
                           -->

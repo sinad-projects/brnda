@@ -56,7 +56,7 @@
                           <form action="{{ route('dashboard.cities') }}" method="post">
                             @csrf
                             <input type="hidden" name="id" value="{{ $city->city_id }}" />
-                            <button type="submit" name="delete_btn" class="btn btn-danger" > حذف المدينة</button>
+                            <button type="submit" name="disable_btn" class="btn btn-warning" > تعطيل عرض المدينة </button>
                             <!--
                             <button class="btn btn-info" type="submit">تعديل الصلاحية</button>
                           -->

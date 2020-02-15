@@ -56,7 +56,7 @@
                           <form action="{{ route('dashboard.a_extra') }}" method="post">
                             @csrf
                             <input type="hidden" name="id" value="{{ $extra->id }}" />
-                            <button type="submit" name="delete_btn" class="btn btn-danger" > حذف المرفق</button>
+                            <button type="submit" name="disable_btn" class="btn btn-warning" > تعطيل عرض المرفق </button>
                             <!--
                             <button class="btn btn-info" type="submit">تعديل الصلاحية</button>
                           -->

@@ -59,7 +59,7 @@
                           <form action="{{ route('dashboard.users') }}" method="post">
                             @csrf
                             <input type="hidden" name="user_id" value="{{ $user->id }}" />
-                            <button type="submit" class="btn btn-danger" >حذف المستخدم</button>
+                            <button type="submit" class="btn btn-warning" > تعطيل الحساب </button>
                             <!--
                             <button class="btn btn-info" type="submit">تعديل الصلاحية</button>
                           -->

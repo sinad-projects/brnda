@@ -23,6 +23,7 @@ use App\City;
 
 use Validator;
 use Auth;
+use DB;
 
 class AgarController extends Controller
 {
@@ -31,7 +32,6 @@ class AgarController extends Controller
     public function list()
     {
       $agars = Agar::where('status',1)
-                    ->where('owner_id',Auth::user()->id)
                     ->get();
       // get agar type
       $agarType = AgarType::where('status',1)->get();
@@ -93,19 +93,6 @@ class AgarController extends Controller
 
       if($request->has('delete_agar_btn')){
         Agar::where('id',$agar_id)->where('owner_id',$user_id)->update(['status' => 0]);
-        /*Agar::where('id',$agar_id)->where('owner_id',$user_id)->delete();
-         AgarExtra::where('agar_id',$agar_id)->delete();
-         AgarPrice::where('agar_id',$agar_id)->delete();
-         AgarCalendar::where('agar_id',$agar_id)->delete();
-         AgarCond::where('agar_id',$agar_id)->delete();
-         $images = AgarImg::where('agar_id',$agar_id)->get();
-         foreach ($images as $image) {
-           File::delete('agar/images/'.$image->img_wide);
-           File::delete('agar/images/'.$image->thumbnail);
-         }
-         AgarImg::where('agar_id',$agar_id)->delete();
-         Reservation::where('agar_id',$agar_id)->delete();
-        $agars = Agar::where('status',1)->where('owner_id',Auth::user()->id)->get();*/
         return view('agars.list')->with('agars',$agars);
       }
 
@@ -322,27 +309,21 @@ class AgarController extends Controller
     }
 
     public function agar_fillter_api(Request $request){
-    /*  $comments = News::find(123)->with(['comments' => function ($query) {
-          $query->where('trashed', '<>', 1);
-      }])->get();
-
-      $news = News::find(123);
-      $comments = $news->comments()->where('trashed', '<>', 1)->get();
-      */
-      $agars = Agar::where('status',1)->get();
-      foreach ($agars as $agar) {
-        $agars_[] = $agar->price()->whereBetween('day',[$request->min_price,$request->max_price])
-                                  ->orWhereBetween('week',[$request->min_price,$request->max_price])
-                                  ->orWhereBetween('month',[$request->min_price,$request->max_price])
-                                  ->get();
-      }
-      /*$agars = Agar::whereBetween('price',[$request->min_price,$request->max_price])
-                    ->whereDate('start_date',$request->date)
-                    ->where('rooms_number', $request->rooms_number)
-                    ->where('bathrooms_number', $request->bathrooms_number)
-                    ->where('status',1)
-                    ->get();*/
-      return agarResource::collection($agars_);
+      //->select('users.*', 'contacts.phone', 'orders.price')
+    $agars = Agar::where('status',1)
+                    ->where('rooms_number',$request->rooms_number)
+                    ->where('bathrooms_number',$request->bathrooms_number)
+                    ->join('agar_price','agar.id','agar_price.agar_id')
+                    // befor discount
+                    ->whereBetween('day',[$request->min_price,$request->max_price])
+                    ->join('agar_calendar','agar.id','agar_calendar.agar_id')
+                    ->where('start_date','<=',$request->start_date)
+                    ->where('end_date','>=',$request->end_date)
+                    ->join('agar_extra','agar.id','agar_extra.agar_id')
+                    ->whereIn('b_extra',[$request->b_extra])
+                    ->select('agar.*')
+                    ->get();
+      return agarResource::collection($agars);
     }
 
     public function store(Request $request)

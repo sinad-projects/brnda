@@ -56,7 +56,7 @@
                           <form action="{{ route('dashboard.agar_floor') }}" method="post">
                             @csrf
                             <input type="hidden" name="id" value="{{ $floor->floor_id }}" />
-                            <button type="submit" name="delete_btn" class="btn btn-danger" > حذف الطابق</button>
+                            <button type="submit" name="disable_btn" class="btn btn-warning" > تعطيل عرض الطابق </button>
                             <!--
                             <button class="btn btn-info" type="submit">تعديل الصلاحية</button>
                           -->

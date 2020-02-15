@@ -25,32 +25,60 @@
                       <div class="text-center">
                         <h1 class="h4 text-gray-900 mb-4"> ادارة عمليات الدفع في الموقع </h1>
                       </div>
-                      <form class="user" method="post" action="{{ route('dashboard.payment') }}">
-                        @csrf
-                        <div class="form-group text-right">
-                            <label for="reservation">اختار طلب الحجز</label>
-                            <select id="reservation" name="reservation_id" class="form-control">
-                              @foreach($reservations as $reservation)
-                                <option value="{{ $reservation->id }}">{{ $reservation->id }}</option>
-                              @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group text-right">
-                          <div class="">
-                            <label for="confirm"> تم الدفع </label>
-                            <input id="confirm" type="radio" class="form-control-user" name="action" value="confirm">
+
+                      <div class="container">
+                        @foreach($reservations as $reservation)
+                        <div class="card shadow mb-4" dir="rtl">
+                          <div class="card-body">
+                            <div class="table-responsive">
+                              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                  <tr class="text-right">
+                                    <th> اسم العقار   </th>
+                                    <th> مقدم طلب الاستئجار </th>
+                                    <th>العمليات</th>
+                                  </tr>
+                                </thead>
+                                <tfoot>
+                                  <tr class="text-right">
+                                    <th> اسم العقار   </th>
+                                    <th> مقدم طلب الاستئجار </th>
+                                    <th>العمليات</th>
+                                  </tr>
+                                </tfoot>
+                                <tbody>
+                                  <tr class="text-right">
+                                    <td>{{ $reservation->agar->agar_name }}</td>
+                                    <td>{{ $reservation->user->name }}</td>
+                                    <td>
+                                      <form class="user" id="payment_{{ $reservation->id }}" method="post" action="{{ route('dashboard.payment') }}">
+                                        @csrf
+                                        <input type="hidden" value="{{ $reservation->id }}" name="reservation_id" />
+                                        <div class="form-group text-right">
+                                          <div class="">
+                                            <label for="confirm"> تم الدفع </label>
+                                            <input id="confirm" type="radio" class="form-control-user" name="action" value="confirm">
+                                          </div>
+                                          <div class="">
+                                            <label for="disable"> تعطيل الطلب  </label>
+                                            <input id="disable" type="radio" class="form-control-user" name="action" value="disable">
+                                          </div>
+                                        </div>
+                                        <button type="submit" form="payment_{{ $reservation->id }}" class="btn btn-primary w3-right">
+                                          اتمام
+                                        </button>
+                                      </form>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
                           </div>
-                          <div class="">
-                            <label for="delete"> حذف الطلب </label>
-                            <input id="delete" type="radio" class="form-control-user" name="action" value="delete">
-                          </div>
                         </div>
-                        <button type="submit" class="btn btn-primary w3-right">
-                          اتمام
-                        </button>
-                      </form>
-                      <div class="w3-clear"></div>
-                      <hr>
+                        <div class="w3-clear"></div>
+                        <hr>
+                        @endforeach
+                      </div>
                     </div>
                   </div>
                 </div>

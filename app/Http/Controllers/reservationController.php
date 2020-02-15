@@ -12,6 +12,8 @@ class reservationController extends Controller
 {
 
     // for web only
+
+    # get reservation sent to this user
     public function index(Request $request)
     {
       if($request->has('accept_reserv')){
@@ -22,24 +24,40 @@ class reservationController extends Controller
         return redirect()->back()->with('info','تم تحديث حالة الطلب');
       }
       // to delete reservation
-      if($request->has('delete_reserv')){
-        Reservation::where('id',$request->reserv_id)
-                      ->delete();
-        return redirect()->back()->with('info','تم الحذف بنجاح');
+      if($request->has('disable_reserv')){
+        Reservation::where('id',$request->reserv_id)->update(['status' => 0]);
+        return redirect()->back()->with('info',' تم تعطيل طلب الحجز ');
       }
       // to list all reservation
-      $reservations = Reservation::where('user_id',Auth::user()->id)
+      $reservations = Reservation::where('reciver_id',Auth::user()->id)
                     ->get();
-      $accepted_reservations = Reservation::where('user_id',Auth::user()->id)
+      $accepted_reservations = Reservation::where('reciver_id',Auth::user()->id)
                                   ->where('status',1)
                                   ->get();
-      $confirmable_reservations = Reservation::where('user_id',Auth::user()->id)
+      $confirmable_reservations = Reservation::where('reciver_id',Auth::user()->id)
                                   ->where('status',2)
                                   ->get();
       return view('reservation.index')
               ->with('reservations',$reservations)
               ->with('accepted_reservations',$accepted_reservations)
               ->with('confirmable_reservations',$confirmable_reservations);
+    }
+
+    # get reservation sent by this user
+    public function sent(){
+
+      $reservations = Reservation::where('user_id',Auth::user()->id)->get();
+      $accepted_reservations = Reservation::where('user_id',Auth::user()->id)
+                                  ->where('status',1)->get();
+      $confirmable_reservations = Reservation::where('user_id',Auth::user()->id)
+                                  ->where('status',2)->get();
+      $rejected_reservations = Reservation::where('user_id',Auth::user()->id)
+                                             ->where('status',0)->get();
+      return view('reservation.sent')
+              ->with('reservations',$reservations)
+              ->with('accepted_reservations',$accepted_reservations)
+              ->with('confirmable_reservations',$confirmable_reservations)
+              ->with('rejected_reservations',$rejected_reservations);
     }
 
     // to add new reservation

@@ -38,15 +38,14 @@ class dashboardController extends Controller
 
     // manage users
     public function getUsers(){
-      $users = User::get();
+      $users = User::where('status','<>' ,0)->get();
       return view('dashboard.users')
               ->with('users',$users);
     }
 
     public function postUsers(Request $request){
-      //User::where('id',$request->user_id)->delete();
       User::where('id',$request->user_id)->update(['status' => 0]);
-      return redirect()->back()->with('info','تم حذف المستخدم بنجاح');
+      return redirect()->back()->with('info',' تم تعطيل حساب المستخدم  ');
     }
 
     // manage agars
@@ -58,18 +57,7 @@ class dashboardController extends Controller
 
     public function postAgars(Request $request){
         Agar::where('id',$request->agar_id)->update(['status' => 0]);
-        /*Agar::where('id',$request->agar_id)->delete();
-        AgarExtra::where('agar_id',$request->agar_id)->delete();
-        AgarPrice::where('agar_id',$request->agar_id)->delete();
-        AgarCalendar::where('agar_id',$request->agar_id)->delete();
-        $images = AgarImg::where('agar_id',$request->agar_id)->get();
-        foreach ($images as $image) {
-          File::delete('agar/images/'.$image->img_wide);
-          File::delete('agar/images/'.$image->thumbnail);
-        }
-        AgarImg::where('agar_id',$request->agar_id)->delete();
-        Reservation::where('agar_id',$request->agar_id)->delete();*/
-        return redirect()->back()->with('info','تم الحذف بنجاح');
+        return redirect()->back()->with('info','  تم تعطيل عرض العقار');
     }
 
     // manage reservation
@@ -80,9 +68,8 @@ class dashboardController extends Controller
     }
 
     public function postReservations(Request $request){
-      Reservation::where('id',$request->reservation_id)
-                    ->delete();
-      return redirect()->back()->with('info','تم الحذف بنجاح');
+      Reservation::where('id',$request->reservation_id)->update(['status' => 0]);
+      return redirect()->back()->with('info','تم تعطيل الحجز ');
     }
 
 
@@ -97,9 +84,9 @@ class dashboardController extends Controller
         if($request->action == 'confirm'){
           Reservation::where('id',$request->reservation_id)->update(['status' => 2]);
           return redirect()->back()->with('info','تم تأكيد طلب الحجز');
-        }elseif($request->action == 'delete'){
-          Reservation::where('id',$request->reservation_id)->delete();
-          return redirect()->back()->with('info','تم حذف طلب الحجز');
+        }elseif($request->action == 'disable'){
+          Reservation::where('id',$request->reservation_id)->update(['status' => 0]);
+          return redirect()->back()->with('info','تم تعطيل الحجز  ');
         }
       }
       return redirect()->back()->with('info','قم باختيار عملية اولا');
@@ -114,9 +101,9 @@ class dashboardController extends Controller
       return view('dashboard.add_B_extra');
     }
     public function postB_extra(Request $request){
-      if($request->has('delete_btn')){
-        B_extra::where('id',$request->id)->delete();
-        return redirect()->back()->with('info','تم الحذف بنجاح');
+      if($request->has('disable_btn')){
+        B_extra::where('id',$request->id)->update(['status' => 0]);
+        return redirect()->back()->with('info','تم تعطيل المرفق ');
       }
       if($request->has('add_btn')){
         B_extra::create([
@@ -136,9 +123,9 @@ class dashboardController extends Controller
       return view('dashboard.add_A_extra');
     }
     public function postA_extra(Request $request){
-      if($request->has('delete_btn')){
-        A_extra::where('id',$request->id)->delete();
-        return redirect()->back()->with('info','تم الحذف بنجاح');
+      if($request->has('disable_btn')){
+        A_extra::where('id',$request->id)->update(['status' => 0]);
+        return redirect()->back()->with('info','تم تعطيل المرفق ');
       }
       if($request->has('add_btn')){
         A_extra::create([
@@ -158,9 +145,9 @@ class dashboardController extends Controller
       return view('dashboard.add_sf_extra');
     }
     public function postSf_extra(Request $request){
-      if($request->has('delete_btn')){
-        Sf_extra::where('id',$request->id)->delete();
-        return redirect()->back()->with('info','تم الحذف بنجاح');
+      if($request->has('disable_btn')){
+        Sf_extra::where('id',$request->id)->update(['status' => 0]);
+        return redirect()->back()->with('info',' تم تعطيل المرفق  ');
       }
       if($request->has('add_btn')){
         Sf_extra::create([
@@ -180,9 +167,9 @@ class dashboardController extends Controller
       return view('dashboard.add_agar_condition');
     }
     public function postCond(Request $request){
-      if($request->has('delete_btn')){
-        AgarCond::where('id',$request->id)->delete();
-        return redirect()->back()->with('info','تم الحذف بنجاح');
+      if($request->has('disable_btn')){
+        AgarCond::where('id',$request->id)->update(['status' => 0]);
+        return redirect()->back()->with('info',' تم تعطيل المرفق ');
       }
       if($request->has('add_btn')){
         AgarCond::create([
@@ -202,9 +189,9 @@ class dashboardController extends Controller
       return view('dashboard.add_agar_type');
     }
     public function postAgar_type(Request $request){
-      if($request->has('delete_btn')){
-        AgarType::where('type_id',$request->id)->delete();
-        return redirect()->back()->with('info','تم الحذف بنجاح');
+      if($request->has('disable_btn')){
+        AgarType::where('type_id',$request->id)->update(['status' => 0]);
+        return redirect()->back()->with('info',' تم تعطيل المرفق ');
       }
       if($request->has('add_btn')){
         AgarType::create([
@@ -224,9 +211,9 @@ class dashboardController extends Controller
       return view('dashboard.add_agar_floor');
     }
     public function postAgar_floor(Request $request){
-      if($request->has('delete_btn')){
-        AgarFloor::where('floor_id',$request->id)->delete();
-        return redirect()->back()->with('info','تم الحذف بنجاح');
+      if($request->has('disable_btn')){
+        AgarFloor::where('floor_id',$request->id)->update(['status' => 0]);
+        return redirect()->back()->with('info',' تم تعطيل المرفق');
       }
       if($request->has('add_btn')){
         AgarFloor::create([
@@ -246,9 +233,9 @@ class dashboardController extends Controller
       return view('dashboard.add_states');
     }
     public function postStates(Request $request){
-      if($request->has('delete_btn')){
-        State::where('state_id',$request->id)->delete();
-        return redirect()->back()->with('info','تم الحذف بنجاح');
+      if($request->has('disable_btn')){
+        State::where('state_id',$request->id)->update(['status' => 0]);
+        return redirect()->back()->with('info','تم تعطيل المرفق ');
       }
       if($request->has('add_btn')){
         State::create([
@@ -269,9 +256,9 @@ class dashboardController extends Controller
       return view('dashboard.add_cities')->with('states',$states);
     }
     public function postCities(Request $request){
-      if($request->has('delete_btn')){
-        City::where('city_id',$request->id)->delete();
-        return redirect()->back()->with('info','تم الحذف بنجاح');
+      if($request->has('disable_btn')){
+        City::where('city_id',$request->id)->update(['status' => 0]);
+        return redirect()->back()->with('info','تم تعطيل المرفق ');
       }
       if($request->has('add_btn')){
         City::create([

@@ -32,7 +32,7 @@
     <div class="w3-container w3-margin-top">
         <div class="w3-card-4">
             <header class="w3-bar w3-padding " style="position: relative">
-                <span class="w3-bar-item w3-right"> <h5><strong><i class="fa fa-building-o"></i> &nbsp; عقاراتي</strong></h5></span>
+                <span class="w3-bar-item w3-right"> <h5><strong><i class="fa fa-building-o"></i> &nbsp; العقارات</strong></h5></span>
                 <span id="addNewAgar" onclick="document.getElementById('NEW_AGAR_FORM').style.display='block'" class=" w3-large w3-hover-light-gray w3-display-left w3-margin-left w3-white w3-border w3-border-gray w3-round w3-text-gray" style="padding: 7px 15px">
                     <i style="font-weight: 50;" class="fa fa-plus"></i>
                 </span>

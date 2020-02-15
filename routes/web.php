@@ -38,13 +38,11 @@ Route::post('register',[
 // home page routes
 Route::get('/',[
   'uses' => 'HomeController@index',
-  'as' => 'home',
-  'middleware' => ['auth']
+  'as' => 'home'
 ]);
 Route::get('/home',[
   'uses' => 'HomeController@index',
-  'as' => 'home',
-  'middleware' => ['auth']
+  'as' => 'home'
 ]);
 
 //  agars Routes for web...
@@ -85,9 +83,16 @@ Route::post('agar/dashboard/{agar_id}',[
     'uses' => 'agarController@postDashboard',
 ]);
 // reservation Routes...
+# reservation recived for users
 Route::get('reservation',[
     'uses' => 'reservationController@index',
     'as' => 'reservation.index',
+    'middleware' => ['auth']
+]);
+#reservation sended for user
+Route::get('reservation/sent',[
+    'uses' => 'reservationController@sent',
+    'as' => 'reservation.sent',
     'middleware' => ['auth']
 ]);
 

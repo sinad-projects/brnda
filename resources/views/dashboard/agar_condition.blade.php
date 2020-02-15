@@ -56,7 +56,7 @@
                           <form action="{{ route('dashboard.agar_condition') }}" method="post">
                             @csrf
                             <input type="hidden" name="id" value="{{ $condition->id }}" />
-                            <button type="submit" name="delete_btn" class="btn btn-danger" > حذف الشرط</button>
+                            <button type="submit" name="disable_btn" class="btn btn-warning" > تعطيل عرض الشرط </button>
                             <!--
                             <button class="btn btn-info" type="submit">تعديل الصلاحية</button>
                           -->
