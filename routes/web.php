@@ -48,7 +48,13 @@ Route::get('/home',[
 //  agars Routes for web...
 Route::get('agars',[
     'uses' => 'agarController@list',
-    'as' => 'agars.list',
+    'as' => 'agars.agarsList',
+    'middleware' => ['auth']
+]);
+// get agars for spacific user
+Route::get('my-agars',[
+    'uses' => 'agarController@myAgars',
+    'as' => 'agars.myAgars',
     'middleware' => ['auth']
 ]);
 Route::post('agars/add',[
@@ -64,6 +70,18 @@ Route::post('agars/edit',[
 Route::post('agars/delete',[
     'uses' => 'agarController@delete',
     'as' => 'agars.delete',
+    'middleware' => ['auth']
+]);
+# search agar by name
+Route::get('agars/{query}',[
+    'uses' => 'agarController@search_by_name',
+    'as' => 'agars.search',
+    'middleware' => ['auth']
+]);
+# filter agars
+Route::post('agars/filter',[
+    'uses' => 'agarController@agar_filter',
+    'as' => 'agars.filter',
     'middleware' => ['auth']
 ]);
 // single agar
@@ -82,6 +100,7 @@ Route::get('agar/dashboard/{agar_id}',[
 Route::post('agar/dashboard/{agar_id}',[
     'uses' => 'agarController@postDashboard',
 ]);
+
 // reservation Routes...
 # reservation recived for users
 Route::get('reservation',[

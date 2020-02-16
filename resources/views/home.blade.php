@@ -44,7 +44,7 @@
             <a class="nav-link" href="{{ route('home') }}">الرئيسية <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('agars.list') }}"> تصفح العقارات </a>
+            <a class="nav-link" href="{{ route('agars.agarsList') }}"> تصفح العقارات </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">تحميل التطبيق</a>

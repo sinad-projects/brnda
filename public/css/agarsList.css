@@ -1,0 +1,34 @@
+.filter-header{
+  background-color: #f1f1f1!important;
+}
+.filter-header p{
+  margin-top: 20px;
+}
+
+#filter_sidebar{
+  width: 80%!important;
+  position: absolute;
+  top: 80px;
+  left: 0px;
+  padding: 25px;
+  background-color: #f1f1f1;
+  height: 500px;
+}
+.open-slider-btn, #main, .filter-header-mobile{
+  display: none!important;
+}
+@media screen and (max-width: 992px){
+  .filter-body, .filter-header-web{
+    display: none;
+  }
+  .open-slider-btn, #main, .filter-header-mobile{
+    display: block!important;
+  }
+  .filter-header-mobile-datepicker{
+    width: 60%!important;
+  }
+  .open-slider-btn{
+    float: right!important;
+    margin-top: -65px
+  }
+}

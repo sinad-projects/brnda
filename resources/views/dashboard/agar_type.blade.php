@@ -56,7 +56,7 @@
                           <form action="{{ route('dashboard.agar_type') }}" method="post">
                             @csrf
                             <input type="hidden" name="id" value="{{ $agar_type->type_id }}" />
-                            <button type="submit" name="disable_btn" class="btn btn-warning" > تعطيل عرض النوع </button>
+                            <button type="submit" name="delete_btn" class="btn btn-danger"  > حذف النوع </button>
                             <!--
                             <button class="btn btn-info" type="submit">تعديل الصلاحية</button>
                           -->

@@ -60,8 +60,8 @@
                                             <input id="confirm" type="radio" class="form-control-user" name="action" value="confirm">
                                           </div>
                                           <div class="">
-                                            <label for="disable"> تعطيل الطلب  </label>
-                                            <input id="disable" type="radio" class="form-control-user" name="action" value="disable">
+                                            <label for="delete"> حذف الطلب  </label>
+                                            <input id="delete" type="radio" class="form-control-user" name="action" value="delete">
                                           </div>
                                         </div>
                                         <button type="submit" form="payment_{{ $reservation->id }}" class="btn btn-primary w3-right">

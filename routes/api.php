@@ -70,7 +70,7 @@ Route::post('/agar/add/image','AgarController@agar_add_image');
 
 #======= search agar by name ==========#
 Route::get('/agar/list/search/{query}','AgarController@search_by_name_api');
-Route::post('/agar/list/fillter','AgarController@agar_fillter_api'); 
+Route::post('/agar/list/filter','AgarController@agar_filter_api'); 
 // ===========================================================//
 
 # ========== list reservation for user ==============#

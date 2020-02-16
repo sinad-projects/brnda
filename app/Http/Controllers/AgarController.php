@@ -29,20 +29,34 @@ class AgarController extends Controller
 {
 
   #========= for web only ============#
-    public function list()
-    {
-      $agars = Agar::where('status',1)
-                    ->get();
-      // get agar type
+  // get all agars
+    public function list(){
+      $agars = Agar::where('status',1)->get();
+      // get this data for filteration
       $agarType = AgarType::where('status',1)->get();
-      // get agar floor
       $agarFloor = AgarFloor::where('status',1)->get();
-      // get states info
       $states = State::where('status',1)->get();
-      // get citys info
       $citys = City::where('status',1)->get();
 
-      return view('agars.list')
+      return view('agars.agarsList')
+              ->with('agars',$agars)
+              ->with('agarType',$agarType)
+              ->with('agarFloor',$agarFloor)
+              ->with('states',$states)
+              ->with('citys',$citys);
+    }
+
+    // get agars for spacific user
+    public function myAgars(){
+      $agars = Agar::where('status',1)
+                    ->where('owner_id',Auth::user()->id)->get();
+      // get this date for edit agar page
+      $agarType = AgarType::where('status',1)->get();
+      $agarFloor = AgarFloor::where('status',1)->get();
+      $states = State::where('status',1)->get();
+      $citys = City::where('status',1)->get();
+
+      return view('agars.myAgars')
               ->with('agars',$agars)
               ->with('agarType',$agarType)
               ->with('agarFloor',$agarFloor)
@@ -260,6 +274,42 @@ class AgarController extends Controller
       }
     }
 
+    // search agar by name
+    public function search_by_name($query){
+      $agars = Agar::where('agar_name', 'LIKE' , "%$query%")
+            ->where('status',1)
+            ->get();
+      return redirect()->with('agars',$agars);
+    }
+
+    public function agar_filter(Request $request){
+    $agars = Agar::where('status',1)
+                    ->where('rooms_number',$request->rooms_number)
+                    //->where('bathrooms_number',$request->bathrooms_number)
+                    //->join('agar_price','agar.id','agar_price.agar_id')
+                    // befor discount
+                    //->whereBetween('day',[$request->min_price,$request->max_price])
+                    ->join('agar_calendar','agar.id','agar_calendar.agar_id')
+                    ->where('start_date',$request->start_date)
+                    //->where('end_date','>=',$request->end_date)
+                    //->join('agar_extra','agar.id','agar_extra.agar_id')
+                    //->whereIn('b_extra',[$request->b_extra])
+                    ->select('agar.*')
+                    ->get();
+      $agarType = AgarType::where('status',1)->get();
+      $agarFloor = AgarFloor::where('status',1)->get();
+      $states = State::where('status',1)->get();
+      $citys = City::where('status',1)->get();
+
+
+      return view('agars.agarsList')
+            ->with('agars',$agars)
+            ->with('agarType',$agarType)
+            ->with('agarFloor',$agarFloor)
+            ->with('states',$states)
+            ->with('citys',$citys);
+    }
+
     # =========================================================================#
 
     #============ for mobile api only ===============#
@@ -308,8 +358,7 @@ class AgarController extends Controller
       return agarResource::collection($agars);
     }
 
-    public function agar_fillter_api(Request $request){
-      //->select('users.*', 'contacts.phone', 'orders.price')
+    public function agar_filter_api(Request $request){
     $agars = Agar::where('status',1)
                     ->where('rooms_number',$request->rooms_number)
                     ->where('bathrooms_number',$request->bathrooms_number)

@@ -62,7 +62,7 @@
                           <form action="{{ route('dashboard.agars') }}" method="post">
                             @csrf
                             <input type="hidden" name="agar_id" value="{{ $agar->id }}" />
-                            <button type="submit" class="btn btn-warning" > تعطيل عرض العقار  </button>
+                            <button type="submit" name="delete_btn" class="btn btn-danger" > حذف العقار  </button>
                             <!--
                             <button class="btn btn-info" type="submit">تعديل الصلاحية</button>
                           -->

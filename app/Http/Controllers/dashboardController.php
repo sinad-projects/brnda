@@ -75,7 +75,7 @@ class dashboardController extends Controller
 
     // manage payment
     public function getPayment(){
-      $reservations = Reservation::where('status','<>', 2)->get();
+      $reservations = Reservation::where('status','<>', 2)->where('status','<>', 0)->get();
       return view('dashboard.payment')
                 ->with('reservations',$reservations);
     }
@@ -84,7 +84,7 @@ class dashboardController extends Controller
         if($request->action == 'confirm'){
           Reservation::where('id',$request->reservation_id)->update(['status' => 2]);
           return redirect()->back()->with('info','تم تأكيد طلب الحجز');
-        }elseif($request->action == 'disable'){
+        }elseif($request->action == 'delete'){
           Reservation::where('id',$request->reservation_id)->update(['status' => 0]);
           return redirect()->back()->with('info','تم تعطيل الحجز  ');
         }
@@ -94,16 +94,16 @@ class dashboardController extends Controller
 
     // manage b_extra info
     public function getB_extra(){
-      $b_extra = B_extra::get();
+      $b_extra = B_extra::where('status',1)->get();
       return view('dashboard.b_extra')->with('b_extra',$b_extra);
     }
     public function add_B_extra(){
       return view('dashboard.add_B_extra');
     }
     public function postB_extra(Request $request){
-      if($request->has('disable_btn')){
+      if($request->has('delete_btn')){
         B_extra::where('id',$request->id)->update(['status' => 0]);
-        return redirect()->back()->with('info','تم تعطيل المرفق ');
+        return redirect()->back()->with('info',' تم حذف المرفق  ');
       }
       if($request->has('add_btn')){
         B_extra::create([
@@ -116,16 +116,16 @@ class dashboardController extends Controller
 
     // manfe a_extra info
     public function getA_extra(){
-      $a_extra = A_extra::get();
+      $a_extra = A_extra::where('status',1)->get();
       return view('dashboard.a_extra')->with('a_extra',$a_extra);
     }
     public function add_A_extra(){
       return view('dashboard.add_A_extra');
     }
     public function postA_extra(Request $request){
-      if($request->has('disable_btn')){
+      if($request->has('delete_btn')){
         A_extra::where('id',$request->id)->update(['status' => 0]);
-        return redirect()->back()->with('info','تم تعطيل المرفق ');
+        return redirect()->back()->with('info','تم حذف المرفق');
       }
       if($request->has('add_btn')){
         A_extra::create([
@@ -138,16 +138,16 @@ class dashboardController extends Controller
 
     // mange sf_extra info
     public function getSf_extra(){
-      $sf_extra = Sf_extra::get();
+      $sf_extra = Sf_extra::where('status',1)->get();
       return view('dashboard.sf_extra')->with('sf_extra',$sf_extra);
     }
     public function add_sf_extra(){
       return view('dashboard.add_sf_extra');
     }
     public function postSf_extra(Request $request){
-      if($request->has('disable_btn')){
+      if($request->has('delete_btn')){
         Sf_extra::where('id',$request->id)->update(['status' => 0]);
-        return redirect()->back()->with('info',' تم تعطيل المرفق  ');
+        return redirect()->back()->with('info',' تم حذف المرفق  ');
       }
       if($request->has('add_btn')){
         Sf_extra::create([
@@ -160,16 +160,16 @@ class dashboardController extends Controller
 
     // mange agars condition info
     public function getCond(){
-      $condition = AgarCond::get();
+      $condition = AgarCond::where('status',1)->get();
       return view('dashboard.agar_condition')->with('condition',$condition);
     }
     public function addCond(){
       return view('dashboard.add_agar_condition');
     }
     public function postCond(Request $request){
-      if($request->has('disable_btn')){
+      if($request->has('delete_btn')){
         AgarCond::where('id',$request->id)->update(['status' => 0]);
-        return redirect()->back()->with('info',' تم تعطيل المرفق ');
+        return redirect()->back()->with('info',' تم حذف الشرط ');
       }
       if($request->has('add_btn')){
         AgarCond::create([
@@ -182,16 +182,16 @@ class dashboardController extends Controller
 
     // mange agars type info
     public function getAgar_type(){
-      $agar_type = AgarType::get();
+      $agar_type = AgarType::where('status',1)->get();
       return view('dashboard.agar_type')->with('agar_type',$agar_type);
     }
     public function AddAgar_type (){
       return view('dashboard.add_agar_type');
     }
     public function postAgar_type(Request $request){
-      if($request->has('disable_btn')){
+      if($request->has('delete_btn')){
         AgarType::where('type_id',$request->id)->update(['status' => 0]);
-        return redirect()->back()->with('info',' تم تعطيل المرفق ');
+        return redirect()->back()->with('info',' تم حذف النوع ');
       }
       if($request->has('add_btn')){
         AgarType::create([
@@ -204,16 +204,16 @@ class dashboardController extends Controller
 
     // mange agars floor info
     public function getAgar_floor(){
-      $agar_floor = AgarFloor::get();
+      $agar_floor = AgarFloor::where('status',1)->get();
       return view('dashboard.agar_floor')->with('agar_floor',$agar_floor);
     }
     public function AddAgar_floor(){
       return view('dashboard.add_agar_floor');
     }
     public function postAgar_floor(Request $request){
-      if($request->has('disable_btn')){
+      if($request->has('delete_btn')){
         AgarFloor::where('floor_id',$request->id)->update(['status' => 0]);
-        return redirect()->back()->with('info',' تم تعطيل المرفق');
+        return redirect()->back()->with('info','تم حذف الطابق');
       }
       if($request->has('add_btn')){
         AgarFloor::create([
@@ -226,16 +226,16 @@ class dashboardController extends Controller
 
     // mange state info
     public function getStates(){
-      $states = State::get();
+      $states = State::where('status',1)->get();
       return view('dashboard.states')->with('states',$states);
     }
     public function AddStates(){
       return view('dashboard.add_states');
     }
     public function postStates(Request $request){
-      if($request->has('disable_btn')){
+      if($request->has('delete_btn')){
         State::where('state_id',$request->id)->update(['status' => 0]);
-        return redirect()->back()->with('info','تم تعطيل المرفق ');
+        return redirect()->back()->with('info','تم حذف الولاية');
       }
       if($request->has('add_btn')){
         State::create([
@@ -248,7 +248,7 @@ class dashboardController extends Controller
 
     // mange cities info
     public function getCities(){
-      $cities = City::get();
+      $cities = City::where('status',1)->get();
       return view('dashboard.cities')->with('cities',$cities);
     }
     public function AddCities(){
@@ -256,9 +256,9 @@ class dashboardController extends Controller
       return view('dashboard.add_cities')->with('states',$states);
     }
     public function postCities(Request $request){
-      if($request->has('disable_btn')){
+      if($request->has('delete_btn')){
         City::where('city_id',$request->id)->update(['status' => 0]);
-        return redirect()->back()->with('info','تم تعطيل المرفق ');
+        return redirect()->back()->with('info','تم حذف المدينة');
       }
       if($request->has('add_btn')){
         City::create([

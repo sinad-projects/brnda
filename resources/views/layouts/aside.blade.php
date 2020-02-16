@@ -32,7 +32,7 @@
           <i class="fa fa-eye fa-fw"></i> الرئيسية
         </a>
 
-        <a href="{{ route('agars.list') }}" class="w3-bar-item w3-btn w3-padding w3-flat-belize-hole w3-animate-zoom">
+        <a href="{{ route('agars.myAgars') }}" class="w3-bar-item w3-btn w3-padding w3-flat-belize-hole w3-animate-zoom">
           <i class="fa fa-hands-helping fa-fw w3-spin"></i>  عقاراتي
         </a>
 
@@ -40,7 +40,7 @@
           <i class="fa fa-hands-helping fa-fw w3-spin"></i> طلبات الايجار
         </a>
 
-        <a href="{{ route('home') }}" class="w3-bar-item w3-btn w3-padding">
+        <a href="{{ route('agars.agarsList') }}" class="w3-bar-item w3-btn w3-padding">
           <i class="fa fa-briefcase fa-fw"></i>  العقارات
         </a>
 
