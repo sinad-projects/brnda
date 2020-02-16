@@ -42,28 +42,29 @@
 
   <body dir="" class="text-right">
     <div class="w3-white">
-  <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg w3-white" style="z-index: 999">
-      <a class="navbar-brand" href="#">
-        <img src="{{ asset('images/logo.png') }}" width="50" height="50" />
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"><i class="fa fa-reorder"></i></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav" dir="rtl">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link w3-text-black" href="#">الرئيسية <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link w3-text-black" href="#">تحميل التطبيق</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link w3-text-black" href="#">عن برندا</a>
-          </li>
-        </ul>
+
+      <!-- sidebar button -->
+      <div class="w3-bar w3-large w3-border-bottom" style="z-index:4; height: 100px">
+        <span class="w3-bar-item w3-left" style="padding: 20px;">
+          <img height="60px" width="60px" src="{{ asset('images/branda_logo.png') }}" alt="شعار برندة" />
+        </span>
+        <button class="w3-bar-item w3-right w3-button w3-right w3-hover-none w3-hover-text-grey w3-xxlarge" style="padding: 20px" onclick="w3_open();">
+          <i class="fa fa-bars"></i>
+        </button>
       </div>
-  </nav>
+
+
+
+    <!-- sidebar menu -->
+    <div class="">
+      @include('layouts/aside')
+    </div>
+
+    <div class="w3-clear"></div>
+
+    <!-- Overlay effect when opening sidebar on small screens -->
+    <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+    <!-- -->
 
   <!-- for web screen only -->
   <section class="w3-card w3-padding filter-header filter-header-web" style="margin-bottom: 50px;">
@@ -104,7 +105,7 @@
           <p>تاريخ الحجز <input type="text" id="datepicker_mobile"></p>
         </div>
         <div class="form-group open-slider-btn">
-          <a href="javascript::void()" id="openNav" class="w3-button w3-black w3-xlarge" onclick="w3_open()"> <i class="fa fa-sliders"></i> </a>
+          <a href="javascript::void()" id="openNav" class="w3-button w3-black w3-xlarge" onclick="open_filter()"> <i class="fa fa-sliders"></i> </a>
         </div>
       </form>
     </div>
@@ -117,7 +118,7 @@
       <!-- sidebar section-->
       <div class="w3-sidebar w3-animate-left" id="filter_sidebar" style="display: none">
         <a href="javascript::void()" class="w3-button w3-large"
-        onclick="w3_close()"> <i class="fa fa-times w3-large w3-hover-none w3-text-black"></i> </a>
+        onclick="close_filter()"> <i class="fa fa-times w3-large w3-hover-none w3-text-black"></i> </a>
         <div class="">
           <div class="card" >
             <ul class="list-group list-group-flush">
@@ -411,13 +412,13 @@
 
 
   <script>
-  function w3_open() {
+  function open_filter() {
     document.getElementById("main").style.marginLeft = "25%";
     document.getElementById("filter_sidebar").style.width = "25%";
     document.getElementById("filter_sidebar").style.display = "block";
   //  document.getElementById("openNav").style.display = 'none';
   }
-  function w3_close() {
+  function close_filter() {
     document.getElementById("main").style.marginLeft = "0%";
     document.getElementById("filter_sidebar").style.display = "none";
     document.getElementById("openNav").style.display = "inline-block";
@@ -485,6 +486,31 @@
   document.getElementsByClassName("tablink")[0].click();
   </script>
 
+
+  <script>
+      // Get the Sidebar
+      var mySidebar = document.getElementById("mySidebar");
+
+      // Get the DIV with overlay effect
+      var overlayBg = document.getElementById("myOverlay");
+
+      // Toggle between showing and hiding the sidebar, and add overlay effect
+      function w3_open() {
+          if (mySidebar.style.display === 'block') {
+              mySidebar.style.display = 'none';
+              overlayBg.style.display = "none";
+          } else {
+              mySidebar.style.display = 'block';
+              overlayBg.style.display = "block";
+          }
+      }
+
+      // Close the sidebar with the close button
+      function w3_close() {
+          mySidebar.style.display = "none";
+          overlayBg.style.display = "none";
+      }
+  </script>
 
   <!-- date picker -->
   <script src="{{ asset('datepicker/js/bootstrap-datepicker.js') }}" ></script>
