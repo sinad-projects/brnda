@@ -76,6 +76,7 @@ class AgarController extends Controller
       // get agar condation
       $agar_cond = AgarCond::where('status',1)->get();
 
+
       return view('agars.single')
               ->with('agar',$agar)
               ->with('agar_b_extra',$agar_b_extra)
@@ -279,7 +280,16 @@ class AgarController extends Controller
       $agars = Agar::where('agar_name', 'LIKE' , "%$query%")
             ->where('status',1)
             ->get();
-      return redirect()->with('agars',$agars);
+      $agarType = AgarType::where('status',1)->get();
+      $agarFloor = AgarFloor::where('status',1)->get();
+      $states = State::where('status',1)->get();
+      $citys = City::where('status',1)->get();
+      return view('agars.agarsList')
+        ->with('agars',$agars)
+        ->with('agarType',$agarType)
+        ->with('agarFloor',$agarFloor)
+        ->with('states',$states)
+        ->with('citys',$citys);
     }
 
     public function agar_filter(Request $request){

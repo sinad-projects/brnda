@@ -1,5 +1,5 @@
 <?php
-
+use App\Message;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,6 +45,21 @@ Route::get('/home',[
   'as' => 'home'
 ]);
 
+/** Route For messenger Controllers **/
+Route::get('/messenger', 'MessengerController@index')->name('messages.index');
+
+Route::get('/messenger/count',function(){
+    return Message::where('to','=',Auth::user()->id)
+            ->where('read',0)
+            ->orwhere('from','=',Auth::user()->id)
+            ->where('read',0)->count();
+});
+
+Route::get('/contacts', 'ContactsController@get');
+Route::get('/conversation/{id}', 'ContactsController@getMessagesFor');
+Route::post('/conversation/send', 'ContactsController@send');
+
+
 //  agars Routes for web...
 Route::get('agars',[
     'uses' => 'agarController@list',
@@ -73,7 +88,7 @@ Route::post('agars/delete',[
     'middleware' => ['auth']
 ]);
 # search agar by name
-Route::get('agars/{query}',[
+Route::get('agars/search/{query}',[
     'uses' => 'agarController@search_by_name',
     'as' => 'agars.search',
     'middleware' => ['auth']
@@ -102,13 +117,13 @@ Route::post('agar/dashboard/{agar_id}',[
 ]);
 
 // reservation Routes...
-# reservation recived for users
+# reservation sended to user
 Route::get('reservation',[
     'uses' => 'reservationController@index',
     'as' => 'reservation.index',
     'middleware' => ['auth']
 ]);
-#reservation sended for user
+#reservation sended by user
 Route::get('reservation/sent',[
     'uses' => 'reservationController@sent',
     'as' => 'reservation.sent',

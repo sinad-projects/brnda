@@ -1,3 +1,20 @@
+<div class="w3-bar w3-large w3-border-bottom" style="z-index:4; height: 100px">
+  <span class="w3-bar-item w3-left" style="padding: 20px;">
+    <img height="60px" width="60px" src="{{ asset('images/branda_logo.png') }}" alt="شعار برندة" />
+  </span>
+
+  <button class="w3-bar-item w3-right w3-button w3-right w3-hover-none w3-hover-text-grey w3-xxlarge" style="padding: 20px" onclick="w3_open();">
+    <i class="fa fa-bars"></i>
+  </button>
+
+  <div class="w3-bar-item w3-right w3-button w3-hover-none w3-xlarge" style="margin-top: 15px">
+    <div id="notification">
+      <notification-app></notification-app>
+    </div>
+   </div>
+
+</div>
+
 <!-- Sidebar/menu -->
 <nav class="w3-sidebar w3-animate-right" style="z-index:3;width:300px;display: none;position: relative; right: 0px" id="mySidebar"><br>
     <div class="w3-container w3-row">
@@ -29,9 +46,15 @@
           <i class="fa fa-inbox"></i> طلبات الايجار
         </a>
 
+        <a href="{{ route('reservation.sent') }}" class="w3-bar-item w3-btn w3-padding w3-flat-belize-hole text-right w3-animate-zoom">
+          <i class="fa fa-inbox"></i> طلبات الايجار المرسلة
+        </a>
+
         <a href="{{ route('agars.agarsList') }}" class="w3-bar-item text-right w3-btn w3-padding">
           <i class="fa fa-building-o"></i>  العقارات
         </a>
 
     </div>
 </nav>
+
+<div class="w3-clear"></div>

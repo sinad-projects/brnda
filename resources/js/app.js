@@ -51,6 +51,8 @@ import { ValidationProvider } from 'vee-validate';
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 Vue.component('ValidationProvider', ValidationProvider);
 
+Vue.component('chat-app', require('./components/messenger/ChatApp.vue').default);
+Vue.component('notification-app',require('./components/site/notificationComponent.vue').default);
 Vue.component('login-app', require('./components/loginComponent.vue').default);
 Vue.component('register-app', require('./components/registerComponent.vue').default);
 
@@ -66,4 +68,12 @@ const login = new Vue({
 
 const register = new Vue({
     el: '#register',
+});
+
+const contact = new Vue({
+    el: '#contact'
+});
+
+const notification = new Vue({
+    el: '#notification'
 });

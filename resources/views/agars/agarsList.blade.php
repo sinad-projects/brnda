@@ -1,66 +1,35 @@
 <!DOCTYPE html>
 <html>
-<title>برندا</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+  <title>برندا</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" href="{{ asset('css/ion.rangeSlider.css')}}"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="{{ asset('js/ion.rangeSlider.js') }}"></script>
+  <link rel="stylesheet" href="{{ asset('css/ion.rangeSlider.css')}}"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="{{ asset('js/ion.rangeSlider.js') }}"></script>
 
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="{{ asset('lib/fontawesome-free-5.0.13/web-fonts-with-css/css/fontawesome-all.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('lib/fontawesome-free-5.0.13/web-fonts-with-css/webfonts/FontAwesome.otf') }}">
+  <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ asset('datepicker/css/bootstrap-datepicker.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/agarsList.css') }}">
 
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<link rel="stylesheet" href="{{ asset('datepicker/css/bootstrap-datepicker.css') }}" />
-<link rel="stylesheet" href="{{ asset('css/agarsList.css') }}">
+  <!-- for vue js app.js file -->
+  <script src="{{ asset('js/app.js') }}" defer></script>
 
-<style>
-  * {
-      box-sizing: border-box;
-  }
-  @font-face {
-      font-family: JF-Flat-regular;
-      font-style: normal;
-      font-weight: 400;
-      src: url("{{ asset('fonts/Flat_Font_Jozoor/JF-Flat-regular.ttf') }}");
-    }
-    html,body,h1,h2,h3,h4,h5,h6,p,span {
-      font-family: JF-Flat-regular, sans-serif;
-    }
-    .navbar-toggler{
-      width: 50px!important;
-      background: inherit!important;
-    }
-    .ui-shadow{
-      border: 0px!important;
-      box-shadow: 0 0px 0px rgba(0,0,0,.15);
-      -webkit-box-shadow: 0 0px 0px rgba(0,0,0,.15);
-    }
+  <!-- genral css file -->
+  <link rel="stylesheet" href="{{ asset('css/general.css') }}">
+</head>
 
-</style>
-
-  <body dir="" class="text-right">
-    <div class="w3-white">
-
-      <!-- sidebar button -->
-      <div class="w3-bar w3-large w3-border-bottom" style="z-index:4; height: 100px">
-        <span class="w3-bar-item w3-left" style="padding: 20px;">
-          <img height="60px" width="60px" src="{{ asset('images/branda_logo.png') }}" alt="شعار برندة" />
-        </span>
-        <button class="w3-bar-item w3-right w3-button w3-right w3-hover-none w3-hover-text-grey w3-xxlarge" style="padding: 20px" onclick="w3_open();">
-          <i class="fa fa-bars"></i>
-        </button>
-      </div>
+<body dir="" class="text-right">
+  <div class="w3-white">
 
 
-
-    <!-- sidebar menu -->
-    <div class="">
-      @include('layouts/aside')
-    </div>
-
-    <div class="w3-clear"></div>
+  <!-- sidebar menu -->
+    @include('layouts/aside')
 
     <!-- Overlay effect when opening sidebar on small screens -->
     <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
@@ -239,7 +208,10 @@
 
               <div class="col-md-6">
                 <div class="w3-margin">
-                 <div><h4> {{ $agar->agar_name }} </h4><p>الخرطوم - السودان - امدرمان</p></div><hr>
+                 <div>
+                   <a href="{{ route('agars.single',['agar_id' => $agar->id]) }}"><h4> {{ $agar->agar_name }} </h4></a>
+                     <p>الخرطوم - السودان - امدرمان</p>
+                 </div><hr>
                  <div><p> <span>{{ $agar->rooms_number }} غرف</span> و <span>{{ $agar->bathrooms_number }} حمامات</span> </p></div><hr>
                  <div><p>from : {{ $agar->price->day }} $ / night</p></div>
                </div><br>
@@ -359,7 +331,10 @@
           <div class="col-md-4" dir="rtl">
             @foreach($agars as $agar)
               <div>
-               <div><h4> {{ $agar->agar_name }} </h4><p>الخرطوم - السودان - امدرمان</p></div><hr>
+               <div>
+                 <a href="{{ route('agars.single',['agar_id' => $agar->id]) }}"><h4> {{ $agar->agar_name }} </h4></a>
+                   <p>الخرطوم - السودان - امدرمان</p>
+               </div><hr>
                <div><p> <span>{{ $agar->rooms_number }} غرف</span> و <span>{{ $agar->bathrooms_number }} حمامات</span> </p></div><hr>
                <div><p>from : {{ $agar->price->day }} $ / night</p></div>
              </div><br>

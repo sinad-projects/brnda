@@ -1,26 +1,13 @@
-<!DOCTYPE html>
-<html>
-  <head>
-      <title>
-          برندة            </title>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="{{  asset('lib/dropzone/dropzone.css') }}" type="text/css">
-      <link rel="stylesheet"  href="{{  asset('lib/lightslider-master/src/css/lightslider.css') }}"/>
-      <link rel="stylesheet" href="{{  asset('css/w3.css') }}">
-      <link rel="stylesheet" href="{{  asset('css/w3-colors-windows.css') }}">
-      <link rel="stylesheet" href="{{  asset('css/w3-colors-flat.css') }}">
-      <link rel="stylesheet" href="{{  asset('lib/fontawesome-free-5.0.13/web-fonts-with-css/css/fontawesome-all.min.css') }}">
-      <link rel="stylesheet" href="{{  asset('lib/fontawesome-free-5.0.13/web-fonts-with-css/webfonts/FontAwesome.otf') }}">
-      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-      <link rel="stylesheet" href="{{ asset('css/home.css') }}">
-      <link rel="stylesheet" href="style.css">
-  </head>
-<body class="">
+@include('layouts/header')
 
-  <!-- Top container -->
+<!-- <link rel="stylesheet" href="{{ asset('css/home.css') }}"> -->
 
-  @include('layouts/aside')
+  <body dir="rtl" class="text-right">
+    <div class="w3-white">
+
+
+    <!-- sidebar menu -->
+      @include('layouts/aside')
 
   <!-- Overlay effect when opening sidebar on small screens -->
   <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
