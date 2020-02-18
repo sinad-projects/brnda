@@ -17,53 +17,17 @@
 
 
 </head>
-<body class="">
-
-  <!-- Top container -->
-  <div class="w3-bar w3-large brnda-card" style="z-index:4; height: 100px">
-      <button class="w3-bar-item w3-button w3-hover-none
-        w3-hover-text-grey w3-xxlarge" style="padding: 20px"
-              onclick="w3_open();">
-          <i class="fa fa-bars"></i></button>
-          <!--span class="w3-bar-item w3-left">برندة</span-->
-          <span class="w3-bar-item w3-left" style="padding: 20px;">
-          <img height="60px" width="60px" src="{{ asset('images/branda_logo.png') }}" alt="شعار برندة" /></span>
-      </div>
-
-    <!-- Sidebar/menu -->
-    <nav class="w3-sidebar brnda-card w3-animate-right" style="z-index:3;width:300px; display: none" id="mySidebar"><br>
-        <div class="w3-container w3-row">
-            <div class="w3-col s4">
-                <img src="images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
-            </div>
-
-            <div class="w3-col s8 w3-bar">
-                <span class="w3-bar-item">مرحباُ يا, <strong>أحمد تبن</strong></span><br>
-                <a href="logout.php" class="w3-bar-item w3-btn"><i class="fa fa-sign-out-alt"></i></a>
-                <a href="settings.php" class="w3-bar-item w3-btn"><i class="fa fa-cog"></i></a>
-            </div>
-        </div>
-        <hr>
-        <div class="w3-bar-block">
-            <a href="#" class="w3-bar-item w3-btn w3-padding-16 w3-hide-large1 w3-dark-grey w3-hover-black"
-               onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  اغلق القائمة</a>
-            <a href="cpanel.php" class="w3-bar-item w3-btn w3-padding
-            "><i class="fa fa-eye fa-fw
-            "></i> الرئيسية </a>
-            <a href="agar.php" class="w3-bar-item w3-btn w3-padding
-            "><i class="fa fa-hands-helping fa-fw
-            "></i>  عقاراتي</a>
-            <a href="account.php" class="w3-bar-item w3-btn w3-padding
-            "><i class="fa fa-briefcase fa-fw
-            "></i>  العقارات</a>
-
-        </div>
-    </nav>
 
 
-  <!-- Overlay effect when opening sidebar on small screens -->
-  <div class="w3-overlay w3-hide-large w3-animate-opacity"
-       onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+  <body dir="rtl" class="text-right">
+    <div class="w3-white">
+
+
+    <!-- sidebar menu -->
+      @include('layouts/aside')
+
+      <!-- Overlay effect when opening sidebar on small screens -->
+      <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
     <!-- !PAGE CONTENT! -->
     <div class="wrapper"><!-- START view agar -->
@@ -90,7 +54,7 @@
                   <div class="w3-content w3-display-container">
                     @foreach($agar->image as $image)
                       <div class="w3-display-container w3-tooltip">
-                          <img width="100%" class="w3-hover-grayscale mySlides" src="{{ asset('agar/images/'.$image->img_wide) }}" alt="{{$image->img_wide}}" height="150px" width="100%">
+                          <img width="100%" class="w3-hover-grayscale mySlides" src="{{ asset('agar/images/'.$image->img_wide) }}" alt="{{$image->img_wide}}">
                       </div>
                     @endforeach
                     <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
@@ -104,9 +68,7 @@
                 <div class="w3-row-padding">
                   <section class="w3-twothird">
                       <div class="w3-bar">
-                          <a href="#" class="w3-bar-item w3-button w3-tag w3-dark-gray w3-hover-none" style="padding: 4px 8px">
-                            <!-- type  -->
-                          </a>
+
                           <a href="#" class="w3-bar-item w3-button w3-hover-none w3-text-gray" style="padding: 4px 8px">
                               <i class="fa fa-info-circle"> <span>أعرف معلومات أكثر</span></i>
                           </a>
@@ -117,8 +79,8 @@
                               موقع العقار
                               <i class="fa fa-map-marker-alt w3-margin-left-8"></i>
                               <span>
-                                <a class="decoration-none hover-underline" href="#">{{ $agar->location->state }}</a>،
-                                <a class="decoration-none hover-underline" href="#">{{ $agar->location->city }}</a>،
+                                <a class="decoration-none hover-underline" href="#">{{ $agar->location->state->state_name }} /</a>
+                                <a class="decoration-none hover-underline" href="#">{{ $agar->location->city->city_name }} /</a>
                                 <a class="decoration-none hover-underline" href="#">{{ $agar->location->area }}</a>
                               </span>
                           </h6>
@@ -241,6 +203,7 @@
                                           <input id="end_date"  name="end_date" class="w3-input" type="date"
                                           placeholder="إلى" required  value="{{ $agar->calender }}">
                                       </div>
+                                      <input type="hidden" name="reciver_id" value="{{ $agar->owner_id }}">
                                       <div class="w3-section">
                                           <button form="booking_form" type="submit" id="request_booking" name="request_booking" value="" class="w3-btn w3-block w3-flat-peter-river">
                                               <i class="fa fa-calendar"></i> طلب الحجز</button>

@@ -2,7 +2,7 @@
 
 <!-- <link rel="stylesheet" href="{{ asset('css/home.css') }}"> -->
 
-<body dir="" class="text-right">
+<body dir="rtl" class="text-right">
   <div class="w3-white">
 
 

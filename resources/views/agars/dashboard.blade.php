@@ -17,55 +17,16 @@
 
 
 </head>
-<body class="">
 
-<!-- Top container -->
-<div class="w3-bar w3-large brnda-card" style="z-index:4; height: 100px">
-    <button class="w3-bar-item w3-button w3-hover-none
-      w3-hover-text-grey w3-xxlarge" style="padding: 20px"
-            onclick="w3_open();">
-        <i class="fa fa-bars"></i></button>
-        <!--span class="w3-bar-item w3-left">برندة</span-->
-        <span class="w3-bar-item w3-left" style="padding: 20px;">
-        <img height="60px" width="60px" src="{{ asset('images/branda_logo.png') }}" alt="شعار برندة" /></span>
-    </div>
+  <body class="" dir="rtl">
 
-  <!-- Sidebar/menu -->
-  <nav class="w3-sidebar brnda-card w3-animate-right" style="z-index:3;width:300px; display: none" id="mySidebar"><br>
-      <div class="w3-container w3-row">
-          <div class="w3-col s4">
-              <img src="images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
-          </div>
+  <!-- sidebar menu -->
+    @include('layouts/aside')
 
-          <div class="w3-col s8 w3-bar">
-              <span class="w3-bar-item">مرحباُ يا, <strong>أحمد تبن</strong></span><br>
-              <a href="logout.php" class="w3-bar-item w3-btn"><i class="fa fa-sign-out-alt"></i></a>
-              <a href="settings.php" class="w3-bar-item w3-btn"><i class="fa fa-cog"></i></a>
-          </div>
-      </div>
-      <hr>
-      <div class="w3-bar-block">
-          <a href="#" class="w3-bar-item w3-btn w3-padding-16 w3-hide-large1 w3-dark-grey w3-hover-black"
-             onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  اغلق القائمة</a>
-          <a href="cpanel.php" class="w3-bar-item w3-btn w3-padding
-          "><i class="fa fa-eye fa-fw
-          "></i> الرئيسية </a>
-          <a href="agar.php" class="w3-bar-item w3-btn w3-padding
-          "><i class="fa fa-hands-helping fa-fw
-          "></i>  عقاراتي</a>
-          <a href="account.php" class="w3-bar-item w3-btn w3-padding
-          "><i class="fa fa-briefcase fa-fw
-          "></i>  العقارات</a>
+    <!-- Overlay effect when opening sidebar on small screens -->
+    <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
-      </div>
-  </nav>
-
-
-<!-- Overlay effect when opening sidebar on small screens -->
-<div class="w3-overlay w3-hide-large w3-animate-opacity"
-     onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
-
-    <!-- !PAGE CONTENT! -->
+  <!-- !PAGE CONTENT! -->
     <div class="wrapper"><!-- START view agar -->
         <div class="w3-container w3-margin-top brnda-card-4">
             <header class="w3-bar w3-section w3-large"> <!-- START HEADER -->
@@ -149,7 +110,11 @@
                               <td class="w3-center">{{ $agar->agar_name }}</td>
                               <td class="w3-center">{{ $agar->type->type_name }}</td>
                               <td class="w3-center">{{ $agar->floor->floor_name }}</td>
-                              <td class="w3-center">{{ $agar->location->area }}</td>
+                              <td class="w3-center">
+                                {{ $agar->location->state->state_name }} /
+                                {{ $agar->location->city->city_name }} /
+                                {{ $agar->location->area }}
+                              </td>
                               <td class="w3-center">{{ $agar->rooms_number }}</td>
                               <td class="w3-center">{{ $agar->bathrooms_number }}</td>
                               <td class="w3-center">{{ $agar->agar_desc }}</td>
@@ -697,162 +662,48 @@
     <br>
     <!-- END MODALS -->
 
-<!-- Footer -->
-<footer class="w3-container w3-padding-16">
-        <h4>برندة</h4>
-        <p>جميع الحقوق محفوظة لـ <b>برندة</b> 2019</p>
-</footer>
+    <!-- Footer -->
+    <div class="w3-clear"></div>
+    <!-- Footer -->
+    <footer class="w3-center w3-white w3-padding-32 w3-opacity w3-margin-top" style="margin-top: 100px!important">
+      <h5> تابع صفحاتنا على مواقع اتواصل الاجتماعي  </h5>
+      <div class="w3-xlarge w3-padding-16">
+        <i class="fa fa-facebook-official w3-hover-opacity"></i>
+        <i class="fa fa-instagram w3-hover-opacity"></i>
+        <i class="fa fa-snapchat w3-hover-opacity"></i>
+        <i class="fa fa-twitter w3-hover-opacity"></i>
+        <i class="fa fa-linkedin w3-hover-opacity"></i>
+      </div>
+    </footer>
 
-<!-- End page content -->
-</div>
+    <!-- End page content -->
+    </div>
 
-<script>
-    function delete_a_img(img_id) {
-        $.ajax({
-            type    :'POST',
-            url     :'delete.ajax.php?agar_id=1&img_id='+img_id,
-            /* Add Files Script*/
-            success: function(images){
-                $("#agar_images").html(images);
-                //setTimeout(function(){window.location.href="index.php"},800);
+
+    <script src="{{ asset('js/script.js') }}"></script>
+
+    <!--Only these JS files are necessary-->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+
+    <script>
+        function opent(evt, Name) {
+            var i, x, tablinks;
+            x = document.getElementsByClassName("tab-el");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
             }
-        });
-    }
-
-</script>
-
-<script>
-    function save_reservation() {
-        $.ajax({
-            type    :'GET',
-            url     :'handle_reservation.ajax.php?agar_id=1',
-            /* Add Files Script */
-            success: function(images){
-                $("#agar_images").html(images);
-                //setTimeout(function(){window.location.href="index.php"},800);
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < x.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" w3-blue", "");
             }
-        });
-    }
-
-</script>
-
-<!--Only these JS files are necessary-->
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script src="{{ asset('lib/dropzone/jquery-plugin.js') }}"></script>
-<script src="{{ asset('lib/dropzone/dropzone.js') }}"></script>
-
-<script type="text/javascript">
-        Dropzone.options.imageUpload = {
-            maxFilesize         :       1,
-            acceptedFiles: ".jpeg,.jpg,.png,.gif"
-        };
-</script>
-
-<script src="lib/lightslider-master/src/js/lightslider.js"></script>
-<script>
-    //$(document).ready(function() {
-        /*$("#content-slider").lightSlider({
-         loop:true,
-         keyPress:true
-         });*/
-        $('#image-gallery').lightSlider({
-            item: 3,
-            autoWidth: false,
-            slideMove: 1, // slidemove will be 1 if loop is true
-            slideMargin: 10,
-
-            addClass: '',
-            mode: "slide",
-            useCSS: true,
-            cssEasing: 'ease', //'cubic-bezier(0.25, 0, 0.25, 1)',//
-            easing: 'linear', //'for jquery animation',////
-
-            speed: 400, //ms'
-            auto: true,
-            pauseOnHover: true,
-            loop: true,
-            slideEndAnimation: true,
-            pause: 2000,
-
-            keyPress: false,
-            controls: true,
-            prevHtml: '',
-            nextHtml: '',
-
-            rtl:true,
-            adaptiveHeight:false,
-
-            vertical:false,
-            verticalHeight:500,
-            vThumbWidth:100,
-
-            thumbItem:8,
-            pager: true,
-            gallery: true,
-            galleryMargin: 5,
-            thumbMargin: 5,
-            currentPagerPosition: 'middle',
-
-            enableTouch:true,
-            enableDrag:true,
-            freeMove:true,
-            swipeThreshold: 40,
-
-            responsive : [],
-
-            onBeforeStart: function (el) {},
-            onSliderLoad: function() {
-                $('#image-gallery').removeClass('cS-hidden');
-            },
-            onBeforeSlide: function (el) {},
-            onAfterSlide: function (el) {},
-            onBeforeNextSlide: function (el) {},
-            onBeforePrevSlide: function (el) {}
-
-        });
-    //});
-</script>
-
-<script>
-    function opent(evt, Name) {
-        var i, x, tablinks;
-        x = document.getElementsByClassName("tab-el");
-        for (i = 0; i < x.length; i++) {
-            x[i].style.display = "none";
+            document.getElementById(Name).style.display = "block";
+            evt.currentTarget.className += " w3-blue";
         }
-        tablinks = document.getElementsByClassName("tablink");
-        for (i = 0; i < x.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" w3-blue", "");
-        }
-        document.getElementById(Name).style.display = "block";
-        evt.currentTarget.className += " w3-blue";
-    }
-</script>
-<script>
-    // Get the Sidebar
-    var mySidebar = document.getElementById("mySidebar");
+    </script>
 
-    // Get the DIV with overlay effect
-    var overlayBg = document.getElementById("myOverlay");
 
-    // Toggle between showing and hiding the sidebar, and add overlay effect
-    function w3_open() {
-        if (mySidebar.style.display === 'block') {
-            mySidebar.style.display = 'none';
-            overlayBg.style.display = "none";
-        } else {
-            mySidebar.style.display = 'block';
-            overlayBg.style.display = "block";
-        }
-    }
 
-    // Close the sidebar with the close button
-    function w3_close() {
-        mySidebar.style.display = "none";
-        overlayBg.style.display = "none";
-    }
-</script>
-<script src="js/jQuery.js"></script>
-<script src="js/app.js"></script>
-</body>
-</html>
+
+    </body>
+    </html>

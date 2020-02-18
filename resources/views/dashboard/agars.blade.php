@@ -55,8 +55,12 @@
                       <tr class="text-right">
                         <td>{{ $agar->agar_name }}</td>
                         <td>{{ $agar->type->type_name }}</td>
-                        <td>{{ $agar->location->area }}</td>
-                        <td><a href="#">{{ $agar->id }}</a></td>
+                        <td>
+                          {{ $agar->location->state->state_name }} /
+                          {{ $agar->location->city->city_name }} /
+                          {{ $agar->location->area }}
+                        </td>
+                        <td><a href="#">{{ $agar->owner_id }}</a></td>
                         <td>{{ $agar->status }}</td>
                         <td>
                           <form action="{{ route('dashboard.agars') }}" method="post">

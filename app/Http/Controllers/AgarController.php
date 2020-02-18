@@ -117,8 +117,19 @@ class AgarController extends Controller
     public function postDashboard(Request $request){
 
       if($request->has('delete_agar_btn')){
-        Agar::where('id',$agar_id)->where('owner_id',$user_id)->update(['status' => 0]);
-        return view('agars.list')->with('agars',$agars);
+        Agar::where('id',$request->agar_id)->where('owner_id',Auth::user()->id)->update(['status' => 0]);
+
+        return redirect()->back()->with('info','تم حذف العقار بنجاح');
+        /*$agars = Agar::where('status',1)->get();
+        $agarType = AgarType::where('status',1)->get();
+        $agarFloor = AgarFloor::where('status',1)->get();
+
+        return view('agars.AgarsList')
+              ->with('agars',$agars)
+              ->with('image')
+              ->with('price')
+              ->with('agarType',$agarType)
+              ->with('agarFloor',$agarFloor);*/
       }
 
       if($request->has('save_b')){
@@ -198,11 +209,9 @@ class AgarController extends Controller
 
       if($request->has('delete_agar_image')){
         // to delete agar image file
-        $images = AgarImg::where($request->image_id)->get();
-        foreach ($images as $image) {
-          File::delete('agar/images/'.$image->img_wide);
-          File::delete('agar/images/'.$image->thumbnail);
-        }
+        $image = AgarImg::find($request->image_id);
+        File::delete('agar/images/'.$image->img_wide);
+        File::delete('agar/images/'.$image->thumbnail);
         AgarImg::where('id',$request->image_id)->delete();
         return redirect()->back()->with('info','تم حذف الصورة بنجاح');
       }

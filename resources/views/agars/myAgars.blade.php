@@ -48,9 +48,13 @@
                                         <tr>
                                             <td>{{ $agar->id }}</td>
                                             <td> {{ $agar->agar_name }} </td>
-                                            <td>{{ $agar->type_id }}</td>
-                                            <td>{{ $agar->floor_id }}</td>
-                                            <td>{{ $agar->geo_loc_id }}</td>
+                                            <td>{{ $agar->type->type_name }}</td>
+                                            <td>{{ $agar->floor->floor_name }}</td>
+                                            <td>
+                                              {{ $agar->location->state->state_name  }} /
+                                              {{ $agar->location->city->city_name  }} /
+                                              {{ $agar->location->area  }}
+                                            </td>
                                             <td>{{ $agar->rooms_number }}</td>
                                             <td>{{ $agar->bathrooms_number }}</td>
                                             <td> {{ $agar->agar_desc }} </td>                                                                                                           </td>

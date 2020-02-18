@@ -75,9 +75,11 @@ class reservationController extends Controller
 
     // to add new reservation
     public function add_Reservation(Request $request){
+
       Reservation::create([
         'agar_id' => $request->agar_id,
         'user_id' => Auth::user()->id,
+        'reciver_id' => $request->reciver_id,
         'start_date' => $request->start_date,
         'end_date' => $request->end_date
       ]);

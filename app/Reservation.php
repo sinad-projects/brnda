@@ -9,7 +9,8 @@ class Reservation extends Model
   protected $table = 'reservation';
   protected $fillable = [
     'agar_id',
-    'user_id',
+    'user_id', // reservation sender id
+    'reciver_id', // agar owner
     'start_date',
     'end_date',
     'status'
