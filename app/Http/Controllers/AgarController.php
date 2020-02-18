@@ -31,7 +31,8 @@ class AgarController extends Controller
   #========= for web only ============#
   // get all agars
     public function list(){
-      $agars = Agar::where('status',1)->get();
+      $agars = Agar::where('status',1)
+              ->with('image')->with('price')->get();
       // get this data for filteration
       $agarType = AgarType::where('status',1)->get();
       $agarFloor = AgarFloor::where('status',1)->get();
@@ -44,6 +45,15 @@ class AgarController extends Controller
               ->with('agarFloor',$agarFloor)
               ->with('states',$states)
               ->with('citys',$citys);
+    }
+
+    public function agars_as_json()
+    {
+      $agars = Agar::where('status',1)
+              ->with('image')->with('price')->get();
+      return response()->json(
+          $agars
+      );
     }
 
     // get agars for spacific user
@@ -293,31 +303,58 @@ class AgarController extends Controller
     }
 
     public function agar_filter(Request $request){
-    $agars = Agar::where('status',1)
-                    ->where('rooms_number',$request->rooms_number)
-                    //->where('bathrooms_number',$request->bathrooms_number)
-                    //->join('agar_price','agar.id','agar_price.agar_id')
-                    // befor discount
-                    //->whereBetween('day',[$request->min_price,$request->max_price])
-                    ->join('agar_calendar','agar.id','agar_calendar.agar_id')
-                    ->where('start_date',$request->start_date)
-                    //->where('end_date','>=',$request->end_date)
-                    //->join('agar_extra','agar.id','agar_extra.agar_id')
-                    //->whereIn('b_extra',[$request->b_extra])
-                    ->select('agar.*')
-                    ->get();
-      $agarType = AgarType::where('status',1)->get();
-      $agarFloor = AgarFloor::where('status',1)->get();
-      $states = State::where('status',1)->get();
-      $citys = City::where('status',1)->get();
 
+      if($request->has('price')){
+          $price = $request->price;
+      } else $price = '';
 
-      return view('agars.agarsList')
-            ->with('agars',$agars)
-            ->with('agarType',$agarType)
-            ->with('agarFloor',$agarFloor)
-            ->with('states',$states)
-            ->with('citys',$citys);
+      if($request->has('rooms_number')){
+          $rooms_number = $request->rooms_number;
+      } else $rooms_number = '';
+
+      if($request->has('bathrooms_number')){
+          $bathrooms_number = $request->bathrooms_number;
+      } else $bathrooms_number = '';
+
+      if($request->has('type_id')){
+          $agar_type    = $request->type_id;
+      } else $agar_type = '';
+
+      if($request->has('floor_id')){
+          $agar_floor   = $request->floor_id;
+      } else $agar_floor = '';
+
+      if($request->has('date')){
+          $date   = $request->date;
+      } else $date = '';
+
+      if($request->has('a_extra')){
+          $a_extra   = $request->a_extra;
+      } else $a_extra = [];
+
+      if($request->has('sf_extra')){
+          $sf_extra   = $request->sf_extra;
+      } else $sf_extra = [];
+
+      $agars = Agar::where('status',1)
+                ->where('rooms_number',$rooms_number)
+                ->with('image')
+                ->with('price')
+                ->where('type_id',$agar_type)
+                ->where('floor_id',$agar_floor)
+                //->where('bathrooms_number',$bathrooms_number)
+                ->join('agar_price','agar.id','agar_price.agar_id')
+                // befor discount
+                ->where('day',$price)
+                ->join('agar_calendar','agar.id','agar_calendar.agar_id')
+                ->where('start_date','<=',$date)
+                ->where('end_date','>=',$date)
+                ->join('agar_extra','agar.id','agar_extra.agar_id')
+                ->whereJsonContains('a_extra',$a_extra)
+                ->whereJsonContains('sf_extra',$sf_extra)
+                ->select('agar.*')->get();
+      return response()->json($agars);
+
     }
 
     # =========================================================================#

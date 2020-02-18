@@ -16,21 +16,10 @@ class HomeController extends Controller
     public function index()
     {
       $agars = Agar::where('status',1)->get();
-      // get agar type
-      $agarType = AgarType::where('status',1)->get();
-      // get agar floor
-      $agarFloor = AgarFloor::where('status',1)->get();
-      // get states info
-      $states = State::where('status',1)->get();
-      // get citys info
-      $citys = City::where('status',1)->get();
-
+      $featured_agars = Agar::where('status',1)->where('featured',1)->get();
       return view('home')
             ->with('agars',$agars)
-            ->with('agarType',$agarType)
-            ->with('agarFloor',$agarFloor)
-            ->with('states',$states)
-            ->with('citys',$citys);
+            ->with('featured_agars',$featured_agars);
     }
 
 }

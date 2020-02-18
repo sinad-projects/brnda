@@ -50,8 +50,6 @@ Route::get('/messenger', 'MessengerController@index')->name('messages.index');
 
 Route::get('/messenger/count',function(){
     return Message::where('to','=',Auth::user()->id)
-            ->where('read',0)
-            ->orwhere('from','=',Auth::user()->id)
             ->where('read',0)->count();
 });
 
@@ -64,6 +62,11 @@ Route::post('/conversation/send', 'ContactsController@send');
 Route::get('agars',[
     'uses' => 'agarController@list',
     'as' => 'agars.agarsList',
+    'middleware' => ['auth']
+]);
+// for filter component
+Route::get('agars/json',[
+    'uses' => 'agarController@agars_as_json',
     'middleware' => ['auth']
 ]);
 // get agars for spacific user
@@ -127,6 +130,12 @@ Route::get('reservation',[
 Route::get('reservation/sent',[
     'uses' => 'reservationController@sent',
     'as' => 'reservation.sent',
+    'middleware' => ['auth']
+]);
+
+# to upload bill image for reservation payment
+Route::post('reservation/sent',[
+    'uses' => 'reservationController@postBill',
     'middleware' => ['auth']
 ]);
 

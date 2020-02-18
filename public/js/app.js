@@ -1899,6 +1899,374 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/filter/agarsComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/filter/agarsComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    agars: {
+      type: Array,
+      "default": []
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/filter/filterComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/filter/filterComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _formComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./formComponent */ "./resources/js/components/filter/formComponent.vue");
+/* harmony import */ var _agarsComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./agarsComponent */ "./resources/js/components/filter/agarsComponent.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    agarType: {
+      type: Array
+    },
+    agarFloor: {
+      type: Array
+    }
+  },
+  data: function data() {
+    return {
+      agars: {
+        type: [],
+        required: true
+      }
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/agars/json').then(function (response) {
+      _this.agars = response.data;
+    });
+  },
+  methods: {
+    pushResult: function pushResult(result) {
+      console.log(result);
+      this.agars = result;
+    }
+  },
+  components: {
+    agars: _agarsComponent__WEBPACK_IMPORTED_MODULE_1__["default"],
+    formfilter: _formComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/filter/formComponent.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/filter/formComponent.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    agarType: {
+      type: Array,
+      "default": []
+    },
+    agarFloor: {
+      type: Array,
+      "default": []
+    }
+  },
+  data: function data() {
+    return {
+      rooms_number: Number,
+      bathrooms_number: Number,
+      floor_id: Number,
+      type_id: Number,
+      date: '',
+      price: '',
+      a_extra: [],
+      sf_extra: []
+    };
+  },
+  methods: {
+    filter: function filter() {
+      var _this = this;
+
+      axios.post('agars/filter', {
+        rooms_number: this.rooms_number,
+        bathrooms_number: this.bathrooms_number,
+        floor_id: this.floor_id,
+        type_id: this.type_id,
+        date: this.date,
+        price: this.price,
+        a_extra: this.a_extra,
+        sf_extra: this.sf_extra,
+        _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      }).then(function (response) {
+        _this.$emit('new', response.data);
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/loginComponent.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/loginComponent.vue?vue&type=script&lang=js& ***!
@@ -51157,6 +51525,954 @@ var version = '3.2.3';
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/filter/agarsComponent.vue?vue&type=template&id=7342c3c6&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/filter/agarsComponent.vue?vue&type=template&id=7342c3c6& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { attrs: { id: "main" } }, [
+    _c(
+      "div",
+      { staticClass: "w3-third" },
+      [
+        _vm._l(_vm.agars, function(agar) {
+          return _c(
+            "div",
+            {
+              staticClass: "carousel slide",
+              attrs: { id: "carousel_" + agar.id, "data-ride": "carousel" }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "carousel-inner" },
+                _vm._l(agar.image, function(image) {
+                  return _c("div", { staticClass: "carousel-item active" }, [
+                    _c("img", {
+                      staticClass: "d-block w-100",
+                      attrs: {
+                        src: "agar/images/" + image.thumbnail,
+                        height: "200px",
+                        alt: "صورة العقار"
+                      }
+                    })
+                  ])
+                }),
+                0
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "carousel-control-prev",
+                  attrs: {
+                    href: "#carousel_" + agar.id,
+                    role: "button",
+                    "data-slide": "prev"
+                  }
+                },
+                [
+                  _c("span", {
+                    staticClass: "carousel-control-prev-icon",
+                    attrs: { "aria-hidden": "true" }
+                  }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "sr-only" }, [_vm._v("Previous")])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "carousel-control-next",
+                  attrs: {
+                    href: "#carousel_" + agar.id,
+                    role: "button",
+                    "data-slide": "next"
+                  }
+                },
+                [
+                  _c("span", {
+                    staticClass: "carousel-control-next-icon",
+                    attrs: { "aria-hidden": "true" }
+                  }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "sr-only" }, [_vm._v("Next")])
+                ]
+              ),
+              _vm._v(" "),
+              _c("br")
+            ]
+          )
+        }),
+        _c("br")
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "w3-third", attrs: { dir: "rtl" } },
+      [
+        _vm._l(_vm.agars, function(agar) {
+          return _c("div", [
+            _c("div", [
+              _c("a", { attrs: { href: "agars/" + agar.id } }, [
+                _c("h4", [_vm._v(" " + _vm._s(agar.agar_name) + " ")])
+              ]),
+              _vm._v(" "),
+              _c("p", [_vm._v("الخرطوم - السودان - امدرمان")])
+            ]),
+            _vm._v(" "),
+            _c("div", [
+              _c("p", [
+                _c("span", [_vm._v(_vm._s(agar.rooms_number) + " غرف")]),
+                _vm._v(" و "),
+                _c("span", [_vm._v(_vm._s(agar.bathrooms_number) + " حمامات")])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", [
+              _c("p", [
+                _vm._v("ابتداءا من  : " + _vm._s(agar.price.day) + " $ / لليوم")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("hr")
+          ])
+        }),
+        _c("br")
+      ],
+      2
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/filter/filterComponent.vue?vue&type=template&id=0bbb364e&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/filter/filterComponent.vue?vue&type=template&id=0bbb364e& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "w3-row-padding" },
+    [
+      _c("br"),
+      _vm._v(" "),
+      _c("formfilter", {
+        attrs: { agarType: _vm.agarType, agarFloor: _vm.agarFloor },
+        on: { new: _vm.pushResult }
+      }),
+      _vm._v(" "),
+      _c("agars", { attrs: { agars: _vm.agars } })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/filter/formComponent.vue?vue&type=template&id=0b76060d&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/filter/formComponent.vue?vue&type=template&id=0b76060d& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("section", [
+    _c(
+      "div",
+      {
+        staticClass:
+          "container w3-card w3-padding filter-header filter-header-web"
+      },
+      [
+        _c("form", { staticClass: "form-inline" }, [
+          _c("div", { staticClass: "form-group mb-2" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.type_id,
+                    expression: "type_id"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { name: "type_id" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.type_id = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              _vm._l(_vm.agarType, function(type) {
+                return _c(
+                  "option",
+                  {
+                    domProps: { value: type.type_id },
+                    on: {
+                      change: function($event) {
+                        return _vm.filter()
+                      }
+                    }
+                  },
+                  [_vm._v(" " + _vm._s(type.type_name) + " ")]
+                )
+              }),
+              0
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group mx-sm-3 mb-2" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.floor_id,
+                    expression: "floor_id"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { name: "floor_id" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.floor_id = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              _vm._l(_vm.agarFloor, function(floor) {
+                return _c(
+                  "option",
+                  {
+                    domProps: { value: floor.floor_id },
+                    on: {
+                      change: function($event) {
+                        return _vm.filter()
+                      }
+                    }
+                  },
+                  [_vm._v(" " + _vm._s(floor.floor_name) + " ")]
+                )
+              }),
+              0
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group mx-sm-3 mb-2" }, [
+            _c("p", [
+              _vm._v("تاريخ الحجز "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.date,
+                    expression: "date"
+                  }
+                ],
+                attrs: { type: "date", name: "date", id: "datepicker" },
+                domProps: { value: _vm.date },
+                on: {
+                  change: function($event) {
+                    return _vm.filter()
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.date = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group mx-sm-3 mb-2" }, [
+            _c("p", [
+              _vm._v("عدد الغرف "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.rooms_number,
+                    expression: "rooms_number"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "number", name: "rooms_number" },
+                domProps: { value: _vm.rooms_number },
+                on: {
+                  change: function($event) {
+                    return _vm.filter()
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.rooms_number = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "w3-button w3-black",
+              attrs: { type: "button", name: "search_btn" },
+              on: {
+                click: function($event) {
+                  return _vm.filter()
+                }
+              }
+            },
+            [_c("i", { staticClass: "fa fa-search" }), _vm._v(" بحث ")]
+          )
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c("div", { staticClass: "w3-third filter_web_sidebar" }, [
+      _c("div", { staticClass: "card", staticStyle: { width: "18rem" } }, [
+        _c("ul", { staticClass: "list-group list-group-flush" }, [
+          _c("li", { staticClass: "list-group-item" }, [
+            _vm._v("\n          سعر الايجار لليوم الواحد\n          "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price,
+                  expression: "price"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "number", name: "price" },
+              domProps: { value: _vm.price },
+              on: {
+                change: function($event) {
+                  return _vm.filter()
+                },
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.price = $event.target.value
+                }
+              }
+            })
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("div", { staticClass: "card", staticStyle: { width: "18rem" } }, [
+        _c("div", { staticClass: "card-header" }, [
+          _vm._v("\n        الخصائص\n      ")
+        ]),
+        _vm._v(" "),
+        _c("ul", { staticClass: "list-group list-group-flush " }, [
+          _c("li", { staticClass: "list-group-item" }, [
+            _c("h4", [_vm._v(" المزايا الاضافية ")]),
+            _vm._v(" "),
+            _c("div", [
+              _c("span", [_vm._v(" انترنت ")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.a_extra,
+                    expression: "a_extra"
+                  }
+                ],
+                attrs: { value: "انترنت", type: "checkbox" },
+                domProps: {
+                  checked: Array.isArray(_vm.a_extra)
+                    ? _vm._i(_vm.a_extra, "انترنت") > -1
+                    : _vm.a_extra
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.a_extra,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "انترنت",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.a_extra = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.a_extra = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.a_extra = $$c
+                    }
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", [
+              _c("span", [_vm._v(" غسالة ")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.a_extra,
+                    expression: "a_extra"
+                  }
+                ],
+                attrs: { value: "غسالة", type: "checkbox" },
+                domProps: {
+                  checked: Array.isArray(_vm.a_extra)
+                    ? _vm._i(_vm.a_extra, "غسالة") > -1
+                    : _vm.a_extra
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.a_extra,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "غسالة",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.a_extra = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.a_extra = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.a_extra = $$c
+                    }
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", [
+              _c("span", [_vm._v(" مصعد ")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.a_extra,
+                    expression: "a_extra"
+                  }
+                ],
+                attrs: { value: "مصعد", type: "checkbox" },
+                domProps: {
+                  checked: Array.isArray(_vm.a_extra)
+                    ? _vm._i(_vm.a_extra, "مصعد") > -1
+                    : _vm.a_extra
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.a_extra,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "مصعد",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.a_extra = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.a_extra = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.a_extra = $$c
+                    }
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "list-group-item" }, [
+            _c("h4", [_vm._v(" مزايا خاصة ")]),
+            _vm._v(" "),
+            _c("div", [
+              _c("span", [_vm._v(" حراسة امنية ")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.sf_extra,
+                    expression: "sf_extra"
+                  }
+                ],
+                attrs: { value: "حراسة امنية", type: "checkbox" },
+                domProps: {
+                  checked: Array.isArray(_vm.sf_extra)
+                    ? _vm._i(_vm.sf_extra, "حراسة امنية") > -1
+                    : _vm.sf_extra
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.sf_extra,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "حراسة امنية",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.sf_extra = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.sf_extra = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.sf_extra = $$c
+                    }
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", [
+              _c("span", [_vm._v(" توصيل من المطار ")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.sf_extra,
+                    expression: "sf_extra"
+                  }
+                ],
+                attrs: { value: "توصيل من المطار", type: "checkbox" },
+                domProps: {
+                  checked: Array.isArray(_vm.sf_extra)
+                    ? _vm._i(_vm.sf_extra, "توصيل من المطار") > -1
+                    : _vm.sf_extra
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.sf_extra,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "توصيل من المطار",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.sf_extra = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.sf_extra = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.sf_extra = $$c
+                    }
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", [
+              _c("span", [_vm._v(" امكانية الاستلام على مدار اليوم ")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.sf_extra,
+                    expression: "sf_extra"
+                  }
+                ],
+                attrs: {
+                  value: "امكانية الاستلام على مدار اليو",
+                  type: "checkbox"
+                },
+                domProps: {
+                  checked: Array.isArray(_vm.sf_extra)
+                    ? _vm._i(_vm.sf_extra, "امكانية الاستلام على مدار اليو") >
+                      -1
+                    : _vm.sf_extra
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.sf_extra,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "امكانية الاستلام على مدار اليو",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.sf_extra = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.sf_extra = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.sf_extra = $$c
+                    }
+                  }
+                }
+              })
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("div", { staticClass: "card", staticStyle: { width: "18rem" } }, [
+        _c("ul", { staticClass: "list-group list-group-flush" }, [
+          _c("li", { staticClass: "list-group-item" }, [
+            _c(
+              "button",
+              {
+                staticClass: "w3-button w3-black",
+                attrs: { type: "button", name: "search_btn" },
+                on: {
+                  click: function($event) {
+                    return _vm.filter()
+                  }
+                }
+              },
+              [_vm._v("بحث")]
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(2)
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "section",
+      {
+        staticClass: "w3-card w3-padding filter-header filter-header-mobile",
+        staticStyle: { "margin-bottom": "50px" }
+      },
+      [
+        _c("div", { staticClass: "container" }, [
+          _c("form", {}, [
+            _c(
+              "div",
+              { staticClass: "form-group filter-header-mobile-datepicker" },
+              [
+                _c("p", [
+                  _vm._v("تاريخ الحجز "),
+                  _c("input", {
+                    attrs: { type: "text", id: "datepicker_mobile" }
+                  })
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group open-slider-btn" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "w3-button w3-black w3-xlarge",
+                  attrs: {
+                    href: "javascript::void()",
+                    id: "openNav",
+                    onclick: "open_filter()"
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-sliders" })]
+              )
+            ])
+          ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card", staticStyle: { width: "18rem" } }, [
+      _c("ul", { staticClass: "list-group list-group-flush" }, [
+        _c("li", { staticClass: "list-group-item" }, [
+          _vm._v("\n          العملة\n          "),
+          _c(
+            "select",
+            { staticClass: "form-control", attrs: { name: "currency" } },
+            [
+              _c("option", { attrs: { value: "sdg" } }, [_vm._v(" SDG ")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "usd" } }, [_vm._v(" USD ")])
+            ]
+          )
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "w3-sidebar w3-animate-left",
+        staticStyle: { display: "none" },
+        attrs: { id: "filter_sidebar" }
+      },
+      [
+        _c(
+          "a",
+          {
+            staticClass: "w3-button w3-large",
+            attrs: { href: "javascript::void()", onclick: "close_filter()" }
+          },
+          [
+            _c("i", {
+              staticClass: "fa fa-times w3-large w3-hover-none w3-text-black"
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", {}, [
+          _c("div", { staticClass: "card" }, [
+            _c("ul", { staticClass: "list-group list-group-flush" }, [
+              _c("li", { staticClass: "list-group-item" }, [
+                _vm._v("\n            سعر الايجار لليوم الواحد\n            "),
+                _c("input", {
+                  staticClass: "js-range-slider",
+                  attrs: {
+                    type: "text",
+                    id: "price_mobile_range",
+                    name: "my_range",
+                    value: ""
+                  }
+                })
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-header" }, [
+              _vm._v("\n          الخصائص\n        ")
+            ]),
+            _vm._v(" "),
+            _c("ul", { staticClass: "list-group list-group-flush " }, [
+              _c("li", { staticClass: "list-group-item" }, [
+                _c("h4", [_vm._v(" المزايا الاضافية ")]),
+                _vm._v(" "),
+                _c("div", [
+                  _c("span", [_vm._v(" انترنت ")]),
+                  _vm._v(" "),
+                  _c("input", { attrs: { type: "checkbox" } })
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c("span", [_vm._v(" غسالة ")]),
+                  _vm._v(" "),
+                  _c("input", { attrs: { type: "checkbox" } })
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c("span", [_vm._v(" مصعد ")]),
+                  _vm._v(" "),
+                  _c("input", { attrs: { type: "checkbox" } })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "list-group-item" }, [
+                _c("h4", [_vm._v(" مزايا خاصة ")]),
+                _vm._v(" "),
+                _c("div", [
+                  _c("span", [_vm._v(" حراسة امنية ")]),
+                  _vm._v(" "),
+                  _c("input", { attrs: { type: "checkbox" } })
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c("span", [_vm._v(" توصيل من المطار ")]),
+                  _vm._v(" "),
+                  _c("input", { attrs: { type: "checkbox" } })
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c("span", [_vm._v(" امكانية الاستلام على مدار اليوم ")]),
+                  _vm._v(" "),
+                  _c("input", { attrs: { type: "checkbox" } })
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("div", { staticClass: "card" }, [
+            _c("ul", { staticClass: "list-group list-group-flush" }, [
+              _c("li", { staticClass: "list-group-item" }, [
+                _c("span", [_vm._v("عدد الغرف")]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { type: "number", name: "rooms_number" }
+                }),
+                _vm._v(" "),
+                _c("span", [_vm._v("عدد الحمامات")]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { type: "number", name: "bathroms_number" }
+                })
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("div", { staticClass: "card" }, [
+            _c("ul", { staticClass: "list-group list-group-flush" }, [
+              _c("li", { staticClass: "list-group-item" }, [
+                _vm._v("\n            العملة\n            "),
+                _c(
+                  "select",
+                  { staticClass: "form-control", attrs: { name: "currency" } },
+                  [
+                    _c("option", { attrs: { value: "sdg" } }, [
+                      _vm._v(" SDG ")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "usd" } }, [_vm._v(" USD ")])
+                  ]
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("div", { staticClass: "card" }, [
+            _c("ul", { staticClass: "list-group list-group-flush" }, [
+              _c("li", { staticClass: "list-group-item" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "w3-button w3-black",
+                    attrs: { type: "submit", name: "search_btn" }
+                  },
+                  [_vm._v("بحث")]
+                )
+              ])
+            ])
+          ])
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/loginComponent.vue?vue&type=template&id=413f4ec2&":
 /*!*****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/loginComponent.vue?vue&type=template&id=413f4ec2& ***!
@@ -51401,7 +52717,9 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "avatar" }, [
-              _c("img", { attrs: { alt: contact.name } })
+              _c("img", {
+                attrs: { src: "images/avatar2.png", alt: contact.name }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "w3-hide-small" }, [
@@ -52074,7 +53392,7 @@ var render = function() {
         _c(
           "span",
           {
-            staticClass: "badge badge-light w3-red",
+            staticClass: "badge badge-light",
             staticStyle: {
               position: "relative",
               top: "5px",
@@ -64316,6 +65634,9 @@ Vue.component('chat-app', __webpack_require__(/*! ./components/messenger/ChatApp
 Vue.component('notification-app', __webpack_require__(/*! ./components/site/notificationComponent.vue */ "./resources/js/components/site/notificationComponent.vue")["default"]);
 Vue.component('login-app', __webpack_require__(/*! ./components/loginComponent.vue */ "./resources/js/components/loginComponent.vue")["default"]);
 Vue.component('register-app', __webpack_require__(/*! ./components/registerComponent.vue */ "./resources/js/components/registerComponent.vue")["default"]);
+Vue.component('filter-app', __webpack_require__(/*! ./components/filter/filterComponent.vue */ "./resources/js/components/filter/filterComponent.vue")["default"]);
+Vue.component('agars-app', __webpack_require__(/*! ./components/filter/agarsComponent.vue */ "./resources/js/components/filter/agarsComponent.vue")["default"]);
+Vue.component('formfilter-app', __webpack_require__(/*! ./components/filter/formComponent.vue */ "./resources/js/components/filter/formComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -64327,6 +65648,15 @@ var login = new Vue({
 });
 var register = new Vue({
   el: '#register'
+});
+var filter = new Vue({
+  el: '#filter'
+});
+var agars = new Vue({
+  el: '#agars'
+});
+var formfilter = new Vue({
+  el: '#formfilter'
 });
 var contact = new Vue({
   el: '#contact'
@@ -64383,6 +65713,213 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   cluster: "mt1",
   encrypted: true
 });
+
+/***/ }),
+
+/***/ "./resources/js/components/filter/agarsComponent.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/filter/agarsComponent.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _agarsComponent_vue_vue_type_template_id_7342c3c6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./agarsComponent.vue?vue&type=template&id=7342c3c6& */ "./resources/js/components/filter/agarsComponent.vue?vue&type=template&id=7342c3c6&");
+/* harmony import */ var _agarsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./agarsComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/filter/agarsComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _agarsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _agarsComponent_vue_vue_type_template_id_7342c3c6___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _agarsComponent_vue_vue_type_template_id_7342c3c6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/filter/agarsComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/filter/agarsComponent.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/filter/agarsComponent.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_agarsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./agarsComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/filter/agarsComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_agarsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/filter/agarsComponent.vue?vue&type=template&id=7342c3c6&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/filter/agarsComponent.vue?vue&type=template&id=7342c3c6& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_agarsComponent_vue_vue_type_template_id_7342c3c6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./agarsComponent.vue?vue&type=template&id=7342c3c6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/filter/agarsComponent.vue?vue&type=template&id=7342c3c6&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_agarsComponent_vue_vue_type_template_id_7342c3c6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_agarsComponent_vue_vue_type_template_id_7342c3c6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/filter/filterComponent.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/filter/filterComponent.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _filterComponent_vue_vue_type_template_id_0bbb364e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./filterComponent.vue?vue&type=template&id=0bbb364e& */ "./resources/js/components/filter/filterComponent.vue?vue&type=template&id=0bbb364e&");
+/* harmony import */ var _filterComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./filterComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/filter/filterComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _filterComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _filterComponent_vue_vue_type_template_id_0bbb364e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _filterComponent_vue_vue_type_template_id_0bbb364e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/filter/filterComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/filter/filterComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/filter/filterComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_filterComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./filterComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/filter/filterComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_filterComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/filter/filterComponent.vue?vue&type=template&id=0bbb364e&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/filter/filterComponent.vue?vue&type=template&id=0bbb364e& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_filterComponent_vue_vue_type_template_id_0bbb364e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./filterComponent.vue?vue&type=template&id=0bbb364e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/filter/filterComponent.vue?vue&type=template&id=0bbb364e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_filterComponent_vue_vue_type_template_id_0bbb364e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_filterComponent_vue_vue_type_template_id_0bbb364e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/filter/formComponent.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/filter/formComponent.vue ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _formComponent_vue_vue_type_template_id_0b76060d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./formComponent.vue?vue&type=template&id=0b76060d& */ "./resources/js/components/filter/formComponent.vue?vue&type=template&id=0b76060d&");
+/* harmony import */ var _formComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./formComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/filter/formComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _formComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _formComponent_vue_vue_type_template_id_0b76060d___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _formComponent_vue_vue_type_template_id_0b76060d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/filter/formComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/filter/formComponent.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/filter/formComponent.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_formComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./formComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/filter/formComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_formComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/filter/formComponent.vue?vue&type=template&id=0b76060d&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/filter/formComponent.vue?vue&type=template&id=0b76060d& ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_formComponent_vue_vue_type_template_id_0b76060d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./formComponent.vue?vue&type=template&id=0b76060d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/filter/formComponent.vue?vue&type=template&id=0b76060d&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_formComponent_vue_vue_type_template_id_0b76060d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_formComponent_vue_vue_type_template_id_0b76060d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 

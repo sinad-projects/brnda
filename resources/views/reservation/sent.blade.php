@@ -2,16 +2,16 @@
 
 <!-- <link rel="stylesheet" href="{{ asset('css/home.css') }}"> -->
 
-  <body dir="rtl" class="text-right">
-    <div class="w3-white">
+<body dir="rtl" class="text-right">
+  <div class="w3-white">
 
 
-    <!-- sidebar menu -->
-      @include('layouts/aside')
+  <!-- sidebar menu -->
+    @include('layouts/aside')
 
-  <!-- Overlay effect when opening sidebar on small screens -->
-  <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
-  <!-- -->
+    <!-- Overlay effect when opening sidebar on small screens -->
+    <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+    <!-- -->
 
   <br>
   <div class="w3-content  w3-card w3-responsive">
@@ -38,7 +38,6 @@
                   <thead>
                   <tr class="">
                       <th class="">#</th>
-                      <th class="">اسم المستأجر</th>
                       <th class="">اسم العقار</th>
                       <th class="">بداية الإيجار</th>
                       <th class="">نهاية الإيجار</th>
@@ -49,7 +48,6 @@
                     @foreach($reservations as $reservation)
                         <tr>
                             <td>{{ $reservation->id }}</td>
-                            <td><a href="#">{{ $reservation->user->name }}</a></td>
                             <td><a href="#">{{ $reservation->agar->agar_name }}</a></td>
                             <td>{{ $reservation->start_date  }}</td>
                             <td>{{ $reservation->end_date }}</td>
@@ -70,23 +68,57 @@
             <thead>
               <tr class="">
                   <th class="">#</th>
-                  <th class="">اسم المستأجر</th>
                   <th class="">اسم العقار</th>
                   <th class="">بداية الإيجار</th>
                   <th class="">نهاية الإيجار</th>
                   <th class="	"> تاريخ الطلب</th>
+                  <th class="">اتمام عملية الدفع</th>
                 </tr>
                 </thead>
                 <tbody>
                   @foreach($accepted_reservations as $reservation)
                     <tr>
                         <td>{{ $reservation->id }}</td>
-                        <td><a href="#">{{ $reservation->user->name }}</a></td>
                         <td><a href="#">{{ $reservation->agar->agar_name }}</a></td>
                         <td>{{ $reservation->start_date  }}</td>
                         <td>{{ $reservation->end_date }}</td>
                         <td>{{ $reservation->created_at->diffForHumans() }}</td>
+                        <td>
+                          <div class="">
+                              <div class="w3-bar">
+                                  <button onclick="document.getElementById('pay_{{ $reservation->id }}').style.display='block'" class=" w3-btn w3-mobile w3-text-gray w3-border col-md-12" style="padding: 0;"><i class="fa fa-credit-card" style="padding: 5px;"></i></button>
+                              </div>
+                          </div>
+                        </td>
                       </tr>
+                      <!-- START pay for reservation  MODAL -->
+                      <div id="pay_{{ $reservation->id }}" class="w3-modal">
+                        <div class="w3-modal-content brnda-card-4 w3-animate-zoom" style="max-width:480px">
+                            <header class="w3-container brnda-card">
+                                <span onclick="document.getElementById('pay_{{ $reservation->id }}').style.display='none'"
+                                  class="w3-btn w3-display-topleft">&times;</span>
+                                <h4>  كيف تود اتمام عملية الدفع </h4>
+                                 <ol>
+                                   <li>دفع مباشر</li>
+                                   <li>تحويل بنكي</li>
+                                 </ol>
+                            </header>
+                            <form action="{{ route('reservation.sent') }}" method="post" id="pay_form_{{ $reservation->id }}" enctype="multipart/form-data">
+                                @csrf
+                                <footer class="w3-container ">
+                                    <div class="w3-margin-top w3-margin-bottom w3-left">
+                                        <input type="hidden" value="{{ $reservation->id }}" name="reservation_id" />
+                                        <hr>
+                                        <label for="bill_file" class="w3-large">صورة لفاتورة الدفع</label>
+                                        <input type="file" name="bill_file" id="bill_file"><br>
+                                        <hr>
+                                        <button form="pay_form_{{ $reservation->id }}" name="pay_btn" value="دفع"class="w3-btn brnda-card w3-ripple w3-margin-left"><i class="fa fa-check-square"></i> موافق</button>
+                                        <button type="button" onclick="document.getElementById('pay_{{ $reservation->id }}').style.display='none'"class="w3-btn w3-white w3-ripple"><i class="fa fa-arrow-right"></i> إلغاء</button>
+                                    </div>
+                                  </footer>
+                                </form>
+                            </div>
+                        </div><!-- END pay for reservation  MODAL -->
                     @endforeach
                   </tbody>
                 </table>
@@ -102,7 +134,6 @@
                     <thead>
                       <tr class="">
                           <th class="">#</th>
-                          <th class="">اسم المستأجر</th>
                           <th class="">اسم العقار</th>
                           <th class="">بداية الإيجار</th>
                           <th class="">نهاية الإيجار</th>
@@ -113,7 +144,6 @@
                       @foreach($confirmable_reservations as $reservation)
                         <tr>
                             <td>{{ $reservation->id }}</td>
-                            <td><a href="#">{{ $reservation->user->name }}</a></td>
                             <td><a href="#">{{ $reservation->agar->agar_name }}</a></td>
                             <td>{{ $reservation->start_date  }}</td>
                             <td>{{ $reservation->end_date }}</td>
@@ -134,7 +164,6 @@
                     <thead>
                       <tr class="">
                           <th class="">#</th>
-                          <th class="">اسم المستأجر</th>
                           <th class="">اسم العقار</th>
                           <th class="">بداية الإيجار</th>
                           <th class="">نهاية الإيجار</th>
@@ -146,7 +175,6 @@
                       @foreach($rejected_reservations as $reservation)
                         <tr>
                             <td>{{ $reservation->id }}</td>
-                            <td><a href="#">{{ $reservation->user->name }}</a></td>
                             <td><a href="#">{{ $reservation->agar->agar_name }}</a></td>
                             <td>{{ $reservation->start_date  }}</td>
                             <td>{{ $reservation->end_date }}</td>
@@ -193,6 +221,23 @@
   </div>
 </div>
 
+<div class="w3-clear"></div>
+<!-- Footer -->
+<footer class="w3-center w3-white w3-padding-32 w3-opacity w3-margin-top" style="margin-top: 100px!important">
+  <h5> تابع صفحاتنا على مواقع اتواصل الاجتماعي  </h5>
+  <div class="w3-xlarge w3-padding-16">
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
+    <i class="fa fa-snapchat w3-hover-opacity"></i>
+    <i class="fa fa-twitter w3-hover-opacity"></i>
+    <i class="fa fa-linkedin w3-hover-opacity"></i>
+  </div>
+  <p>تم التطوير بواسطة <a href="#" target="_blank" class="w3-hover-text-green">شركة سناد للحلول البرمجية</a></p>
+</footer>
+
+<script type="text/javascript" src="{{ asset('js/script.js') }}">
+
+</script>
 
 <script>
   function openTab(evt, TabName) {
@@ -212,11 +257,6 @@
   document.getElementsByClassName("tablink")[0].click();
 
 </script>
-
-<footer class="w3-container w3-padding-16">
-    <h4>برندة</h4>
-    <p>جميع الحقوق محفوظة لـ <b>برندة</b> 2019</p>
-</footer>
 
 </body>
 </html>

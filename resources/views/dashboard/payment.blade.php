@@ -36,6 +36,7 @@
                                   <tr class="text-right">
                                     <th> اسم العقار   </th>
                                     <th> مقدم طلب الاستئجار </th>
+                                    <th> صورة للفاتورة </th>
                                     <th>العمليات</th>
                                   </tr>
                                 </thead>
@@ -43,6 +44,7 @@
                                   <tr class="text-right">
                                     <th> اسم العقار   </th>
                                     <th> مقدم طلب الاستئجار </th>
+                                    <th> صورة للفاتورة </th>
                                     <th>العمليات</th>
                                   </tr>
                                 </tfoot>
@@ -50,6 +52,14 @@
                                   <tr class="text-right">
                                     <td>{{ $reservation->agar->agar_name }}</td>
                                     <td>{{ $reservation->user->name }}</td>
+                                    @if($reservation->bill)
+                                      <td>
+                                        <a href="http://localhost:8000/bill/images/{{$reservation->bill->bill_image}}">
+                                          <img src="{{ asset('bill/images/'.$reservation->bill->bill_image) }}" width="100" height="100"></td>
+                                        </a>
+                                    @else
+                                      <td></td>
+                                    @endif
                                     <td>
                                       <form class="user" id="payment_{{ $reservation->id }}" method="post" action="{{ route('dashboard.payment') }}">
                                         @csrf

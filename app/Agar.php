@@ -16,7 +16,8 @@ class Agar extends Model
       'bathrooms_number',
       'agar_desc',
       'owner_id',
-      'status'
+      'status',
+      'featured'
     ];
 
     public function user()

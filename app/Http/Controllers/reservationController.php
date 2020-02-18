@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\reservation as reservationResource;
 use Auth;
 use Validator;
+use App\Bill;
 
 class reservationController extends Controller
 {
@@ -58,6 +59,18 @@ class reservationController extends Controller
               ->with('accepted_reservations',$accepted_reservations)
               ->with('confirmable_reservations',$confirmable_reservations)
               ->with('rejected_reservations',$rejected_reservations);
+    }
+
+    public function postBill(Request $request){
+      $bill_image = $request->file('bill_file');
+      $imageName = time().'_'. rand(1000, 9999). '.' .$bill_image->extension();
+      $bill_image->move(public_path('bill/images'),$imageName);
+      Bill::create([
+        'user_id' => Auth::user()->id,
+        'reservation_id' => $request->reservation_id,
+        'bill_image' => $imageName
+      ]);
+      return redirect()->back()->with('info','تم رفع الصورة بنجاح');
     }
 
     // to add new reservation

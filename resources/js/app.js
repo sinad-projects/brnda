@@ -56,6 +56,10 @@ Vue.component('notification-app',require('./components/site/notificationComponen
 Vue.component('login-app', require('./components/loginComponent.vue').default);
 Vue.component('register-app', require('./components/registerComponent.vue').default);
 
+Vue.component('filter-app', require('./components/filter/filterComponent.vue').default);
+Vue.component('agars-app', require('./components/filter/agarsComponent.vue').default);
+Vue.component('formfilter-app', require('./components/filter/formComponent.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -69,6 +73,17 @@ const login = new Vue({
 const register = new Vue({
     el: '#register',
 });
+
+const filter = new Vue({
+    el: '#filter'
+});
+const agars = new Vue({
+    el: '#agars'
+});
+const formfilter = new Vue({
+    el: '#formfilter'
+});
+
 
 const contact = new Vue({
     el: '#contact'

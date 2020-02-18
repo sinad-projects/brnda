@@ -23,4 +23,8 @@ class Reservation extends Model
       return $this->belongsTo(Agar::class,'agar_id');
   }
 
+  public function bill(){
+      return $this->hasOne(Bill::class,'reservation_id');
+  }
+
 }

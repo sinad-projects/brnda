@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1e06fd8572dcef51600f91bdafcd63a7",
+    "content-hash": "574878ba5067975ead5922afdca791ad",
     "packages": [
         {
             "name": "defuse/php-encryption",
@@ -1538,6 +1538,49 @@
                 "server"
             ],
             "time": "2019-07-13T18:58:26+00:00"
+        },
+        {
+            "name": "mobily-ws/api",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mobily-ws/api.git",
+                "reference": "bf152742e4631f9594b1b88caf5fb7d6a438223f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mobily-ws/api/zipball/bf152742e4631f9594b1b88caf5fb7d6a438223f",
+                "reference": "bf152742e4631f9594b1b88caf5fb7d6a438223f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "MobilySms.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mobily.ws",
+                    "email": "info@mobily.ws"
+                }
+            ],
+            "description": "Mobily-api is the PHP library for sending sms through internet ",
+            "homepage": "http://mobily.ws/",
+            "keywords": [
+                "api",
+                "mobily",
+                "mobily.ws",
+                "sms"
+            ],
+            "time": "2017-10-31T13:36:02+00:00"
         },
         {
             "name": "monolog/monolog",

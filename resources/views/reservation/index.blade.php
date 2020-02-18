@@ -2,12 +2,13 @@
 
 <!-- <link rel="stylesheet" href="{{ asset('css/home.css') }}"> -->
 
-  <body dir="rtl" class="text-right">
-    <div class="w3-white">
+<body dir="" class="text-right">
+  <div class="w3-white">
 
 
-    <!-- sidebar menu -->
-      @include('layouts/aside')
+  <!-- sidebar menu -->
+    @include('layouts/aside')
+
     <!-- Overlay effect when opening sidebar on small screens -->
     <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
     <!-- -->
@@ -15,7 +16,7 @@
     <br>
     <div class="w3-content  w3-card w3-responsive">
     <div class="w3-container">
-      <h2> طلبات الايجار على عقاراتي </h2>
+      <h3> طلبات الايجار على عقاراتي </h3>
     </div>
 
     <div class="w3-bar w3-border-bottom w3-card">
