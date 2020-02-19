@@ -4,7 +4,7 @@
 .filter-header p{
   margin-top: 20px;
 }
-
+ 
 #filter_sidebar{
   width: 80%!important;
   position: absolute;
@@ -16,6 +16,10 @@
 }
 .open-slider-btn, .filter-header-mobile{
   display: none!important;
+}
+
+.agars_details{
+  height: 250px;
 }
 @media screen and (max-width: 992px){
   .filter-header-web{
@@ -31,19 +35,21 @@
     float: right!important;
     margin-top: -75px
   }
+  .filter_web_sidebar{
+    display: none;
+  }
   .agars-body{
     width: 50%!important;
   }
 }
 
-@media screen and (max-width: 992px){
-  .filter_web_sidebar{
-    display: none;
-  }
-}
 
 @media screen and (max-width: 766px){
   .agars-body{
     width: 100%!important;
+  }
+  .agars_images{}
+  .agars_details{
+    margin-bottom: -80px;
   }
 }

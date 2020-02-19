@@ -1953,11 +1953,6 @@ __webpack_require__.r(__webpack_exports__);
       type: Array,
       "default": []
     }
-  },
-  date: function date() {
-    return {
-      counter: 0
-    };
   }
 });
 
@@ -68719,16 +68714,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "main" } }, [
-    _c(
-      "div",
-      { staticClass: "w3-third agars-body" },
-      [
-        _vm._l(_vm.agars, function(agar) {
-          return _c(
+  return _c(
+    "section",
+    { attrs: { id: "main" } },
+    _vm._l(_vm.agars, function(agar) {
+      return _c("div", [
+        _c("div", { staticClass: "w3-third agars-body" }, [
+          _c(
             "div",
             {
-              staticClass: "carousel slide",
+              staticClass: "carousel slide agars_images",
               attrs: { id: "carousel_" + agar.id, "data-ride": "carousel" }
             },
             [
@@ -68815,49 +68810,48 @@ var render = function() {
               _vm._v(" "),
               _c("br")
             ]
-          )
-        }),
-        _c("br")
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "w3-third agars-body", attrs: { dir: "rtl" } },
-      [
-        _vm._l(_vm.agars, function(agar) {
-          return _c("div", [
-            _c("div", [
-              _c("a", { attrs: { href: "agars/" + agar.id } }, [
-                _c("h4", [_vm._v(" " + _vm._s(agar.agar_name) + " ")])
+          ),
+          _c("br")
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "w3-third agars-body", attrs: { dir: "rtl" } },
+          [
+            _c("div", { staticClass: "agars_details" }, [
+              _c("div", [
+                _c("a", { attrs: { href: "agars/" + agar.id } }, [
+                  _c("h4", [_vm._v(" " + _vm._s(agar.agar_name) + " ")])
+                ]),
+                _vm._v(" "),
+                _c("p", [_vm._v("الخرطوم - السودان - امدرمان")])
               ]),
               _vm._v(" "),
-              _c("p", [_vm._v("الخرطوم - السودان - امدرمان")])
-            ]),
-            _vm._v(" "),
-            _c("div", [
-              _c("p", [
-                _c("span", [_vm._v(_vm._s(agar.rooms_number) + " غرف")]),
-                _vm._v(" و "),
-                _c("span", [_vm._v(_vm._s(agar.bathrooms_number) + " حمامات")])
+              _c("div", [
+                _c("p", [
+                  _c("span", [_vm._v(_vm._s(agar.rooms_number) + " غرف")]),
+                  _vm._v(" و "),
+                  _c("span", [
+                    _vm._v(_vm._s(agar.bathrooms_number) + " حمامات")
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", [
+                _c("p", [
+                  _vm._v(
+                    "ابتداءا من  : " + _vm._s(agar.price.day) + " $ / لليوم"
+                  )
+                ])
               ])
             ]),
-            _vm._v(" "),
-            _c("div", [
-              _c("p", [
-                _vm._v("ابتداءا من  : " + _vm._s(agar.price.day) + " $ / لليوم")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("hr")
-          ])
-        }),
-        _c("br")
-      ],
-      2
-    )
-  ])
+            _c("br")
+          ]
+        )
+      ])
+    }),
+    0
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

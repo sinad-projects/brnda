@@ -39,7 +39,7 @@
                                         <th class="w3-center">الموقع الجغرافي</th>
                                         <th class="w3-center">عدد الغرف</th>
                                         <th class="w3-center">عدد الحمامات</th>
-                                        <th class="w3-center">الوصف</th>
+
                                         <th class="w3-center">العمليات</th>
                                     </tr>
                                     </thead>
@@ -47,7 +47,11 @@
                                       @foreach($agars as $agar)
                                         <tr>
                                             <td>{{ $agar->id }}</td>
-                                            <td> {{ $agar->agar_name }} </td>
+                                            <td>
+                                              <a class="w3-text-blue" href="{{ route('agars.single',['agar_id' => $agar->id]) }}">
+                                                 {{ $agar->agar_name }}
+                                              </a>
+                                            </td>
                                             <td>{{ $agar->type->type_name }}</td>
                                             <td>{{ $agar->floor->floor_name }}</td>
                                             <td>
@@ -57,7 +61,7 @@
                                             </td>
                                             <td>{{ $agar->rooms_number }}</td>
                                             <td>{{ $agar->bathrooms_number }}</td>
-                                            <td> {{ $agar->agar_desc }} </td>                                                                                                           </td>
+                                                                                                                                                    </td>
                                             <td>
                                               <div class="w3-center">
                                                 @if(Auth::user()->id == $agar->owner_id)
@@ -137,7 +141,7 @@
                                 </tr>
                                 <tr>
                                     <th>تاريخ الإنشاء</th>
-                                    <td>{{ $agar->created_at }}</td>
+                                    <td>{{ $agar->created_at->diffForHumans() }}</td>
                                 </tr>
 
                             </table>

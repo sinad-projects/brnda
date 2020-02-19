@@ -27,6 +27,8 @@
         </div>
     </div>
 
+    <br>
+    
     <div class="w3-bar-block">
         <a href="javascript::void()" class="w3-bar-item text-right w3-btn w3-padding-16 w3-hide-large1 w3-dark-grey w3-hover-black"onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  اغلق القائمة</a>
 
@@ -34,21 +36,23 @@
           <i class="fa fa-home"></i> الرئيسية
         </a>
 
+        <a href="{{ route('agars.agarsList') }}" class="w3-bar-item w3-large text-right w3-btn w3-padding">
+          <i class="fa fa-building-o"></i>  العقارات
+        </a>
+
         <a href="{{ route('agars.myAgars') }}" class="w3-bar-item w3-large w3-btn w3-padding text-right w3-animate-zoom">
           <i class="fa fa-hotel"></i>  عقاراتي
         </a>
 
         <a href="{{ route('reservation.index') }}" class="w3-bar-item w3-large w3-btn w3-padding text-right w3-animate-zoom">
-          <i class="fa fa-inbox"></i> طلبات الايجار
+          <i class="fa fa-mail-forward"></i> طلبات الايجار لعقاراتي
         </a>
 
         <a href="{{ route('reservation.sent') }}" class="w3-bar-item w3-large w3-btn w3-padding text-right w3-animate-zoom">
-          <i class="fa fa-inbox"></i> طلبات الايجار المرسلة
+          <i class="fa fa-mail-reply"></i> طلبات الايجار المرسلة
         </a>
 
-        <a href="{{ route('agars.agarsList') }}" class="w3-bar-item w3-large text-right w3-btn w3-padding">
-          <i class="fa fa-building-o"></i>  العقارات
-        </a>
+        <hr>
 
         <form action="{{ route('logout') }}" method="POST">
           @csrf

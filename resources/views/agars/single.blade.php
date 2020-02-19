@@ -220,6 +220,9 @@
       </div>
     </div>
 
+
+    @include('layouts/footer')
+    
     <script>
       var slideIndex = 1;
       showDivs(slideIndex);

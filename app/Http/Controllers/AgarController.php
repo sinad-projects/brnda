@@ -234,15 +234,16 @@ class AgarController extends Controller
       ]);
       // add new agar
       $agar = Agar::create([
-        'agar_name' => $request->agar_name,
-        'type_id' => $request->type_id,
-        'floor_id' => $request->floor_id,
-        'geo_loc_id' => $location->id,
-        'rooms_number' => $request->rooms_number,
-        'bathrooms_number' => $request->bathrooms_number,
-        'agar_desc' => $request->agar_desc,
-        'owner_id' => Auth::user()->id,
-        'status' => 1
+        'agar_name'         => $request->agar_name,
+        'type_id'           => $request->type_id,
+        'floor_id'          => $request->floor_id,
+        'geo_loc_id'        => $location->id,
+        'rooms_number'      => $request->rooms_number,
+        'bathrooms_number'  => $request->bathrooms_number,
+        'agar_desc'         => $request->agar_desc,
+        'owner_id'          => Auth::user()->id,
+        'status'            => 1,
+        'featured'          => 0
       ]);
       // add agar extra
       AgarExtra::create([
@@ -258,8 +259,7 @@ class AgarController extends Controller
 
     // to delete agar
     public function delete(Request $request){
-      Agar::where('id',$agar_id)->where('owner_id',$user_id)->update(['status' => 0]);
-    //  $delete = Agar::where('id',$request->agar_id)->delete();
+      Agar::where('id',$request->agar_id)->where('owner_id',Auth::user()->id)->update(['status' => 0]);
       return redirect()->back()->with('info','تم حذف العقار بنجاح');
     }
 
@@ -313,14 +313,14 @@ class AgarController extends Controller
 
     public function agar_filter(Request $request){
 
-      if($request->has('price')){
+      if($request->price != 0){
           $price = $request->price;
-      } else $price = '';
+      } else $price = 0;
 
-      if($request->has('rooms_number')){
+      if($request->rooms_number != 0){
           $rooms_number = $request->rooms_number;
-      } else $rooms_number = '';
-
+      } else $rooms_number = 0;
+      
       if($request->has('bathrooms_number')){
           $bathrooms_number = $request->bathrooms_number;
       } else $bathrooms_number = '';
@@ -333,9 +333,9 @@ class AgarController extends Controller
           $agar_floor   = $request->floor_id;
       } else $agar_floor = '';
 
-      if($request->has('range')){
+      if($request->range != ''){
           $date   = $request->range;
-      } else $date = '';
+      } else{ $date[0] = date('YYYY-MM-dd'); $date[1] = date('YYYY-MM-dd');}
 
       if($request->has('a_extra')){
           $a_extra   = $request->a_extra;
@@ -354,7 +354,7 @@ class AgarController extends Controller
                 //->where('bathrooms_number',$bathrooms_number)
                 ->join('agar_price','agar.id','agar_price.agar_id')
                 // befor discount
-                ->where('day',$price)
+                ->where('day','<=',$price)
                 ->join('agar_calendar','agar.id','agar_calendar.agar_id')
                 ->where('start_date','<=',$date[0])
                 ->where('end_date','>=',$date[1])
