@@ -19,7 +19,9 @@
         <div class="form-group mx-sm-3 mb-2">
           <p>عدد الغرف <input type="number" @change="filter()" class="form-control" v-model="rooms_number" name="rooms_number" /> </p>
         </div>
-        <button type="button" @click="filter()" class="w3-button w3-black" name="search_btn"> <i class="fa fa-search"></i> بحث </button>
+        <!--<div class="form-group mx-sm-3 mb-2">
+          <p> عدد الحمامات <input type="number" @change="filter()" class="form-control" v-model="bathroms_number" name="bathroms_number" style="width: 50px!important" /> </p>
+        </div> -->
       </form>
     </div>
 
@@ -45,7 +47,12 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
             سعر الايجار لليوم الواحد
-            <input type="number"  @change="filter()" class="form-control" name="price" v-model="price" />
+            <vue-slider  @change="filter()"
+              v-model="price"
+              :min="0"
+              :max="400"
+              :interval="1" >
+            </vue-slider>
           </li>
         </ul>
       </div> <br>
@@ -118,7 +125,12 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
               سعر الايجار لليوم الواحد
-              <input type="number" @change="filter()" class="form-control" name="price" v-model="price" />
+              <vue-slider  @change="filter()"
+                v-model="price"
+                :min="0"
+                :max="400"
+                :interval="1" >
+              </vue-slider>
             </li>
           </ul>
         </div>
@@ -213,10 +225,15 @@
 </template>
 
 <script>
+  // to import datepicker component
   import DatePicker from 'vue2-datepicker';
   import 'vue2-datepicker/index.css';
+  // to import slider component
+  import VueSlider from 'vue-slider-component';
+  import 'vue-slider-component/theme/antd.css';
+
 	export default{
-    components: { DatePicker },
+    components: { DatePicker ,VueSlider },
     props:{
       agarType: {
           type: Array,
@@ -236,7 +253,7 @@
         floor_id: Number,
         type_id: Number,
         date: '',
-				price: '',
+				price: 0,
         a_extra: [],
         sf_extra: []
 			}
