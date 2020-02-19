@@ -1,9 +1,14 @@
 <template>
   <div id="main">
-    <div class="w3-third">
+    <div class="w3-third agars-body">
       <div v-for="agar in agars" :id="`carousel_${agar.id}`" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
-          <div  v-for="image in agar.image" class="carousel-item active">
+            <span style="display: none">{{ counter = 0 }}</span>
+          <div v-if="counter == 0" v-for="image in agar.image" class="carousel-item active">
+            <img class="d-block w-100" :src="`agar/images/${image.thumbnail}`" height="200px" alt="صورة العقار">
+            <span style="display: none">{{ counter = counter + 1 }}</span>
+          </div>
+          <div v-else v-for="image in agar.image" class="carousel-item">
             <img class="d-block w-100" :src="`agar/images/${image.thumbnail}`" height="200px" alt="صورة العقار">
           </div>
         </div>
@@ -17,7 +22,7 @@
         </a> <br>
       </div><br>
     </div>
-    <div class="w3-third" dir="rtl">
+    <div class="w3-third agars-body" dir="rtl">
         <div v-for="agar in agars">
          <div>
            <a :href="`agars/${agar.id}`"><h4> {{ agar.agar_name }} </h4></a>
@@ -40,6 +45,11 @@
         default: []
       }
     },
+    date() {
+      return{
+        counter: 0
+      }
+    }
 
 	}
 </script>

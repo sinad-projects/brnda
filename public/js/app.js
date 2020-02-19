@@ -1942,12 +1942,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     agars: {
       type: Array,
       "default": []
     }
+  },
+  date: function date() {
+    return {
+      counter: 0
+    };
   }
 });
 
@@ -68712,7 +68722,7 @@ var render = function() {
   return _c("div", { attrs: { id: "main" } }, [
     _c(
       "div",
-      { staticClass: "w3-third" },
+      { staticClass: "w3-third agars-body" },
       [
         _vm._l(_vm.agars, function(agar) {
           return _c(
@@ -68725,19 +68735,42 @@ var render = function() {
               _c(
                 "div",
                 { staticClass: "carousel-inner" },
-                _vm._l(agar.image, function(image) {
-                  return _c("div", { staticClass: "carousel-item active" }, [
-                    _c("img", {
-                      staticClass: "d-block w-100",
-                      attrs: {
-                        src: "agar/images/" + image.thumbnail,
-                        height: "200px",
-                        alt: "صورة العقار"
-                      }
-                    })
-                  ])
-                }),
-                0
+                [
+                  _c("span", { staticStyle: { display: "none" } }, [
+                    _vm._v(_vm._s((_vm.counter = 0)))
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(agar.image, function(image) {
+                    return _vm.counter == 0
+                      ? _c("div", { staticClass: "carousel-item active" }, [
+                          _c("img", {
+                            staticClass: "d-block w-100",
+                            attrs: {
+                              src: "agar/images/" + image.thumbnail,
+                              height: "200px",
+                              alt: "صورة العقار"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("span", { staticStyle: { display: "none" } }, [
+                            _vm._v(_vm._s((_vm.counter = _vm.counter + 1)))
+                          ])
+                        ])
+                      : _vm._l(agar.image, function(image) {
+                          return _c("div", { staticClass: "carousel-item" }, [
+                            _c("img", {
+                              staticClass: "d-block w-100",
+                              attrs: {
+                                src: "agar/images/" + image.thumbnail,
+                                height: "200px",
+                                alt: "صورة العقار"
+                              }
+                            })
+                          ])
+                        })
+                  })
+                ],
+                2
               ),
               _vm._v(" "),
               _c(
@@ -68791,7 +68824,7 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "w3-third", attrs: { dir: "rtl" } },
+      { staticClass: "w3-third agars-body", attrs: { dir: "rtl" } },
       [
         _vm._l(_vm.agars, function(agar) {
           return _c("div", [
@@ -69034,6 +69067,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
+                staticStyle: { width: "100px!important" },
                 attrs: { type: "number", name: "rooms_number" },
                 domProps: { value: _vm.rooms_number },
                 on: {
@@ -69072,6 +69106,7 @@ var render = function() {
                   [
                     _vm._v(" تاريخ الحجز "),
                     _c("date-picker", {
+                      staticStyle: { width: "100%" },
                       attrs: {
                         range: "",
                         lang: "en",
@@ -69952,7 +69987,7 @@ var staticRenderFns = [
       _c(
         "a",
         {
-          staticClass: "w3-button w3-black w3-xlarge",
+          staticClass: "w3-button w3-xxlarge",
           attrs: {
             href: "javascript::void()",
             id: "openNav",

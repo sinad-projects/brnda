@@ -17,7 +17,7 @@
           <p> تاريخ الحجز <date-picker v-model="range" range @change="filter()" lang="en" type="date" formate="YYYY-MM-dd"></date-picker> </p>
         </div>
         <div class="form-group mx-sm-3 mb-2">
-          <p>عدد الغرف <input type="number" @change="filter()" class="form-control" v-model="rooms_number" name="rooms_number" /> </p>
+          <p>عدد الغرف <input type="number" @change="filter()" class="form-control" v-model="rooms_number" name="rooms_number" style="width: 100px!important" /> </p>
         </div>
         <!--<div class="form-group mx-sm-3 mb-2">
           <p> عدد الحمامات <input type="number" @change="filter()" class="form-control" v-model="bathroms_number" name="bathroms_number" style="width: 50px!important" /> </p>
@@ -30,10 +30,10 @@
       <div class="container">
         <form class="">
           <div class="form-group filter-header-mobile-datepicker">
-            <p> تاريخ الحجز <date-picker v-model="range" range @change="filter()" lang="en" type="date" formate="YYYY-MM-dd"></date-picker> </p>
+            <p> تاريخ الحجز <date-picker v-model="range" range @change="filter()" lang="en" type="date" formate="YYYY-MM-dd" style="width: 100%"></date-picker> </p>
           </div>
           <div class="form-group open-slider-btn">
-            <a href="javascript::void()" id="openNav" class="w3-button w3-black w3-xlarge" onclick="open_filter()"> <i class="fa fa-sliders"></i> </a>
+            <a href="javascript::void()" id="openNav" class="w3-button w3-xxlarge" onclick="open_filter()"> <i class="fa fa-sliders"></i> </a>
           </div>
         </form>
       </div>

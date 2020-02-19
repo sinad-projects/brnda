@@ -18,7 +18,7 @@
   display: none!important;
 }
 @media screen and (max-width: 992px){
-  .filter_web_sidebar, .filter-header-web{
+  .filter-header-web{
     display: none;
   }
   .open-slider-btn, #main, .filter-header-mobile{
@@ -29,6 +29,21 @@
   }
   .open-slider-btn{
     float: right!important;
-    margin-top: -65px
+    margin-top: -75px
+  }
+  .agars-body{
+    width: 50%!important;
+  }
+}
+
+@media screen and (max-width: 992px){
+  .filter_web_sidebar{
+    display: none;
+  }
+}
+
+@media screen and (max-width: 766px){
+  .agars-body{
+    width: 100%!important;
   }
 }
