@@ -12,10 +12,12 @@
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
+
       <!-- Main Content -->
       <div id="content">
 
         @include('dashboard/layouts/nav')
+
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
@@ -67,8 +69,10 @@
                             @csrf
                             <input type="hidden" name="agar_id" value="{{ $agar->id }}" />
                             <button type="submit" name="delete_btn" class="btn btn-danger" > حذف العقار  </button>
-                            @if($agar->featured != 1)
-                              <button class="btn btn-info" name="featured_btn" type="submit"> تحويل الى مميز </button>
+                            @if($agar->featured == 0)
+                              <button class="btn btn-success" name="featured_btn" type="submit"> تحويل الى مميز </button>
+                            @else
+                              <button class="btn btn-info" name="notfeatured_btn" type="submit"> تحويل الى عادي  </button>
                             @endif
                           </form>
                         </td>
@@ -88,6 +92,7 @@
 
       <!-- Footer -->
       @include('dashboard/layouts/footer')
+
 
   <!-- Bootstrap core JavaScript-->
   <script src="{{  asset('dashboard/vendor/jquery/jquery.min.js') }}"></script>

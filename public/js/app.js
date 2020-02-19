@@ -2739,6 +2739,82 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reservations/sentReservationComponent.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/reservations/sentReservationComponent.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue2_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue2-datepicker */ "./node_modules/vue2-datepicker/index.esm.js");
+/* harmony import */ var vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue2-datepicker/index.css */ "./node_modules/vue2-datepicker/index.css");
+/* harmony import */ var vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue2_datepicker_locale_zh_cn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue2-datepicker/locale/zh-cn */ "./node_modules/vue2-datepicker/locale/zh-cn.js");
+/* harmony import */ var vue2_datepicker_locale_zh_cn__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue2_datepicker_locale_zh_cn__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// to import datepicker component
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    DatePicker: vue2_datepicker__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: {
+    agar_id: {
+      require: true,
+      type: Number
+    },
+    owner_id: {
+      require: true,
+      type: Number
+    }
+  },
+  data: function data() {
+    return {
+      start_date: '',
+      end_date: ''
+    };
+  },
+  methods: {
+    sent: function sent() {
+      axios.post('/reservation/add', {
+        reciver_id: this.owner_id,
+        start_date: this.start_date,
+        end_date: this.end_date,
+        agar_id: this.agar_id,
+        _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      }).then(function (response) {
+        if (response.data.code == 200) {
+          document.getElementById('reservation_success').style.display = 'block';
+        }
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/site/notificationComponent.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/site/notificationComponent.vue?vue&type=script&lang=js& ***!
@@ -70968,6 +71044,94 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reservations/sentReservationComponent.vue?vue&type=template&id=7c088176&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/reservations/sentReservationComponent.vue?vue&type=template&id=7c088176& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "w3-section" },
+      [
+        _c("label", { attrs: { for: "start_date" } }, [_vm._v("تاريخ الوصول")]),
+        _vm._v(" "),
+        _c("date-picker", {
+          staticStyle: { width: "100%" },
+          attrs: { lang: "en", type: "date", formate: "YYYY-MM-dd" },
+          model: {
+            value: _vm.start_date,
+            callback: function($$v) {
+              _vm.start_date = $$v
+            },
+            expression: "start_date"
+          }
+        })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "w3-section" },
+      [
+        _c("label", { attrs: { for: "end_date" } }, [_vm._v("تاريخ المغادرة")]),
+        _vm._v(" "),
+        _c("date-picker", {
+          staticStyle: { width: "100%" },
+          attrs: { lang: "en", type: "date", formate: "YYYY-MM-dd" },
+          model: {
+            value: _vm.end_date,
+            callback: function($$v) {
+              _vm.end_date = $$v
+            },
+            expression: "end_date"
+          }
+        })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "w3-section" }, [
+      _c(
+        "button",
+        {
+          staticClass: "w3-btn w3-block w3-flat-peter-river",
+          attrs: {
+            form: "booking_form",
+            type: "button",
+            id: "request_booking",
+            name: "request_booking",
+            value: ""
+          },
+          on: {
+            click: function($event) {
+              return _vm.sent()
+            }
+          }
+        },
+        [_c("i", { staticClass: "fa fa-calendar" }), _vm._v(" طلب الحجز")]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/site/notificationComponent.vue?vue&type=template&id=7f4495d6&":
 /*!*****************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/site/notificationComponent.vue?vue&type=template&id=7f4495d6& ***!
@@ -87335,6 +87499,76 @@ _extends(DatePicker, {
 
 /***/ }),
 
+/***/ "./node_modules/vue2-datepicker/locale/zh-cn.js":
+/*!******************************************************!*\
+  !*** ./node_modules/vue2-datepicker/locale/zh-cn.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function (global, factory) {
+	 true ? module.exports = factory(__webpack_require__(/*! vue2-datepicker */ "./node_modules/vue2-datepicker/index.esm.js")) :
+	undefined;
+}(this, (function (DatePicker) { 'use strict';
+
+	DatePicker = DatePicker && DatePicker.hasOwnProperty('default') ? DatePicker['default'] : DatePicker;
+
+	function unwrapExports (x) {
+		return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+	}
+
+	function createCommonjsModule(fn, module) {
+		return module = { exports: {} }, fn(module, module.exports), module.exports;
+	}
+
+	var zhCn = createCommonjsModule(function (module, exports) {
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports["default"] = void 0;
+	var locale = {
+	  months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+	  monthsShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+	  weekdays: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+	  weekdaysShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+	  weekdaysMin: ['日', '一', '二', '三', '四', '五', '六'],
+	  firstDayOfWeek: 1,
+	  firstWeekContainsDate: 4,
+	  meridiemParse: /上午|下午/,
+	  meridiem: function meridiem(hour) {
+	    if (hour < 12) {
+	      return '上午';
+	    }
+
+	    return '下午';
+	  },
+	  isPM: function isPM(input) {
+	    return input === '下午';
+	  }
+	};
+	var _default = locale;
+	exports["default"] = _default;
+	module.exports = exports.default;
+	});
+
+	var zhCN = unwrapExports(zhCn);
+
+	var lang = {
+	  formatLocale: zhCN,
+	  yearFormat: 'YYYY年',
+	  monthFormat: 'MMM',
+	  monthBeforeYear: false
+	};
+	DatePicker.locale('zh-cn', lang);
+
+	return lang;
+
+})));
+
+
+/***/ }),
+
 /***/ "./node_modules/webpack/buildin/global.js":
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -87464,6 +87698,7 @@ Vue.component('register-app', __webpack_require__(/*! ./components/registerCompo
 Vue.component('filter-app', __webpack_require__(/*! ./components/filter/filterComponent.vue */ "./resources/js/components/filter/filterComponent.vue")["default"]);
 Vue.component('agars-app', __webpack_require__(/*! ./components/filter/agarsComponent.vue */ "./resources/js/components/filter/agarsComponent.vue")["default"]);
 Vue.component('formfilter-app', __webpack_require__(/*! ./components/filter/formComponent.vue */ "./resources/js/components/filter/formComponent.vue")["default"]);
+Vue.component('reservation-app', __webpack_require__(/*! ./components/reservations/sentReservationComponent.vue */ "./resources/js/components/reservations/sentReservationComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -87490,6 +87725,9 @@ var contact = new Vue({
 });
 var notification = new Vue({
   el: '#notification'
+});
+var reservation = new Vue({
+  el: '#reservation'
 });
 
 /***/ }),
@@ -88318,6 +88556,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_registerComponent_vue_vue_type_template_id_35e21442___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_registerComponent_vue_vue_type_template_id_35e21442___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/reservations/sentReservationComponent.vue":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/reservations/sentReservationComponent.vue ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _sentReservationComponent_vue_vue_type_template_id_7c088176___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sentReservationComponent.vue?vue&type=template&id=7c088176& */ "./resources/js/components/reservations/sentReservationComponent.vue?vue&type=template&id=7c088176&");
+/* harmony import */ var _sentReservationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sentReservationComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/reservations/sentReservationComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _sentReservationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _sentReservationComponent_vue_vue_type_template_id_7c088176___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _sentReservationComponent_vue_vue_type_template_id_7c088176___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/reservations/sentReservationComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/reservations/sentReservationComponent.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/reservations/sentReservationComponent.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_sentReservationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./sentReservationComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reservations/sentReservationComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_sentReservationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/reservations/sentReservationComponent.vue?vue&type=template&id=7c088176&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/reservations/sentReservationComponent.vue?vue&type=template&id=7c088176& ***!
+  \**********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_sentReservationComponent_vue_vue_type_template_id_7c088176___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./sentReservationComponent.vue?vue&type=template&id=7c088176& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reservations/sentReservationComponent.vue?vue&type=template&id=7c088176&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_sentReservationComponent_vue_vue_type_template_id_7c088176___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_sentReservationComponent_vue_vue_type_template_id_7c088176___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

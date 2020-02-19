@@ -4,6 +4,7 @@
     <title>  برندة    </title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet"  href="{{ asset('lib/lightslider-master/src/css/lightslider.css') }}"/>
     <link rel="stylesheet" href="{{ asset('lib/dropzone/dropzone.css') }}" />
@@ -15,6 +16,8 @@
     <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 
+    <!-- for vue js app.js file -->
+   <script src="{{ asset('js/app.js') }}" defer></script>
 
 </head>
 
@@ -187,31 +190,23 @@
                   <section class="w3-third">
                       <div class="w3-card w3-animate-zoom w3-flat-clouds"><!-- START CALENDAR_FORM -->
                           <div class="w3-container">
-                              <div id="booking_msg"></div>
-                              <form id="booking_form" action="{{ route('reservation.add') }}" method="post" class="w3-padding-16">
-                                @csrf
-                                  <input type="hidden" name="agar_id" value="{{ $agar->id }}">
-                                  <input type="hidden" name="calendar_id" value="{{ $agar->calender }}">
-                                  <div class="">
-                                      <div class="w3-section">
-                                          <label for="start_date">تاريخ الوصول</label>
-                                          <input id="start_date"  name="start_date" class="w3-input" type="date"
-                                          placeholder="من" required value="{{ $agar->calender }}">
-                                      </div>
-                                      <div class="w3-section">
-                                          <label for="end_date">تاريخ المغادرة</label>
-                                          <input id="end_date"  name="end_date" class="w3-input" type="date"
-                                          placeholder="إلى" required  value="{{ $agar->calender }}">
-                                      </div>
-                                      <input type="hidden" name="reciver_id" value="{{ $agar->owner_id }}">
-                                      <div class="w3-section">
-                                          <button form="booking_form" type="submit" id="request_booking" name="request_booking" value="" class="w3-btn w3-block w3-flat-peter-river">
-                                              <i class="fa fa-calendar"></i> طلب الحجز</button>
-                                      </div>
-                                  </div>
-                              </form>
+                              <input type="hidden" name="agar_id" value="{{ $agar->id }}">
+                              <input type="hidden" name="calendar_id" value="{{ $agar->calender }}">
+                              <div class="" id="reservation">
+                                  <reservation-app :owner_id="{{ $agar->owner_id }}" :agar_id="{{ $agar->id }}"></reservation-app>
+                              </div>
                           </div>
                       </div><!-- END CALENDAR_FORM -->
+
+                      <!-- reservation success message -->
+                      <div class="w3-modal" id="reservation_success" style="display: none">
+                        <div class="w3-panel w3-modal-content w3-card-4 w3-padding-64 w3-animate-zoom" style="max-width:480px">
+                          <span onclick="document.getElementById('reservation_success').style.display='none'"
+                          class="w3-button w3-large w3-display-topright">&times;</span>
+                          <h3 class="w3-center"> تم ارسال طلب الايجار بنجاح </h3>
+                        </div>
+                      </div>
+
                   </section>
               </div>
             </div>
@@ -222,7 +217,7 @@
 
 
     @include('layouts/footer')
-    
+
     <script>
       var slideIndex = 1;
       showDivs(slideIndex);

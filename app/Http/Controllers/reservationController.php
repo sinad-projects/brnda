@@ -8,6 +8,7 @@ use App\Http\Resources\reservation as reservationResource;
 use Auth;
 use Validator;
 use App\Bill;
+use Carbon;
 
 class reservationController extends Controller
 {
@@ -76,14 +77,31 @@ class reservationController extends Controller
     // to add new reservation
     public function add_Reservation(Request $request){
 
-      Reservation::create([
-        'agar_id' => $request->agar_id,
-        'user_id' => Auth::user()->id,
-        'reciver_id' => $request->reciver_id,
-        'start_date' => $request->start_date,
-        'end_date' => $request->end_date
+      $this->validate($request,[
+        'start_date' => 'required|date',
+        'end_date' => 'required|date'
       ]);
-      return redirect()->back()->with('info','تم ارسال طلب الحجز');
+      if(Auth::user()->id != $request->reciver_id){
+        Reservation::create([
+          'agar_id' => $request->agar_id,
+          'user_id' => Auth::user()->id,
+          'reciver_id' => $request->reciver_id,
+          'start_date' => Carbon\Carbon::parse($request->start_date)->toDateTimeString(),
+          'end_date' => Carbon\Carbon::parse($request->end_date)->toDateTimeString()
+        ]);
+        return response()->json([
+          'code' => 200,
+          'errors' => 'false',
+          'message' => 'تم ارسال طلب الايجار بنجاح'
+        ]);
+      }
+      else{
+          return response()->json([
+            'code' => 400,
+            'errors' => 'true',
+            'message' => 'لا يمكنك ارسال طلب ايجار على عقارك'
+          ]);
+        }
     }
 
     # =========================================================================#

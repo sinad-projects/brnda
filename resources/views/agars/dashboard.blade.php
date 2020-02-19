@@ -691,6 +691,12 @@
         }
     </script>
 
+    <script type="text/javascript">
+      function statusToggle(event){
+        console.log(event.target.className = ' ');
+      }
+    </script>
+
 
 
 

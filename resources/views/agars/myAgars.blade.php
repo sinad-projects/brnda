@@ -9,7 +9,6 @@
     <!-- sidebar menu -->
       @include('layouts/aside')
 
-
     <!-- Overlay effect when opening sidebar on small screens -->
     <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
     <!-- -->
@@ -167,18 +166,7 @@
 
     </div><!-- END delete_agar_confirm_ MODALS -->
 
-    <div class="w3-clear"></div>
-    <!-- Footer -->
-    <footer class="w3-center w3-white w3-padding-32 w3-opacity w3-margin-top" style="margin-top: 100px!important">
-      <h5> تابع صفحاتنا على مواقع اتواصل الاجتماعي  </h5>
-      <div class="w3-xlarge w3-padding-16">
-        <i class="fa fa-facebook-official w3-hover-opacity"></i>
-        <i class="fa fa-instagram w3-hover-opacity"></i>
-        <i class="fa fa-snapchat w3-hover-opacity"></i>
-        <i class="fa fa-twitter w3-hover-opacity"></i>
-        <i class="fa fa-linkedin w3-hover-opacity"></i>
-      </div>
-    </footer>
+    @include('layouts/footer')
 
 <!-- End page content -->
 </div>

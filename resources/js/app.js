@@ -60,6 +60,8 @@ Vue.component('filter-app', require('./components/filter/filterComponent.vue').d
 Vue.component('agars-app', require('./components/filter/agarsComponent.vue').default);
 Vue.component('formfilter-app', require('./components/filter/formComponent.vue').default);
 
+Vue.component('reservation-app', require('./components/reservations/sentReservationComponent.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -91,4 +93,8 @@ const contact = new Vue({
 
 const notification = new Vue({
     el: '#notification'
+});
+
+const reservation = new Vue({
+    el: '#reservation'
 });

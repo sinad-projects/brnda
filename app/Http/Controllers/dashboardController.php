@@ -60,6 +60,10 @@ class dashboardController extends Controller
           Agar::where('id',$request->agar_id)->update(['featured' => 1]);
           return redirect()->back()->with('info','  تم تحويل العقار الى مميز ');
         }
+        if($request->has('notfeatured_btn')){
+          Agar::where('id',$request->agar_id)->update(['featured' => 0]);
+          return redirect()->back()->with('info','  تم تحويل العقار الى عادي ');
+        }
         if($request->has('delete_btn')){
           Agar::where('id',$request->agar_id)->update(['status' => 0]);
           return redirect()->back()->with('info','  تم تعطيل عرض العقار');

@@ -12,3 +12,6 @@
   </div>
   <p>تم التطوير بواسطة <a href="#" target="_blank" class="w3-hover-text-green">شركة سناد للحلول البرمجية</a></p>
 </footer>
+
+
+@include('layouts/alert')

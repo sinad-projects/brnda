@@ -29,4 +29,5 @@
 
     <!-- genral css file -->
     <link rel="stylesheet" href="{{ asset('css/general.css') }}">
+
 </head>

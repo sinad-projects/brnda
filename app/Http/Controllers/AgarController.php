@@ -242,7 +242,7 @@ class AgarController extends Controller
         'bathrooms_number'  => $request->bathrooms_number,
         'agar_desc'         => $request->agar_desc,
         'owner_id'          => Auth::user()->id,
-        'status'            => 1,
+        'status'            => 0,
         'featured'          => 0
       ]);
       // add agar extra
@@ -320,9 +320,9 @@ class AgarController extends Controller
       if($request->rooms_number != 0){
           $rooms_number = $request->rooms_number;
       } else $rooms_number = 0;
-      
+
       if($request->has('bathrooms_number')){
-          $bathrooms_number = $request->bathrooms_number;
+          $bathrooms_number = $request->bathrooms_number; 
       } else $bathrooms_number = '';
 
       if($request->has('type_id')){
