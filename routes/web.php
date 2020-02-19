@@ -44,6 +44,11 @@ Route::get('/home',[
   'uses' => 'HomeController@index',
   'as' => 'home'
 ]);
+# search agar by name
+Route::post('home/search',[
+    'uses' => 'HomeController@search_by_name',
+    'as' => 'home.search'
+]);
 
 /** Route For messenger Controllers **/
 Route::get('/messenger', 'MessengerController@index')->name('messages.index');
@@ -88,12 +93,6 @@ Route::post('agars/edit',[
 Route::post('agars/delete',[
     'uses' => 'agarController@delete',
     'as' => 'agars.delete',
-    'middleware' => ['auth']
-]);
-# search agar by name
-Route::get('agars/search/{query}',[
-    'uses' => 'agarController@search_by_name',
-    'as' => 'agars.search',
     'middleware' => ['auth']
 ]);
 # filter agars

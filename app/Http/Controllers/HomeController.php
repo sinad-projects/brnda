@@ -17,9 +17,27 @@ class HomeController extends Controller
     {
       $agars = Agar::where('status',1)->get();
       $featured_agars = Agar::where('status',1)->where('featured',1)->get();
+      $citys = City::get();
       return view('home')
             ->with('agars',$agars)
-            ->with('featured_agars',$featured_agars);
+            ->with('featured_agars',$featured_agars)
+            ->with('citys',$citys);
+    }
+
+    // search agar by name
+    public function search_by_name(Request $request){
+      $query  = $request->input('query');
+      $agars = Agar::where('agar_name', 'LIKE' , "%$query%")
+            ->where('status',1)
+            ->get();
+      $featured_agars = Agar::where('agar_name', 'LIKE' , "%$query%")
+                            ->where('status',1)
+                            ->where('featured',1)->get();
+      $citys = City::get();
+      return view('home')
+              ->with('agars',$agars)
+              ->with('featured_agars',$featured_agars)
+              ->with('citys',$citys);
     }
 
 }

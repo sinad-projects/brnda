@@ -14,7 +14,7 @@
           </select>
         </div>
         <div class="form-group mx-sm-3 mb-2">
-          <p>تاريخ الحجز <input type="date" @change="filter()" v-model="date" name="date" id="datepicker"></p>
+          <p> تاريخ الحجز <date-picker v-model="range" range @change="filter()" lang="en" type="date" formate="YYYY-MM-dd"></date-picker> </p>
         </div>
         <div class="form-group mx-sm-3 mb-2">
           <p>عدد الغرف <input type="number" @change="filter()" class="form-control" v-model="rooms_number" name="rooms_number" /> </p>
@@ -28,7 +28,7 @@
       <div class="container">
         <form class="">
           <div class="form-group filter-header-mobile-datepicker">
-            <p>تاريخ الحجز <input type="text" id="datepicker_mobile"></p>
+            <p> تاريخ الحجز <date-picker v-model="range" range @change="filter()" lang="en" type="date" formate="YYYY-MM-dd"></date-picker> </p>
           </div>
           <div class="form-group open-slider-btn">
             <a href="javascript::void()" id="openNav" class="w3-button w3-black w3-xlarge" onclick="open_filter()"> <i class="fa fa-sliders"></i> </a>
@@ -45,7 +45,7 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
             سعر الايجار لليوم الواحد
-            <input type="number" @change="filter()" class="form-control" name="price" v-model="price" />
+            <input type="number"  @change="filter()" class="form-control" name="price" v-model="price" />
           </li>
         </ul>
       </div> <br>
@@ -59,15 +59,15 @@
             <h4> المزايا الاضافية </h4>
             <div>
               <span> انترنت </span>
-              <input value="انترنت"  v-model="a_extra" type="checkbox" class="" />
+              <input value="انترنت" @change="filter()"   v-model="a_extra" type="checkbox" class="" />
             </div>
             <div>
               <span> غسالة </span>
-              <input value="غسالة" v-model="a_extra" type="checkbox" class="" />
+              <input value="غسالة" @change="filter()"  v-model="a_extra" type="checkbox" class="" />
             </div>
             <div>
               <span> مصعد </span>
-              <input value="مصعد" v-model="a_extra" type="checkbox" class="" />
+              <input value="مصعد" @change="filter()"  v-model="a_extra" type="checkbox" class="" />
             </div>
           </li>
           <li class="list-group-item">
@@ -118,7 +118,7 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
               سعر الايجار لليوم الواحد
-              <input type="text" id="price_mobile_range" class="js-range-slider" name="my_range" value=""/>
+              <input type="number" @change="filter()" class="form-control" name="price" v-model="price" />
             </li>
           </ul>
         </div>
@@ -133,30 +133,30 @@
               <h4> المزايا الاضافية </h4>
               <div>
                 <span> انترنت </span>
-                <input type="checkbox" class="" />
+                <input type="checkbox" value="انترنت" v-model="a_extra" class="" />
               </div>
               <div>
                 <span> غسالة </span>
-                <input type="checkbox" class="" />
+                <input type="checkbox" value="غسالة" v-model="a_extra" class="" />
               </div>
               <div>
                 <span> مصعد </span>
-                <input type="checkbox" class="" />
+                <input type="checkbox" value="مصعد" v-model="a_extra" class="" />
               </div>
             </li>
             <li class="list-group-item">
               <h4> مزايا خاصة </h4>
               <div>
                 <span> حراسة امنية </span>
-                <input type="checkbox" class="" />
+                <input type="checkbox" value=" حراسة امني" v-model="sf_extra" class="" />
               </div>
               <div>
                 <span> توصيل من المطار </span>
-                <input type="checkbox" class="" />
+                <input type="checkbox" value="توصيل من المطا" v-model="sf_extra" class="" />
               </div>
               <div>
                 <span> امكانية الاستلام على مدار اليوم </span>
-                <input type="checkbox" class="" />
+                <input type="checkbox" value="امكانية الاستلام على مدار اليو" v-model="sf_extra" class="" />
               </div>
             </li>
           </ul>
@@ -166,9 +166,23 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <span>عدد الغرف</span>
-              <input type="number" name="rooms_number" class="form-control" >
+              <input type="number" @change="filter()" class="form-control" v-model="rooms_number" name="rooms_number" >
               <span>عدد الحمامات</span>
-              <input type="number" name="bathroms_number" class="form-control" >
+              <input type="number" @change="filter()" v-model="bathroms_number" name="bathroms_number" class="form-control" >
+            </li>
+          </ul>
+        </div>
+        <div class="card">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <span>نوع العقار</span>
+              <select name="type_id" v-model=type_id class="form-control">
+                <option v-for="type in agarType" @change="filter()"  :value="type.type_id"> {{ type.type_name }} </option>
+              </select>
+              <span>الطابق</span>
+              <select name="floor_id" v-model="floor_id" class="form-control">
+                  <option v-for="floor in agarFloor" @change="filter()" :value="floor.floor_id"> {{ floor.floor_name }} </option>
+              </select>
             </li>
           </ul>
         </div>
@@ -199,7 +213,10 @@
 </template>
 
 <script>
+  import DatePicker from 'vue2-datepicker';
+  import 'vue2-datepicker/index.css';
 	export default{
+    components: { DatePicker },
     props:{
       agarType: {
           type: Array,
@@ -212,6 +229,8 @@
     },
 		data(){
 			return{
+        date: '',
+        range: '',
         rooms_number: Number,
         bathrooms_number: Number,
         floor_id: Number,
@@ -229,7 +248,7 @@
           bathrooms_number: this.bathrooms_number,
           floor_id: this.floor_id,
           type_id: this.type_id,
-          date: this.date,
+          range: this.range,
           price: this.price,
           a_extra: this.a_extra,
           sf_extra: this.sf_extra,

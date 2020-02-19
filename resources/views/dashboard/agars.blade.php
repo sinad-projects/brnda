@@ -60,16 +60,16 @@
                           {{ $agar->location->city->city_name }} /
                           {{ $agar->location->area }}
                         </td>
-                        <td><a href="#">{{ $agar->owner_id }}</a></td>
+                        <td><a href="#">{{ $agar->user->name }}</a></td>
                         <td>{{ $agar->status }}</td>
                         <td>
                           <form action="{{ route('dashboard.agars') }}" method="post">
                             @csrf
                             <input type="hidden" name="agar_id" value="{{ $agar->id }}" />
                             <button type="submit" name="delete_btn" class="btn btn-danger" > حذف العقار  </button>
-                            <!--
-                            <button class="btn btn-info" type="submit">تعديل الصلاحية</button>
-                          -->
+                            @if($agar->featured != 1)
+                              <button class="btn btn-info" name="featured_btn" type="submit"> تحويل الى مميز </button>
+                            @endif
                           </form>
                         </td>
                       </tr>

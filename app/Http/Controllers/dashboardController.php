@@ -56,8 +56,14 @@ class dashboardController extends Controller
     }
 
     public function postAgars(Request $request){
-        Agar::where('id',$request->agar_id)->update(['status' => 0]);
-        return redirect()->back()->with('info','  تم تعطيل عرض العقار');
+        if($request->has('featured_btn')){
+          Agar::where('id',$request->agar_id)->update(['featured' => 1]);
+          return redirect()->back()->with('info','  تم تحويل العقار الى مميز ');
+        }
+        if($request->has('delete_btn')){
+          Agar::where('id',$request->agar_id)->update(['status' => 0]);
+          return redirect()->back()->with('info','  تم تعطيل عرض العقار');
+        }
     }
 
     // manage reservation

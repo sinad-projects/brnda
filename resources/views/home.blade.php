@@ -13,25 +13,7 @@
     <link rel="stylesheet" href="{{ asset('lib/fontawesome-free-5.0.13/web-fonts-with-css/css/fontawesome-all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('lib/fontawesome-free-5.0.13/web-fonts-with-css/webfonts/FontAwesome.otf') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
-    <style>
-      * {
-          box-sizing: border-box;
-      }
-      @font-face {
-          font-family: JF-Flat-regular;
-          font-style: normal;
-          font-weight: 400;
-          src: url("fonts/Flat_Font_Jozoor/JF-Flat-regular.ttf");
-        }
-        html,body,h1,h2,h3,h4,h5,h6,p,span {
-          font-family: JF-Flat-regular, sans-serif;
-        }
-        .about_brnda_icons{
-          border-radius: 50%;
-          border: 1px solid #000;
-          padding: 15px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
   </head>
 
   <body class="" dir="rtl">
@@ -43,7 +25,7 @@
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav" dir="rtl">
+      <div class="collapse navbar-collapse home-nav" id="navbarNav" dir="rtl">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
             <a class="nav-link w3-large" href="{{ route('home') }}">الرئيسية <span class="sr-only">(current)</span></a>
@@ -64,13 +46,16 @@
   <br>
   <!-- Header -->
   <header class="container w3-light-grey" style="z-index: 99;height: 500px!important">
-    <div class="w3-display-middle" style="width:65%">
+    <div class="w3-display-middle home-search-model">
       <div class="container w3-padding-64 text-center" style="">
         <h3 class="">برندا دليل العقارات المفروشة في السودان</h3>
         <div class="row">
           <div class="col-md-12">
-            <input style="position: relative;" class="form-control w3-padding-32 text-right" type="text" placeholder="ابحث عن عقار..">
-            <button type="submit" class="btn w3-black" style="position: absolute; top: 0px; left: 18px;padding: 21px 35px"> <i class="fa fa-search w3-large"></i> </button>
+            <form action="{{ route('home.search') }}" method="post">
+              @csrf
+              <input style="position: relative;" class="form-control w3-padding-32 text-right" name="query" type="text" placeholder="ابحث عن عقار..">
+              <button type="submit" class="btn w3-black" style="position: absolute; top: 0px; left: 18px;padding: 21px 35px"> <i class="fa fa-search w3-large"></i> </button>
+            </form>
           </div>
         </div>
       </div>
@@ -193,72 +178,19 @@
 
   <hr>
 
-  <footer style="margin-top: 50px;">
+  <footer style="margin-top: 50px;" dir="rtl">
     <div class="container text-right w3-margin-top">
-      <h3> عاوز تسكن وين  </h3>
+      <h3>  عاوز تسكن وين ! </h3>
     </div>
     <div class="container w3-margin-top" id="places">
       <div class="row w3-white  text-right w3-text-black">
-        <div class="col-md-2 w3-margin-bottom">
-          <div class="w3-padding-16">
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a>
+        @foreach($citys as $city)
+          <div class="col-md-3 col-sm-2 w3-margin-bottom">
+            <div class="">
+              <a class="w3-button" href="#"> <span> {{$city->city_name }} </span> </a><br>
+            </div>
           </div>
-        </div>
-        <div class="col-md-2 w3-margin-bottom">
-          <div class="w3-padding-16">
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a>
-          </div>
-        </div>
-        <div class="col-md-2 w3-margin-bottom">
-          <div class="w3-padding-16">
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a>
-          </div>
-        </div>
-        <div class="col-md-2 w3-margin-bottom">
-          <div class="w3-padding-16">
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a>
-          </div>
-        </div>
-        <div class="col-md-2 w3-margin-bottom">
-          <div class="w3-padding-16">
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a>
-          </div>
-        </div>
-        <div class="col-md-2 w3-margin-bottom">
-          <div class="w3-padding-16">
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a><br>
-            <a href="#"> <span> ادرمان </span> </a>
-          </div>
-        </div>
+        @endforeach
       </div>
     </div>
   </footer>
@@ -293,7 +225,7 @@
 </footer>
 
 
-<script src="{{ asset('jquery-3.4.1.slim.min.js') }}"></script>
+<script src="{{ asset('js/jquery-3.4.1.slim.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 

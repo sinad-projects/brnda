@@ -235,13 +235,13 @@ input {
 	transition : all .5c ease-in-out;
 	-webkit-transition : all .5c ease-in-out;
 	-moz-transition : all .5c ease-in-out;
-	
+
 }
 .social-container a:hover{
 	background:#ef3f64;
 	border :1px solid #ef3f64 ;
 	color:#fff;
-	
+
 }
 
 footer {
@@ -260,7 +260,7 @@ footer p {
     margin: 10px 0;
 }
 
-footer i {
+footer i { 
     color: red;
 }
 

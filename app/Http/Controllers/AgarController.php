@@ -333,8 +333,8 @@ class AgarController extends Controller
           $agar_floor   = $request->floor_id;
       } else $agar_floor = '';
 
-      if($request->has('date')){
-          $date   = $request->date;
+      if($request->has('range')){
+          $date   = $request->range;
       } else $date = '';
 
       if($request->has('a_extra')){
@@ -356,8 +356,8 @@ class AgarController extends Controller
                 // befor discount
                 ->where('day',$price)
                 ->join('agar_calendar','agar.id','agar_calendar.agar_id')
-                ->where('start_date','<=',$date)
-                ->where('end_date','>=',$date)
+                ->where('start_date','<=',$date[0])
+                ->where('end_date','>=',$date[1])
                 ->join('agar_extra','agar.id','agar_extra.agar_id')
                 ->whereJsonContains('a_extra',$a_extra)
                 ->whereJsonContains('sf_extra',$sf_extra)

@@ -56,7 +56,7 @@ class User extends Authenticatable
     }
 
     public function agar()
-    {
-        return $this->hasMany(Agar::class,'owner_id'); 
+    { 
+        return $this->hasMany(Agar::class,'owner_id');
     }
 }
