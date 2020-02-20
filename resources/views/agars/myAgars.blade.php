@@ -50,6 +50,11 @@
                                               <a class="w3-text-blue" href="{{ route('agars.single',['agar_id' => $agar->id]) }}">
                                                  {{ $agar->agar_name }}
                                               </a>
+                                              @if($agar->admin_comments != '')
+                                                <button class="w3-bar-item w3-btn w3-mobile" type="button" onclick="document.getElementById('admin_comments_{{ $agar->id }}').style.display = 'block'"></a>
+                                                  <i class="fa fa-bullhorn w3-text-red"></i>
+                                                </button>
+                                              @endif
                                             </td>
                                             <td>{{ $agar->type->type_name }}</td>
                                             <td>{{ $agar->floor->floor_name }}</td>
@@ -162,6 +167,17 @@
                 </footer>
             </div>
         </div><!-- END delete_agar_confirm MODAL -->
+
+
+        <!-- admin comment in agar model -->
+        <div class="w3-modal" id="admin_comments_{{ $agar->id }}">
+          <div class="w3-panel w3-modal-content w3-card-4 w3-padding-64 w3-animate-zoom" style="max-width:480px">
+            <span onclick="document.getElementById('admin_comments_{{ $agar->id }}').style.display='none'"
+            class="w3-button w3-large w3-display-topright">&times;</span>
+            <h3 class="w3-center"> {{ $agar->admin_comments }} </h3>
+          </div>
+        </div>
+
         @endforeach
 
     </div><!-- END delete_agar_confirm_ MODALS -->

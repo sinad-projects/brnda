@@ -64,6 +64,8 @@
                                       <form class="user" id="payment_{{ $reservation->id }}" method="post" action="{{ route('dashboard.payment') }}">
                                         @csrf
                                         <input type="hidden" value="{{ $reservation->id }}" name="reservation_id" />
+                                        <input type="hidden" name="user_id" value="{{ $reservation->user_id }}">
+                                        <input type="hidden" name="reciver_id" value="{{ $reservation->reciver_id }}">
                                         <div class="form-group text-right">
                                           <div class="">
                                             <label for="confirm"> تم الدفع </label>

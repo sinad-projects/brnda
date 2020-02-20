@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Message;
+use App\Contacts;
 use App\Events\NewMessage;
 use Auth;
 
@@ -12,8 +13,10 @@ class ContactsController extends Controller
 {
   public function get() {
      // get all users except the authenticated one
-     $contacts = User::where('id', '!=', auth()->id())->get(); 
-     //$contacts = Auth::user()->workers();
+    // $contacts = User::where('id', '!=', auth()->id())->get();
+
+
+     $contacts = Auth::user()->contacts();
 
      // get a collection of items where sender_id is the user who sent us a message
      // and messages_count is the number of unread messages we have from him

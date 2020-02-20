@@ -11,7 +11,9 @@ class Location extends Model
       'geo_loc_id',
       'state_id',
       'city_id',
-      'area'
+      'area',
+      'lng',
+      'lat'
     ];
 
     public function agar(){

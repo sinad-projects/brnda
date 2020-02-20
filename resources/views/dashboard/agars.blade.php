@@ -31,10 +31,11 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" dir="rtl">
                   <thead>
                     <tr class="text-right">
                       <th>اسم العقار</th>
+                      <th>صورة للعقار</th>
                       <th>نوع العقار</th>
                       <th>موقع العقار</th>
                       <th>صاحب العقار</th>
@@ -45,6 +46,7 @@
                   <tfoot>
                     <tr class="text-right">
                       <th>اسم العقار</th>
+                      <th>صورة للعقار</th>
                       <th>نوع العقار</th>
                       <th>موقع العقار</th>
                       <th>صاحب العقار</th>
@@ -56,6 +58,12 @@
                     @foreach($agars as $agar)
                       <tr class="text-right">
                         <td>{{ $agar->agar_name }}</td>
+                        <td>
+                          @foreach($agar->image as $image)
+                            <img src="{{ asset('agar/images/'.$image->img_wide) }}" width="100" height="100" />
+                            @break
+                          @endforeach
+                        </td>
                         <td>{{ $agar->type->type_name }}</td>
                         <td>
                           {{ $agar->location->state->state_name }} /
@@ -63,16 +71,32 @@
                           {{ $agar->location->area }}
                         </td>
                         <td><a href="#">{{ $agar->user->name }}</a></td>
-                        <td>{{ $agar->status }}</td>
-                        <td>
+                        @if($agar->status == 1)
+                          <td>متاح</td>
+                        @endif
+                        <td class="">
                           <form action="{{ route('dashboard.agars') }}" method="post">
                             @csrf
                             <input type="hidden" name="agar_id" value="{{ $agar->id }}" />
-                            <button type="submit" name="delete_btn" class="btn btn-danger" > حذف العقار  </button>
+                            <!-- delete with comments model -->
+                            <div class="w3-modal" id="admin_comments_{{ $agar->id }}">
+                              <div class="w3-modal-content w3-card-4 w3-padding-64 w3-animate-zoom" style="max-width:480px">
+                                <span onclick="document.getElementById('admin_comments_{{ $agar->id }}').style.display='none'"
+                                class="w3-button w3-large w3-display-topright">&times;</span>
+                                <div class="w3-margin">
+                                  <textarea name="comments" class="form-control" placeholder="كتابة ملاحظة لصاحب العقار" rows="8" cols="20"></textarea>
+                                  <hr>
+                                  <button type="submit" name="delete_btn" class="btn btn-danger form-control" > حذف العقار  </button>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- end delete with comments model -->
+                            <button type="button" onclick="document.getElementById('admin_comments_{{ $agar->id }}').style.display = 'block'"  class="btn btn-danger form-control" > حذف العقار  </button>
+                            <hr>
                             @if($agar->featured == 0)
-                              <button class="btn btn-success" name="featured_btn" type="submit"> تحويل الى مميز </button>
+                              <button class="btn btn-success form-control" name="featured_btn" type="submit"> تحويل الى مميز </button>
                             @else
-                              <button class="btn btn-info" name="notfeatured_btn" type="submit"> تحويل الى عادي  </button>
+                              <button class="btn btn-info form-control" name="notfeatured_btn" type="submit"> تحويل الى عادي  </button>
                             @endif
                           </form>
                         </td>

@@ -35,9 +35,7 @@
     <!-- !PAGE CONTENT! -->
     <div class="wrapper"><!-- START view agar -->
        <div class="w3-container w3-margin-top brnda-card-4">
-           <header class="w3-bar w3-section w3-large"> <!-- START HEADER -->
-               <span class="w3-bar-item w3-right" style="padding-right: 0"><i class="fa fa-picture-o"></i> صور العقار</span>
-           </header>
+
 
            <!-- begin agars images -->
            <div class="w3-animate-zoom w3-margin-bottom w3-responsive">
@@ -57,7 +55,7 @@
                   <div class="w3-content w3-display-container">
                     @foreach($agar->image as $image)
                       <div class="w3-display-container w3-tooltip">
-                          <img width="100%" class="w3-hover-grayscale mySlides" src="{{ asset('agar/images/'.$image->img_wide) }}" alt="{{$image->img_wide}}">
+                          <img width="100%" class="mySlides" src="{{ asset('agar/images/'.$image->img_wide) }}" alt="{{$image->img_wide}}">
                       </div>
                     @endforeach
                     <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
@@ -70,12 +68,6 @@
               <div class="wrapper">
                 <div class="w3-row-padding">
                   <section class="w3-twothird">
-                      <div class="w3-bar">
-
-                          <a href="#" class="w3-bar-item w3-button w3-hover-none w3-text-gray" style="padding: 4px 8px">
-                              <i class="fa fa-info-circle"> <span>أعرف معلومات أكثر</span></i>
-                          </a>
-                      </div>
                       <section class="w3-section">
                           <h2>{{ $agar->agar_name }}</h2>
                           <h6>
@@ -113,8 +105,18 @@
                       <section class="w3-section" style="margin-bottom: 64px !important;" >
                           <h3>الموقع على الخريطة</h3>
                           <div>
-                              <div class="mapouter"><div class="gmap_canvas"><iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Innovation%20platform%2C%20khartoum%2C%20sudan&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>Google Maps Generator by <a href="https://www.embedgooglemap.net">embedgooglemap.net</a></div><style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style></div>
+
+                            <div class="mapouter">
+                              <div class="gmap_canvas">
+                                <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Innovation%20platform%2C%20khartoum%2C%20sudan&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                                </iframe>Google Maps Generator by <a href="https://www.embedgooglemap.net">embedgooglemap.net</a>
+                              </div>
+                              <style>
+                                .mapouter{position:relative;text-align:right;height:500px;width:600px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}
+                              </style>
+                            </div>
                               <!-- Special 20% Discount for Elegant Themes Divi Page Builder https://www.embedgooglemap.net/divi-sale/ -->
+
                           </div>
                           <div id="agar_feature"></div>
                       </section>
@@ -217,6 +219,8 @@
 
 
     @include('layouts/footer')
+
+    <script src="{{ asset('js/script.js') }}"></script>
 
     <script>
       var slideIndex = 1;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use App\User;
+use App\Contacts;
 use App\Agar;
 use App\AgarExtra;
 use App\B_extra;
@@ -21,6 +22,7 @@ use App\AgarImg;
 use App\State;
 use App\City;
 use App\Settings;
+use Auth;
 
 class dashboardController extends Controller
 {
@@ -65,7 +67,11 @@ class dashboardController extends Controller
           return redirect()->back()->with('info','  تم تحويل العقار الى عادي ');
         }
         if($request->has('delete_btn')){
-          Agar::where('id',$request->agar_id)->update(['status' => 0]);
+
+          Agar::where('id',$request->agar_id)->update([
+            'admin_comments' => $request->comments,
+            'status' => 0
+          ]);
           return redirect()->back()->with('info','  تم تعطيل عرض العقار');
         }
     }
@@ -93,8 +99,15 @@ class dashboardController extends Controller
       if($request->has('action')){
         if($request->action == 'confirm'){
           Reservation::where('id',$request->reservation_id)->update(['status' => 2]);
+          // add reservation sender to agar owner contacts list
+          $user = User::where('id',$request->reciver_id)->first();
+          if(Auth::user()->isContactWith($user)){
+              return redirect()->back()->with('info','المستخدم موجود في قائمة الاتصال');
+          }
+          Auth::user()->addContact($user);
           return redirect()->back()->with('info','تم تأكيد طلب الحجز');
-        }elseif($request->action == 'delete'){
+        }
+        elseif($request->action == 'delete'){
           Reservation::where('id',$request->reservation_id)->update(['status' => 0]);
           return redirect()->back()->with('info','تم تعطيل الحجز  ');
         }

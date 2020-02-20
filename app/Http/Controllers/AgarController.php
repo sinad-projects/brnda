@@ -58,8 +58,7 @@ class AgarController extends Controller
 
     // get agars for spacific user
     public function myAgars(){
-      $agars = Agar::where('status',1)
-                    ->where('owner_id',Auth::user()->id)->get();
+      $agars = Agar::where('owner_id',Auth::user()->id)->get();
       // get this date for edit agar page
       $agarType = AgarType::where('status',1)->get();
       $agarFloor = AgarFloor::where('status',1)->get();
@@ -322,7 +321,7 @@ class AgarController extends Controller
       } else $rooms_number = 0;
 
       if($request->has('bathrooms_number')){
-          $bathrooms_number = $request->bathrooms_number; 
+          $bathrooms_number = $request->bathrooms_number;
       } else $bathrooms_number = '';
 
       if($request->has('type_id')){

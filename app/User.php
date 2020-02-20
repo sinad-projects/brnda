@@ -56,7 +56,57 @@ class User extends Authenticatable
     }
 
     public function agar()
-    { 
+    {
         return $this->hasMany(Agar::class,'owner_id');
     }
+
+
+    // for contacts table
+   public function contactsOfMine(){
+       return $this->belongsToMany(User::class,'contacts','user_id','contact_id');
+   }
+
+   public function contactsOf(){
+       // test this out (user_id vs worker_id)
+       return $this->belongsToMany(User::class,'contacts','contact_id','user_id');
+   }
+
+   public function contacts(){
+       return $this->contactsOfMine()->wherePivot('accepted',true)->get()->merge($this->contactsOf()->wherePivot('accepted',true)->get());
+   }
+
+   public function contactRequest(){
+       return $this->contactsOfMine()->wherePivot('accepted',false)->get();
+   }
+
+   public function contactRequestPending(){
+       return $this->contactsOf()->wherePivot('accepted',false)->get();
+   }
+
+   public function hasContactRequestPending(User $user){
+       return (bool) $this->contactRequestPending()->where('id',$user->id)->count();
+   }
+
+   public function hasContactRequestRecived(User $user){
+       return (bool) $this->ContactRequest()->where('id',$user->id)->count();
+   }
+
+   public function addContact(User $user){
+       $this->contactsOf()->attach($user->id);
+   }
+
+   public function deleteContact(User $user){
+       $this->contactsOf()->detach($user->id);
+       $this->contactsOfMine()->detach($user->id);
+   }
+
+   public function acceptContactRequest(User $user){
+       $this->contactRequest()->where('id',$user->id)->first()->pivot->update([
+           'accepted' => true,
+       ]);
+   }
+
+   public function isContactWith(User $user){
+       return (bool) $this->contacts()->where('id',$user->id)->count();
+   }
 }

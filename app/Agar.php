@@ -17,7 +17,8 @@ class Agar extends Model
       'agar_desc',
       'owner_id',
       'status',
-      'featured'
+      'featured',
+      'admin-comments'
     ];
 
     public function user()
