@@ -37,7 +37,7 @@
             <a class="nav-link w3-large" href="#">تحميل التطبيق</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link w3-large" href="#services">   خدماتنا </a>
+            <a class="nav-link w3-large" href="{{ route('login') }}">  دخول جديد  </a>
           </li>
         </ul>
       </div>
@@ -104,29 +104,27 @@
   <div class="container w3-white text-center w3-margin-top w3-padding-16">
     <div class="row w3-large">
       @foreach($featured_agars as $agar)
-        <div class="col-md-4 w3-margin-bottom">
-          @foreach($agar->image as $image)
-            <div class="">
-              <img src="{{ asset('agar/images/'.$image->img_wide) }}" width="100%" height="200" />
-            </div>
-            @break
-          @endforeach
-        </div>
+        @if($agar->image->count())
+          <div class="col-md-4 w3-margin-bottom">
+            <a href="{{ route('agars.single',['agar_id' => $agar->id]) }}">
+              <div class="w3-white  card">
+                @foreach($agar->image as $image)
+                  <img src="{{ asset('agar/images/'.$image->img_wide ) }}" width="100%" height="200" />
+                  @break
+                @endforeach
+                <div class="w3-padding">
+                  <h3> {{ $agar->agar_name }}  </h3>
+                  <p>{{ $agar->price->day }} جنيه <span> / اليوم </span> </p>
+                </div>
+              </div>
+            </a>
+          </div>
+        @endif
       @endforeach
-      <div class="col-md-4 w3-margin-bottom">
-        <div class="">
-          <img src="{{ asset('images/2.jpg') }}" width="100%" height="200" />
-        </div>
-      </div>
-      <div class="col-md-4 w3-margin-bottom">
-        <div class="">
-          <img src="{{ asset('images/1.jpg') }}" width="100%" height="200" />
-        </div>
-      </div>
     </div>
   </div>
 
-  <hr>
+  <br>
 
   <div class="container" style="margin-top: 50px;">
     <div class="row text-center w3-light-grey w3-padding-32">
@@ -136,7 +134,7 @@
           <p class="w3-padding">
             هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة
           </p>
-          <a href="#places" class="w3-button w3-border w3-margin-bottom"> تعرف على اماكن السكن </a>
+          <a href="#places" class="w3-button w3-hover-none w3-padding-16 w3-black w3-round w3-margin-bottom"> تعرف على اماكن السكن </a>
         </div>
       </div>
       <div class="col-md-6 w3-margin-bottom">
@@ -145,13 +143,13 @@
           <p class="w3-padding">
             هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة
           </p>
-          <a href="{{ route('agars.agarsList') }}" class="w3-button w3-border w3-margin-bottom">تصفح العقارات</a>
+          <a href="{{ route('agars.agarsList') }}" class="w3-button w3-hover-none w3-padding-16 w3-black w3-round w3-margin-bottom">تصفح العقارات</a>
         </div>
       </div>
     </div>
   </div>
 
-  <hr>
+  <br>
 
 
   <div class="container text-right" style="margin-top: 50px;">
@@ -160,18 +158,22 @@
   <div class="container">
     <div class="row text-right">
       @foreach($agars as $agar)
-        <div class="col-md-3 w3-margin-bottom">
-          <div class="w3-white  card">
-            @foreach($agar->image as $image)
-              <img src="{{ asset('agar/images/'.$image->img_wide ) }}" width="100%" height="200" />
-              @break
-            @endforeach
-            <div class="w3-padding">
-              <h3> {{ $agar->agar_name }}  </h3>
-              <p>{{ $agar->price->day }} جنيه <span> / اليوم </span> </p>
-            </div>
+        @if($agar->image->count())
+          <div class="col-md-3 w3-margin-bottom">
+            <a href="{{ route('agars.single',['agar_id' => $agar->id]) }}">
+              <div class="w3-white  w3-card">
+                @foreach($agar->image as $image)
+                  <img src="{{ asset('agar/images/'.$image->img_wide ) }}" width="100%" height="200" />
+                  @break
+                @endforeach
+                <div class="w3-padding">
+                  <h3> {{ $agar->agar_name }}  </h3>
+                  <p>{{ $agar->price->day }} جنيه <span> / اليوم </span> </p>
+                </div>
+              </div>
+            </a>
           </div>
-        </div>
+        @endif
       @endforeach
     </div>
   </div>

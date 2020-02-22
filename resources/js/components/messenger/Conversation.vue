@@ -1,6 +1,5 @@
 <template>
-    <div class="conversation col-md-12">
-        <h1 class="w3-right-align">{{ contact ? contact.name : 'اختار مستخدم' }}</h1>
+    <div class="col-md-8 col-xl-6 chat">
         <MessagesFeed :contact="contact" :messages="messages"/>
         <MessageComposer @send="sendMessage"/>
     </div>
@@ -41,22 +40,5 @@
 </script>
 
 <style lang="scss" scoped>
-.conversation {
-    flex: 5;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
 
-    h1 {
-        font-size: 20px;
-        padding: 10px;
-        margin: 0;
-        border-bottom: 1px dashed lightgray;
-    }
-}
-@media screen and (max-width: 768px){
-    .conversation {
-        flex: 7;
-    }
-}
 </style>

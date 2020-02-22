@@ -1,13 +1,25 @@
 <template>
-    <div class="feed" ref="feed">
-        <ul v-if="contact">
-            <li v-for="message in messages" :class="`message${message.to == contact.id ? ' sent' : ' received'}`" :key="message.id">
-                <div class="text">
-                    {{ message.message }}
-                </div>
-            </li>
-        </ul>
+  <div class="card">
+    <div class="card-header msg_head">
+      <div class="d-flex bd-highlight">
+        <div class="img_cont">
+          <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
+          <span class="online_icon"></span>
+        </div>
+        <div class="user_info">
+          <span>اختر مستخدم لبدء المحادثة</span>
+        </div>
+      </div>
     </div>
+    <div  v-if="contact" class="card-body msg_card_body">
+      <div v-for="message in messages" class="d-flex justify-content-start mb-4" :key="message.id">
+        <div :class="`msg_cotainer${message.to == contact.id ? ' msg_cotainer_send' : ''}`">
+          {{ message.message }}
+        </div>
+      </div>
+    </div>
+  </div>
+
 </template>
 
 <script>
@@ -40,46 +52,5 @@
 </script>
 
 <style lang="scss" scoped>
-.feed {
-    background: #f0f0f0;
-    height: 100%;
-    max-height: 470px;
-    overflow: scroll;
 
-    ul {
-        list-style-type: none;
-        padding: 5px;
-
-        li {
-            &.message {
-                margin: 10px 0;
-                width: 100%;
-
-                .text {
-                    max-width: 200px;
-                    border-radius: 5px;
-                    padding: 12px;
-                    display: inline-block;
-
-                }
-
-                &.received {
-                    text-align: right;
-
-                    .text {
-                        background: #b2b2b2;
-                    }
-                }
-
-                &.sent {
-                    text-align: left;
-
-                    .text {
-                        background: #81c4f9;
-                    }
-                }
-            }
-        }
-    }
-}
 </style>

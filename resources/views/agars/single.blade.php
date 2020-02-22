@@ -104,20 +104,20 @@
                       </section>
                       <section class="w3-section" style="margin-bottom: 64px !important;" >
                           <h3>الموقع على الخريطة</h3>
-                          <div>
+                          <div id="map" style="width: 500px;height: 400px"></div>
+                          <script>
+                            function initMap() {
+                              var uluru = {lat: <?php echo $agar->location->lat ?>, lng: <?php echo $agar->location->lng ?>};
+                              var map = new google.maps.Map(
+                                  document.getElementById('map'), {zoom: 4, center: uluru});
+                              var marker = new google.maps.Marker({position: uluru, map: map});
+                            }
+                          </script>
+                          <script async defer
+                          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_7Yl8XjIAZ28pE5uNuZ0GdR_q_125UxY&callback=initMap">
+                          </script>
 
-                            <div class="mapouter">
-                              <div class="gmap_canvas">
-                                <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Innovation%20platform%2C%20khartoum%2C%20sudan&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
-                                </iframe>Google Maps Generator by <a href="https://www.embedgooglemap.net">embedgooglemap.net</a>
-                              </div>
-                              <style>
-                                .mapouter{position:relative;text-align:right;height:500px;width:600px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}
-                              </style>
-                            </div>
-                              <!-- Special 20% Discount for Elegant Themes Divi Page Builder https://www.embedgooglemap.net/divi-sale/ -->
 
-                          </div>
                           <div id="agar_feature"></div>
                       </section>
                       <section class="w3-section">

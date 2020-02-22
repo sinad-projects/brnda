@@ -28,7 +28,7 @@
     </div>
 
     <br>
-    
+
     <div class="w3-bar-block">
         <a href="javascript::void()" class="w3-bar-item text-right w3-btn w3-padding-16 w3-hide-large1 w3-dark-grey w3-hover-black"onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  اغلق القائمة</a>
 
@@ -56,7 +56,7 @@
 
         <form action="{{ route('logout') }}" method="POST">
           @csrf
-          <button type="submit" name="logout" class="w3-btn"><i class="fa fa-sign-out"></i> تسجيل خروج </button>
+          <button type="submit" name="logout" class="w3-bar-item w3-large w3-btn w3-padding text-right w3-animate-zoom"><i class="fa fa-sign-out"></i> تسجيل خروج </button>
         </form>
 
     </div>

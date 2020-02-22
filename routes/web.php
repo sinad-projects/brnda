@@ -51,7 +51,17 @@ Route::post('home/search',[
 ]);
 
 /** Route For messenger Controllers **/
-Route::get('/messenger', 'MessengerController@index')->name('messages.index');
+Route::get('/messenger',[
+  'uses'       => 'MessengerController@index',
+  'as'         => 'messages.index',
+  'middleware' => ['auth']
+]);
+
+Route::get('/messenger/test',[
+  'uses'       => 'MessengerController@test',
+  'as'         => 'messages.testChat',
+  'middleware' => ['auth']
+]);
 
 Route::get('/messenger/count',function(){
     return Message::where('to','=',Auth::user()->id)
@@ -105,17 +115,21 @@ Route::post('agars/filter',[
 Route::get('agars/{agar_id}',[
     'uses' => 'agarController@single',
     'as' => 'agars.single',
+    'middleware' => ['auth']
 ]);
 Route::post('agars/{agar_id}',[
     'uses' => 'agarController@postSingle',
+    'middleware' => ['auth']
 ]);
 // agar control panel
 Route::get('agar/dashboard/{agar_id}',[
     'uses' => 'agarController@getDashboard',
     'as' => 'agar.dashboard',
+    'middleware' => ['auth']
 ]);
 Route::post('agar/dashboard/{agar_id}',[
     'uses' => 'agarController@postDashboard',
+    'middleware' => ['auth']
 ]);
 
 // reservation Routes...

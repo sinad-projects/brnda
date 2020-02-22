@@ -1,7 +1,7 @@
 <template>
-    <div class="chat-app row">
-        <Conversation :contact="selectedContact" :messages="messages" @new="saveNewMessage"/>
+    <div class="row justify-content-center h-100">
         <ContactsList :contacts="contacts" @selected="startConversationWith"/>
+        <Conversation :contact="selectedContact" :messages="messages" @new="saveNewMessage"/>
     </div>
 </template>
 
@@ -53,7 +53,7 @@
                     this.saveNewMessage(message);
                     // to notifi user about the new message
                     var counter = parseInt(document.getElementById('notifi').innerText);
-                    document.getElementById('notifi').innerHTML = counter + 1; 
+                    document.getElementById('notifi').innerHTML = counter + 1;
                     return;
                 }
 
@@ -80,7 +80,5 @@
 
 
 <style lang="scss" scoped>
-.chat-app {
-    display: flex;
-}
+
 </style>

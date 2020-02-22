@@ -1,8 +1,15 @@
 <template>
-    <div class="composer">
-        <textarea class="text-right" v-model="message" @keydown.enter="send" placeholder="اكتب الرسالة هنا" ></textarea>
-        <button type="submit" @click="send" class="btn custom-bg w3-right w3-margin-right">ارسال</button>
+  <div class="card-footer">
+    <div class="input-group">
+      <div class="input-group-append">
+        <span @click="send" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
+      </div>
+      <textarea v-model="message" @keydown.enter="send" class="form-control  text-right type_msg" placeholder="اكتب الرسالة هنا"></textarea>
+      <div class="input-group-append">
+        <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -28,12 +35,5 @@
 </script>
 
 <style lang="scss" scoped>
-.composer textarea {
-    width: 96%;
-    margin: 10px;
-    resize: none;
-    border-radius: 3px;
-    border: 1px solid lightgray;
-    padding: 6px;
-}
+
 </style>

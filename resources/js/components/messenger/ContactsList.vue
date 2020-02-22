@@ -1,18 +1,33 @@
 <template>
-    <div class="contacts-list col-md-12">
-        <ul>
-            <li v-for="contact in sortedContacts" :key="contact.id" @click="selectContact(contact)" :class="{ 'selected': contact == selected }">
-                <div class="avatar">
-                    <img src="images/avatar2.png" :alt="contact.name">
-                </div>
-                <div class="w3-hide-small">
-                    <p class="name">{{ contact.name }}</p>
-                    <p class="email">{{ contact.email }}</p>
-                </div>
-                <span class="unread" v-if="contact.unread">{{ contact.unread }}</span>
-            </li>
-        </ul>
+  <div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
+    <div class="card-header">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
+        </div>
+        <input type="text" placeholder="بحث عن مستخدم" name="" class="form-control search">
+      </div>
     </div>
+    <div class="card-body contacts_body">
+      <ul class="contacts">
+        <li v-for="contact in sortedContacts" :key="contact.id" @click="selectContact(contact)" :class="{ 'selected': contact == selected }">
+          <div class="d-flex bd-highlight">
+            <div class="img_cont">
+              <img src="images/avatar2.png" :alt="contact.name" class="rounded-circle user_img">
+              <span class="online_icon"></span>
+            </div>
+            <div class="user_info">
+              <span>{{ contact.name }}</span>
+              <p class="unread" v-if="contact.unread">{{ contact.unread }} رسالة غير مقروءة</p>
+            </div>
+
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="card-footer"></div>
+  </div>
+</div>
 </template>
 
 <script>
@@ -49,86 +64,4 @@
     }
 </script>
 
-<style lang="scss" scoped>
-.contacts-list {
-    flex: 2;
-    max-height: 600px;
-    overflow: scroll;
-    border-left: 1px solid #a6a6a6;
-
-    ul {
-        list-style-type: none;
-        padding-left: 0;
-
-        li {
-            display: flex;
-            padding: 2px;
-            border-bottom: 1px solid #aaaaaa;
-            height: 80px;
-            position: relative;
-            cursor: pointer;
-
-            &.selected {
-                background: #dfdfdf;
-            }
-
-            span.unread {
-                background: #82e0a8;
-                color: #fff;
-                position: absolute;
-                right: 11px;
-                top: 20px;
-                display: flex;
-                font-weight: 700;
-                min-width: 20px;
-                justify-content: center;
-                align-items: center;
-                line-height: 20px;
-                font-size: 12px;
-                padding: 0 4px;
-                border-radius: 3px;
-            }
-
-            .avatar {
-                flex: 1;
-                display: flex;
-                align-items: center;
-
-                img {
-                    width: 50px;
-                    height: 50px;
-                    border-radius: 50%;
-                    margin: 0 auto;
-                }
-            }
-
-            .contact {
-                flex: 3;
-                font-size: 10px;
-                display: flex;
-                overflow: hidden;
-                flex-direction: column;
-                justify-content: center;
-
-                p {
-                    margin: 0;
-
-                    &.name {
-                        font-weight: bold;
-                        font-size: 14px;
-                    }
-                    &.email{
-                        font-size: 14px;
-                    }
-                }
-            }
-        }
-    }
-}
-
-@media screen and (max-width: 768px){
-    .contacts-list {
-        flex: 1;
-    }
-}
-</style>
+<style></style>

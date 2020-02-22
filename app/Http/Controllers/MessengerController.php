@@ -21,4 +21,13 @@ class MessengerController extends Controller
       return view('messages.index')
           ->with('messagesCount',$messagesCount);
   }
+
+  public function test()
+  {
+    $messagesCount = Message::where('to','=',Auth::user()->id)
+          ->orwhere('from','=',Auth::user()->id)->count();
+
+      return view('messages.testChat')
+          ->with('messagesCount',$messagesCount);
+  }
 }

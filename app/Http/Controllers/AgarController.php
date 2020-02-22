@@ -225,11 +225,26 @@ class AgarController extends Controller
         'bathrooms_number' => 'required|integer',
         'agar_desc'        => 'required|string'
       ]);
+
+      $state = State::where('state_id',$request->state_id)->first()->state_name;
+      $city = City::where('city_id',$request->city_id)->first()->city_name;
+
+      $address = urlencode($state. ' ' . $city. ' ' . $request->area);
+
+      $client = new \GuzzleHttp\Client();
+      $response = $client->request('GET', "https://maps.googleapis.com/maps/api/geocode/json?address=$address&key=AIzaSyD_7Yl8XjIAZ28pE5uNuZ0GdR_q_125UxY");
+
+      $api_result = json_decode($response->getBody());
+      $lng = $api_result->results[0]->geometry->location->lng;
+      $lat = $api_result->results[0]->geometry->location->lat;
+
       // add agar location
       $location = Location::create([
         'state_id' => $request->state_id,
         'city_id'  => $request->city_id,
-        'area'     => $request->area
+        'area'     => $request->area,
+        'lng'      => $lng,
+        'lat'      => $lat
       ]);
       // add new agar
       $agar = Agar::create([
