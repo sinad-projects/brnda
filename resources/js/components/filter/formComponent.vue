@@ -5,12 +5,12 @@
       <form class="form-inline">
         <div class="form-group mb-2">
           <select name="type_id" v-model=type_id class="form-control">
-            <option v-for="type in agarType" @change="filter()"  :value="type.type_id"> {{ type.type_name }} </option>
+            <option v-for="type in agarType" @click="filter()"  :value="type.type_id"> {{ type.type_name }} </option>
           </select>
         </div>
         <div class="form-group mx-sm-3 mb-2">
           <select name="floor_id" v-model="floor_id" class="form-control">
-              <option v-for="floor in agarFloor" @change="filter()" :value="floor.floor_id"> {{ floor.floor_name }} </option>
+              <option v-for="floor in agarFloor" @click="filter()" :value="floor.floor_id"> {{ floor.floor_name }} </option>
           </select>
         </div>
         <div class="form-group mx-sm-3 mb-2">
@@ -248,11 +248,10 @@
 			return{
         date: '',
         range: '',
-        rooms_number: Number,
-        bathrooms_number: Number,
-        floor_id: Number,
-        type_id: Number,
-        date: '',
+        rooms_number: 0,
+        bathrooms_number: 0,
+        floor_id: 0,
+        type_id: 0,
 				price: 0,
         a_extra: [],
         sf_extra: []

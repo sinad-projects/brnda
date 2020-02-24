@@ -71,9 +71,17 @@
                           {{ $agar->location->area }}
                         </td>
                         <td><a href="#">{{ $agar->user->name }}</a></td>
-                        @if($agar->status == 1)
-                          <td>متاح</td>
-                        @endif
+                        <td>
+                          @if($agar->status == 1)
+                            <form action="{{ route('dashboard.agars') }}" method="post">
+                              @csrf
+                              <input type="hidden" name="agar_id" value="{{ $agar->id }}" />
+                              <button type="submit" name="approve_btn" class="btn btn-success form-control">موافقة</button>
+                            </form>
+                            @else
+                            متاح
+                          @endif
+                        </td>
                         <td class="">
                           <form action="{{ route('dashboard.agars') }}" method="post">
                             @csrf

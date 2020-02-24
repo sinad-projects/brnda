@@ -321,19 +321,41 @@ text-decoration: none;
 }
 @media screen and (max-width: 574px){
   .home-search-model{
-    width: 100%
+    width: 80%;
   }
 }
 
 .about_brnda_icons{
   border-radius: 50%;
-  border: 1px solid #000;
+  border: 1px solid #757575;
   padding: 15px;
 }
 
+
+/* home page */
+
+.home_header{
+  margin-top: -95px;
+  background-image: url('../images/francesca-tosolini-tHkJAMcO3QE-unsplash.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 99;height: 550px!important
+}
+.inner_content{
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+  height: 550px!important;
+}
+
 @media screen and (max-width: 990px) {
+  .navbar-light .navbar-toggler {
+    color: #fff!important;
+    border-color:#fff;
+    }
   .home-nav{
-    background-color: #fff!important;
+    width: 100%;
+    background-color: #fff;
   }
   .home-nav ul{
     padding: 25px;
@@ -341,6 +363,9 @@ text-decoration: none;
     text-align: right
   }
   .home-nav ul li{
-    border-bottom: 1px solid #f1f1f1
+    1border-bottom: 1px solid #f1f1f1
+  }
+  .home-nav ul li a{
+    color: #000!important;
   }
 }

@@ -2,7 +2,7 @@
 
 <!-- <link rel="stylesheet" href="{{ asset('css/home.css') }}"> -->
 
-<body dir="rtl" class="text-right">
+<body class="text-right">
   <div class="w3-white">
 
 
@@ -14,15 +14,16 @@
     <!-- -->
 
     <br>
-    <div class="w3-content  w3-card w3-responsive">
+    <div class="w3-content  w3-card w3-responsive" dir="rtl">
+
     <div class="w3-container">
       <h3> طلبات الايجار على عقاراتي </h3>
     </div>
 
     <div class="w3-bar w3-border-bottom w3-card">
-      <button style="cursor: pointer"  class="w3-bar-item w3-white w3-border-brnda tablink w3-border-bottom-brnda" onclick="openTab(event,'all')"><i class="fa fa-plus-square"></i> الطلبات الجديدة</button>
-      <button style="cursor: pointer"  class="w3-bar-item w3-white w3-hover-border-bottom-brnda tablink" onclick="openTab(event,'accepted')"><i class="fa fa-check-square"></i> الطلبات المقبولة</button>
-      <button style="cursor: pointer" class="w3-bar-item w3-white w3-hover-border-bottom-brnda tablink" onclick="openTab(event,'confirmable')"><i class="fa fa-check-square"></i> الطلبات المؤكدة</button>
+      <button style="cursor: pointer"  class="w3-bar-item tablink w3-hover-border-bottom-brnda" onclick="openTab(event,'all')"><i class="fa fa-plus-square"></i> الطلبات الجديدة</button>
+      <button style="cursor: pointer"  class="w3-bar-item w3-hover-border-bottom-brnda tablink" onclick="openTab(event,'accepted')"><i class="fa fa-check-square"></i> الطلبات المقبولة</button>
+      <button style="cursor: pointer" class="w3-bar-item w3-hover-border-bottom-brnda tablink" onclick="openTab(event,'confirmable')"><i class="fa fa-check-square"></i> الطلبات المؤكدة</button>
     </div>
 
     <div id="all" class="w3-container tabs">
@@ -58,7 +59,7 @@
                                 <div class="">
                                     <div class="w3-bar">
                                         <button onclick="document.getElementById('accept_reservation_{{ $reservation->id }}').style.display='block'" class=" w3-btn w3-mobile w3-text-gray w3-border" style="padding: 0;"><i class="fa fa-check" style="padding: 5px;"></i></button>
-                                        <button type="button" onclick="document.getElementById('disable_reservation_{{ $reservation->id }}').style.display='block'" class="w3-btn w3-mobile"><i class="fa fa-times w3-text-gray w3-border" style="padding: 5px;"></i></button>
+                                        <button type="button" onclick="document.getElementById('delete_reservation_{{ $reservation->id }}').style.display='block'" class="w3-btn w3-mobile"><i class="fa fa-times w3-text-gray w3-border" style="padding: 5px;"></i></button>
                                     </div>
                                 </div>
                             </td>
@@ -85,14 +86,14 @@
                           </div><!-- END reservation accepted MODAL -->
 
                         <!-- START reservation_ delete confirm MODAL -->
-                        <div id="disable_reservation_{{ $reservation->id }}" class="w3-modal">
+                        <div id="delete_reservation_{{ $reservation->id }}" class="w3-modal">
                           <div class="w3-modal-content brnda-card-4 w3-animate-zoom" style="max-width:480px">
                               <header class="w3-container brnda-card">
-                                  <span onclick="document.getElementById('disable_reservation_{{ $reservation->id }}').style.display='none'"
+                                  <span onclick="document.getElementById('delete_reservation_{{ $reservation->id }}').style.display='none'"
                                     class="w3-btn w3-display-topleft">&times;</span>
                                   <h4>حذف</h4>
                               </header>
-                              <form action="{{ route('reservation.index') }}" method="post" id="disable_reservation_form_{{ $reservation->id }}">
+                              <form action="{{ route('reservation.index') }}" method="post" id="delete_reservation_form_{{ $reservation->id }}">
                                   @csrf
                                   <div class="w3-container">
                                       <div class="w3-section">
@@ -103,8 +104,8 @@
                                   <footer class="w3-container ">
                                       <div class="w3-margin-top w3-margin-bottom w3-left">
                                           <input type="hidden" value="{{ $reservation->id }}" name="reserv_id" />
-                                              <button form="disable_reservation_form_{{ $reservation->id }}" name="disable_reserv" value="موافق"class="w3-btn brnda-card w3-ripple w3-margin-left"><i class="fa fa-check-square"></i> موافق</button>
-                                              <button type="button" onclick="document.getElementById('disable_reservation_{{ $reservation->id }}').style.display='none'"class="w3-btn w3-white w3-ripple"><i class="fa fa-arrow-right"></i> إلغاء</button>
+                                              <button form="delete_reservation_form_{{ $reservation->id }}" name="delete_reserv" value="موافق"class="w3-btn brnda-card w3-ripple w3-margin-left"><i class="fa fa-check-square"></i> موافق</button>
+                                              <button type="button" onclick="document.getElementById('delete_reservation_{{ $reservation->id }}').style.display='none'"class="w3-btn w3-white w3-ripple"><i class="fa fa-arrow-right"></i> إلغاء</button>
                                           </div>
                                     </footer>
                                   </form>
@@ -195,7 +196,7 @@
                                   <footer class="w3-container ">
                                       <div class="w3-margin-top w3-margin-bottom w3-left">
                                           <input type="hidden" value="{{ $reservation->id }}" name="reserv_id" />
-                                              <button form="delete_accepted_reservation_form_{{ $reservation->id }}" name="disable_reserv" value="موافق"class="w3-btn brnda-card w3-ripple w3-margin-left"><i class="fa fa-check-square"></i> موافق</button>
+                                              <button form="delete_accepted_reservation_form_{{ $reservation->id }}" name="delete_reserv" value="موافق"class="w3-btn brnda-card w3-ripple w3-margin-left"><i class="fa fa-check-square"></i> موافق</button>
                                               <button type="button" onclick="document.getElementById('delete_accepted_reservation_{{ $reservation->id }}').style.display='none'"class="w3-btn w3-white w3-ripple"><i class="fa fa-arrow-right"></i> إلغاء</button>
                                           </div>
                                     </footer>
@@ -286,7 +287,7 @@
                                       <footer class="w3-container ">
                                           <div class="w3-margin-top w3-margin-bottom w3-left">
                                               <input type="hidden" value="{{ $reservation->id }}" name="reserv_id" />
-                                                  <button form="delete_confirmable_reservation__form_{{ $reservation->id }}" name="disable_reserv" value="موافق"class="w3-btn brnda-card w3-ripple w3-margin-left"><i class="fa fa-check-square"></i> موافق</button>
+                                                  <button form="delete_confirmable_reservation__form_{{ $reservation->id }}" name="delete_reserv" value="موافق"class="w3-btn brnda-card w3-ripple w3-margin-left"><i class="fa fa-check-square"></i> موافق</button>
                                                   <button type="button" onclick="document.getElementById('delete_confirmable_reservation_{{ $reservation->id }}').style.display='none'"class="w3-btn w3-white w3-ripple"><i class="fa fa-arrow-right"></i> إلغاء</button>
                                               </div>
                                         </footer>
@@ -305,10 +306,7 @@
 
   @include('layouts/footer')
 
-  <!--- <footer class="w3-container w3-padding-16">
-      <h4>برندة</h4>
-      <p>جميع الحقوق محفوظة لـ <b>برندة</b> 2019</p>
-  </footer> -->
+
 
   <script src="{{ asset('js/script.js') }}"></script>
 

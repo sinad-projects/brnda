@@ -2033,8 +2033,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_slider_component__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_slider_component__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var vue_slider_component_theme_antd_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-slider-component/theme/antd.css */ "./node_modules/vue-slider-component/theme/antd.css");
 /* harmony import */ var vue_slider_component_theme_antd_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_slider_component_theme_antd_css__WEBPACK_IMPORTED_MODULE_3__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -2283,16 +2281,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   data: function data() {
-    var _ref;
-
-    return _ref = {
+    return {
       date: '',
       range: '',
-      rooms_number: Number,
-      bathrooms_number: Number,
-      floor_id: Number,
-      type_id: Number
-    }, _defineProperty(_ref, "date", ''), _defineProperty(_ref, "price", 0), _defineProperty(_ref, "a_extra", []), _defineProperty(_ref, "sf_extra", []), _ref;
+      rooms_number: 0,
+      bathrooms_number: 0,
+      floor_id: 0,
+      type_id: 0,
+      price: 0,
+      a_extra: [],
+      sf_extra: []
+    };
   },
   methods: {
     filter: function filter() {
@@ -2636,10 +2635,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
 //
 //
 //
@@ -68822,7 +68817,7 @@ var render = function() {
                   {
                     domProps: { value: type.type_id },
                     on: {
-                      change: function($event) {
+                      click: function($event) {
                         return _vm.filter()
                       }
                     }
@@ -68870,7 +68865,7 @@ var render = function() {
                   {
                     domProps: { value: floor.floor_id },
                     on: {
-                      change: function($event) {
+                      click: function($event) {
                         return _vm.filter()
                       }
                     }
@@ -70397,7 +70392,7 @@ var render = function() {
                       "msg_cotainer" +
                       (message.to == _vm.contact.id ? " msg_cotainer_send" : "")
                   },
-                  [_vm._v("\n        " + _vm._s(message.message) + "\n      ")]
+                  [_c("span", [_vm._v(_vm._s(message.message))])]
                 )
               ]
             )
@@ -70414,17 +70409,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header msg_head" }, [
       _c("div", { staticClass: "d-flex bd-highlight" }, [
-        _c("div", { staticClass: "img_cont" }, [
-          _c("img", {
-            staticClass: "rounded-circle user_img",
-            attrs: {
-              src: "https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-            }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "online_icon" })
-        ]),
-        _vm._v(" "),
         _c("div", { staticClass: "user_info" }, [
           _c("span", [_vm._v("اختر مستخدم لبدء المحادثة")])
         ])
@@ -70672,7 +70656,7 @@ var render = function() {
       { staticClass: "form-group" },
       [
         _c("validation-provider", {
-          attrs: { name: "phone", rules: "required|max:11" },
+          attrs: { name: "phone", rules: "required|max:12|min:9" },
           scopedSlots: _vm._u([
             {
               key: "default",

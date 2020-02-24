@@ -2,7 +2,7 @@
 
 <!-- <link rel="stylesheet" href="{{ asset('css/home.css') }}"> -->
 
-<body dir="rtl" class="text-right">
+<body  class="text-right">
   <div class="w3-white">
 
 
@@ -14,16 +14,17 @@
     <!-- -->
 
   <br>
-  <div class="w3-content  w3-card w3-responsive">
+  <div class="w3-content  w3-card w3-responsive" dir="rtl">
+
   <div class="w3-container">
     <h2> طلبات الايجار المرسلة </h2>
   </div>
 
   <div class="w3-bar w3-border-bottom w3-card">
-    <button style="cursor: pointer"  class="w3-bar-item w3-white w3-border-brnda tablink w3-border-bottom-brnda" onclick="openTab(event,'all')"><i class="fa fa-plus-square"></i> كل الطلبات </button>
-    <button style="cursor: pointer"  class="w3-bar-item w3-white w3-hover-border-bottom-brnda tablink" onclick="openTab(event,'accepted')"><i class="fa fa-check-square"></i> الطلبات المقبولة</button>
-    <button style="cursor: pointer" class="w3-bar-item w3-white w3-hover-border-bottom-brnda tablink" onclick="openTab(event,'confirmable')"><i class="fa fa-check-square"></i> الطلبات المؤكدة</button>
-    <button style="cursor: pointer" class="w3-bar-item w3-white w3-hover-border-bottom-brnda tablink" onclick="openTab(event,'rejected')"><i class="fa fa-check-square"></i> الطلبات المرفوضة</button>
+    <button style="cursor: pointer"  class="w3-bar-item w3-hover-border-bottom-brnda  tablink" onclick="openTab(event,'all')"><i class="fa fa-plus-square"></i> كل الطلبات </button>
+    <button style="cursor: pointer"  class="w3-bar-item w3-hover-border-bottom-brnda tablink" onclick="openTab(event,'accepted')"><i class="fa fa-check-square"></i> الطلبات المقبولة</button>
+    <button style="cursor: pointer" class="w3-bar-item w3-hover-border-bottom-brnda tablink" onclick="openTab(event,'confirmable')"><i class="fa fa-check-square"></i> الطلبات المؤكدة</button>
+    <button style="cursor: pointer" class="w3-bar-item w3-hover-border-bottom-brnda tablink" onclick="openTab(event,'rejected')"><i class="fa fa-check-square"></i> الطلبات المرفوضة</button>
   </div>
 
   <div id="all" class="w3-container tabs">

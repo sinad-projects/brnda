@@ -2,7 +2,7 @@
 
 <!-- <link rel="stylesheet" href="{{ asset('css/home.css') }}"> -->
 
-  <body dir="rtl" class="text-right">
+  <body class="text-right">
     <div class="w3-white">
 
 
@@ -14,7 +14,7 @@
     <!-- -->
 
     <!-- !PAGE CONTENT! -->
-    <div class="container">
+    <div class="container" dir="rtl">
         <div class="w3-container w3-margin-top">
             <div class="w3-card-4">
                 <header class="w3-bar w3-padding " style="position: relative">
@@ -158,7 +158,7 @@
                         <form id="delete_agar_form_{{ $agar->id }}" action="{{ route('agars.delete') }}" method="post">
                             @csrf
                             <input type="hidden" name="agar_id" value="{{ $agar->id }}"/>
-                            <button type="submit" form="delete_agar_form_{{ $agar->id }}" autofocus type="submit" name="delete_agar" value="موافق"
+                            <button type="submit" form="delete_agar_form_{{ $agar->id }}" autofocus type="submit" name="delete_agar_btn" value="موافق"
                                 class="w3-button w3-white w3-border w3-border-gray w3-round w3-text-gray w3-hover-light-gray w3-hover-text-gray" style="padding: 7px 15px"><i class="fa fa-check-square"></i> موافق</button>
                             <button type="button" onclick="document.getElementById('delete_agar_confirm_{{ $agar->id }}').style.display='none'"
                                 class="w3-button w3-white w3-border w3-border-gray w3-round w3-text-gray w3-hover-light-gray w3-hover-text-gray" style="padding: 7px 15px"><i class="fa fa-arrow-right"></i> إلغاء</button>

@@ -75,8 +75,7 @@
 
             <div class="w3-margin-bottom">
                 <label for="agar_desc">الوصف</label>
-                <textarea id="agar_desc" name="agar_desc" class="w3-input"
-                          required>                            </textarea>
+                <textarea id="agar_desc" name="agar_desc" class="w3-input" required></textarea>
             </div>
         </form>
     </div>

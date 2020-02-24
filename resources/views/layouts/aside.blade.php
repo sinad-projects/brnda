@@ -16,7 +16,7 @@
 </div>
 
 <!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-animate-right" style="z-index:3;width:250px;display: none;position: relative; right: 0px" id="mySidebar"><br>
+<nav dir="rtl" class="w3-sidebar w3-animate-right" style="z-index:3;width:250px;display: none;position: relative; right: 0px" id="mySidebar"><br>
     <div class="w3-container w3-row">
         <div class="w3-col s4">
             <img src="{{ asset('images/avatar2.png') }}" class="w3-circle w3-margin-right" style="width:46px">

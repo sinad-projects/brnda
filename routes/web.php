@@ -90,6 +90,7 @@ Route::get('my-agars',[
     'as' => 'agars.myAgars',
     'middleware' => ['auth']
 ]);
+
 Route::post('agars/add',[
     'uses' => 'agarController@add',
     'as' => 'agars.add',

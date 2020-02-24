@@ -28,10 +28,15 @@ use DB;
 class AgarController extends Controller
 {
 
+  public $map_url = 'https://maps.googleapis.com/maps/api/geocode/json';
+  public $key = 'AIzaSyD_7Yl8XjIAZ28pE5uNuZ0GdR_q_125UxY';
+  public $query = '';
+
   #========= for web only ============#
   // get all agars
     public function list(){
-      $agars = Agar::where('status',1)
+      // status 2 means approved
+      $agars = Agar::where('status',2)
               ->with('image')->with('price')->get();
       // get this data for filteration
       $agarType = AgarType::where('status',1)->get();
@@ -49,7 +54,7 @@ class AgarController extends Controller
 
     public function agars_as_json()
     {
-      $agars = Agar::where('status',1)
+      $agars = Agar::where('status',2)
               ->with('image')->with('price')->get();
       return response()->json(
           $agars
@@ -58,7 +63,8 @@ class AgarController extends Controller
 
     // get agars for spacific user
     public function myAgars(){
-      $agars = Agar::where('owner_id',Auth::user()->id)->get();
+      $agars = Agar::where('owner_id',Auth::user()->id)
+                    ->where('status',1)->get();
       // get this date for edit agar page
       $agarType = AgarType::where('status',1)->get();
       $agarFloor = AgarFloor::where('status',1)->get();
@@ -116,19 +122,25 @@ class AgarController extends Controller
     public function postDashboard(Request $request){
 
       if($request->has('delete_agar_btn')){
-        Agar::where('id',$request->agar_id)->where('owner_id',Auth::user()->id)->update(['status' => 0]);
+        Agar::where('id',$request->agar_id)
+            ->where('owner_id',Auth::user()->id)
+            ->update(['status' => 0]);
 
-        return redirect()->back()->with('info','تم حذف العقار بنجاح');
-        /*$agars = Agar::where('status',1)->get();
+        //return redirect()->back()->with('info','تم حذف العقار بنجاح');
+        $agars = Agar::where('status',1)->where('owner_id',Auth::user()->id)->get();
         $agarType = AgarType::where('status',1)->get();
         $agarFloor = AgarFloor::where('status',1)->get();
+        $states = State::where('status',1)->get();
+        $citys = City::where('status',1)->get();
 
-        return view('agars.AgarsList')
+        return view('agars.myAgars')
               ->with('agars',$agars)
               ->with('image')
               ->with('price')
               ->with('agarType',$agarType)
-              ->with('agarFloor',$agarFloor);*/
+              ->with('agarFloor',$agarFloor)
+              ->with('states',$states)
+              ->with('citys',$citys);
       }
 
       if($request->has('save_b')){
@@ -232,7 +244,7 @@ class AgarController extends Controller
       $address = urlencode($state. ' ' . $city. ' ' . $request->area);
 
       $client = new \GuzzleHttp\Client();
-      $response = $client->request('GET', "https://maps.googleapis.com/maps/api/geocode/json?address=$address&key=AIzaSyD_7Yl8XjIAZ28pE5uNuZ0GdR_q_125UxY");
+      $response = $client->request('GET', "$this->map_url?address=$address&key=$this->key");
 
       $api_result = json_decode($response->getBody());
       $lng = $api_result->results[0]->geometry->location->lng;
@@ -256,7 +268,7 @@ class AgarController extends Controller
         'bathrooms_number'  => $request->bathrooms_number,
         'agar_desc'         => $request->agar_desc,
         'owner_id'          => Auth::user()->id,
-        'status'            => 0,
+        'status'            => 1,
         'featured'          => 0
       ]);
       // add agar extra
@@ -311,7 +323,7 @@ class AgarController extends Controller
     // search agar by name
     public function search_by_name($query){
       $agars = Agar::where('agar_name', 'LIKE' , "%$query%")
-            ->where('status',1)
+            ->where('status',2)
             ->get();
       $agarType = AgarType::where('status',1)->get();
       $agarFloor = AgarFloor::where('status',1)->get();
@@ -325,58 +337,39 @@ class AgarController extends Controller
         ->with('citys',$citys);
     }
 
-    public function agar_filter(Request $request){
+    public function agar_filter(Request $request, Agar $agar){
 
-      if($request->price != 0){
-          $price = $request->price;
-      } else $price = 0;
-
+      $agar = $agar->newQuery();
       if($request->rooms_number != 0){
-          $rooms_number = $request->rooms_number;
-      } else $rooms_number = 0;
-
-      if($request->has('bathrooms_number')){
-          $bathrooms_number = $request->bathrooms_number;
-      } else $bathrooms_number = '';
-
-      if($request->has('type_id')){
-          $agar_type    = $request->type_id;
-      } else $agar_type = '';
-
-      if($request->has('floor_id')){
-          $agar_floor   = $request->floor_id;
-      } else $agar_floor = '';
-
+        $agar->where('rooms_number',$request->rooms_number)->where('status',2)->with('image')->with('price');
+      }
+      if($request->bathrooms_number != 0){
+        $agar->where('bathrooms_number',$request->bathrooms_number)->where('status',2)->with('image')->with('price');
+      }
+      if($request->floor_id != 0){
+        $agar->where('floor_id',$request->floor_id)->where('status',2)->with('image')->with('price');
+      }
+      if($request->type_id != 0){
+        $agar->where('type_id',$request->type_id)->where('status',2)->with('image')->with('price');
+      }
       if($request->range != ''){
-          $date   = $request->range;
-      } else{ $date[0] = date('YYYY-MM-dd'); $date[1] = date('YYYY-MM-dd');}
-
-      if($request->has('a_extra')){
-          $a_extra   = $request->a_extra;
-      } else $a_extra = [];
-
-      if($request->has('sf_extra')){
-          $sf_extra   = $request->sf_extra;
-      } else $sf_extra = [];
-
-      $agars = Agar::where('status',1)
-                ->where('rooms_number',$rooms_number)
-                ->with('image')
-                ->with('price')
-                ->where('type_id',$agar_type)
-                ->where('floor_id',$agar_floor)
-                //->where('bathrooms_number',$bathrooms_number)
-                ->join('agar_price','agar.id','agar_price.agar_id')
-                // befor discount
-                ->where('day','<=',$price)
-                ->join('agar_calendar','agar.id','agar_calendar.agar_id')
-                ->where('start_date','<=',$date[0])
-                ->where('end_date','>=',$date[1])
-                ->join('agar_extra','agar.id','agar_extra.agar_id')
-                ->whereJsonContains('a_extra',$a_extra)
-                ->whereJsonContains('sf_extra',$sf_extra)
-                ->select('agar.*')->get();
-      return response()->json($agars);
+        $agar->join('agar_calendar','agar.id','agar_calendar.agar_id')
+            ->where('start_date','<=',$request->range[0])
+            ->where('end_date','>=',$request->range[1])->where('status',2)->with('image')->with('price');
+      }
+      if($request->a_extra != []){
+          $agar->join('agar_extra','agar.id','agar_extra.agar_id')
+          ->whereJsonContains('a_extra',[$request->a_extra])->where('status',2)->with('image')->with('price');
+      }
+      if($request->sf_extra != []){
+          $agar->join('agar_extra','agar.id','agar_extra.agar_id')
+          ->whereJsonContains('sf_extra',[$request->sf_extra])->where('status',2)->with('image')->with('price');
+      }
+      if($request->price != 0){
+          $agar->join('agar_price','agar.id','agar_price.agar_id')
+          ->where('day','<=',$request->price)->where('status',2)->with('image')->with('price');
+      }
+      return response()->json($agar->get());
 
     }
 
@@ -392,7 +385,7 @@ class AgarController extends Controller
     }
     // get agar with pagination
     public function get_agar_with_paginate(){
-      $agars = Agar::where('status',1)->paginate(15);
+      $agars = Agar::where('status',2)->paginate(15);
       // Return collection of agar's as a resource
       return agarResource::collection($agars);
     }
@@ -406,7 +399,7 @@ class AgarController extends Controller
                     ->with('image')
                     ->with('price')
                     ->with('agar_extra')
-                    ->where('status',1)->get();
+                    ->where('status',2)->get();
       // Return collection of agar's as a resource
       return agarResource::collection($agars);
     }
@@ -414,7 +407,7 @@ class AgarController extends Controller
 
     // last added
     public function lastAdded(){
-      $agars = Agar::where('status',1)->OrderByRaw('updated_at - created_at DESC')
+      $agars = Agar::where('status',2)->OrderByRaw('updated_at - created_at DESC')
                           ->limit(5)
                           ->get();
       // Return collection of agar's as a resource
@@ -423,13 +416,13 @@ class AgarController extends Controller
 
     public function search_by_name_api($query){
       $agars = Agar::where('agar_name', 'LIKE' , "%$query%")
-            ->where('status',1)
+            ->where('status',2)
             ->get();
       return agarResource::collection($agars);
     }
 
     public function agar_filter_api(Request $request){
-    $agars = Agar::where('status',1)
+    $agars = Agar::where('status',2)
                     ->where('rooms_number',$request->rooms_number)
                     ->where('bathrooms_number',$request->bathrooms_number)
                     ->join('agar_price','agar.id','agar_price.agar_id')
@@ -464,11 +457,23 @@ class AgarController extends Controller
       ]);
 
       if ($validator->passes()) {
+
+        $state = State::where('state_id',$request->state_id)->first()->state_name;
+        $city = City::where('city_id',$request->city_id)->first()->city_name;
+        $address = urlencode($state. ' ' . $city. ' ' . $request->area);
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('GET', "$this->map_url?address=$address&key=$this->key");
+        $api_result = json_decode($response->getBody());
+        $lng = $api_result->results[0]->geometry->location->lng;
+        $lat = $api_result->results[0]->geometry->location->lat;
+
       // add agar location
         $location = Location::create([
           'state_id' => $request->state_id,
           'city_id'  => $request->city_id,
-          'area'     => $request->area
+          'area'     => $request->area,
+          'lat'      => $lat,
+          'lng'      => $lng
         ]);
         // add new agar
         $agar = Agar::create([
@@ -677,23 +682,6 @@ class AgarController extends Controller
     public function destroy($agar_id,$user_id)
     {
       Agar::where('id',$request->agar_id)->where('owner_id',$request->user_id)->update(['status' => 0]);
-       /*Agar::where('id',$agar_id)->where('owner_id',$user_id)->delete();
-        AgarExtra::where('agar_id',$agar_id)->delete();
-        AgarPrice::where('agar_id',$agar_id)->delete();
-        AgarCalendar::where('agar_id',$agar_id)->delete();
-        AgarCalendar::where('agar_id',$agar_id)->delete();
-
-        $images = AgarImg::where('agar_id',$agar_id)->get();
-        foreach ($images as $image) {
-          File::delete('agar/images/'.$image->img_wide);
-          File::delete('agar/images/'.$image->thumbnail);
-        }
-        AgarImg::where('agar_id',$agar_id)
-                ->delete();
-
-        Reservation::where('agar_id',$agar_id)
-                ->delete();
-        */
         return response()->json([
           'code' => 200,
           'message' => 'تم حذف العقار بنجاح'

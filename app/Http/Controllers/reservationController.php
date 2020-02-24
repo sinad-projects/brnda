@@ -26,13 +26,14 @@ class reservationController extends Controller
         return redirect()->back()->with('info','تم تحديث حالة الطلب');
       }
       // to delete reservation
-      if($request->has('disable_reserv')){
+      if($request->has('delete_reserv')){
         Reservation::where('id',$request->reserv_id)->update(['status' => 0]);
-        return redirect()->back()->with('info',' تم تعطيل طلب الحجز ');
+        return redirect()->back()->with('info',' تم حذف الطلب بنجاح ');
       }
       // to list all reservation
       $reservations = Reservation::where('reciver_id',Auth::user()->id)
-                    ->get();
+                                  ->where('status', NULL)
+                                  ->get();
       $accepted_reservations = Reservation::where('reciver_id',Auth::user()->id)
                                   ->where('status',1)
                                   ->get();
@@ -48,7 +49,8 @@ class reservationController extends Controller
     # get reservation sent by this user
     public function sent(){
 
-      $reservations = Reservation::where('user_id',Auth::user()->id)->get();
+      $reservations = Reservation::where('user_id',Auth::user()->id)
+                                  ->where('status', NULL)->get();
       $accepted_reservations = Reservation::where('user_id',Auth::user()->id)
                                   ->where('status',1)->get();
       $confirmable_reservations = Reservation::where('user_id',Auth::user()->id)

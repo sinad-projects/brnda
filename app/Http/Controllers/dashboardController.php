@@ -52,12 +52,16 @@ class dashboardController extends Controller
 
     // manage agars
     public function getAgars(){
-      $agars = Agar::where('status',1)->get();
+      $agars = Agar::where('status','<>',0)->get();
       return view('dashboard.agars')
               ->with('agars',$agars);
     }
 
     public function postAgars(Request $request){
+        if($request->has('approve_btn')){
+          Agar::where('id',$request->agar_id)->update(['status' => 2]);
+          return redirect()->back()->with('info',' تمت الموافقة على العقار ');
+        }
         if($request->has('featured_btn')){
           Agar::where('id',$request->agar_id)->update(['featured' => 1]);
           return redirect()->back()->with('info','  تم تحويل العقار الى مميز ');
@@ -70,7 +74,7 @@ class dashboardController extends Controller
 
           Agar::where('id',$request->agar_id)->update([
             'admin_comments' => $request->comments,
-            'status' => 0
+            'status' => 1
           ]);
           return redirect()->back()->with('info','  تم تعطيل عرض العقار');
         }
@@ -100,11 +104,12 @@ class dashboardController extends Controller
         if($request->action == 'confirm'){
           Reservation::where('id',$request->reservation_id)->update(['status' => 2]);
           // add reservation sender to agar owner contacts list
-          $user = User::where('id',$request->reciver_id)->first();
-          if(Auth::user()->isContactWith($user)){
+          $sender_user = User::where('id',$request->user_id)->first();
+          $resever_user = User::where('id',$request->reciver_id)->first();
+          if($resever_user->isContactWith($sender_user)){
               return redirect()->back()->with('info','المستخدم موجود في قائمة الاتصال');
           }
-          Auth::user()->addContact($user);
+          $resever_user->addContact($sender_user);
           return redirect()->back()->with('info','تم تأكيد طلب الحجز');
         }
         elseif($request->action == 'delete'){

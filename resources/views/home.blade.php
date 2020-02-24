@@ -18,26 +18,26 @@
 
   <body class="" dir="rtl">
   <!-- Navigation Bar -->
-  <nav class="container navbar navbar-expand-lg navbar-light w3-light-grey" style="z-index: 999">
+  <nav class="navbar navbar-expand-lg navbar-light" style="z-index: 999;">
       <a class="navbar-brand" href="#">
         <img src="{{ asset('images/logo.png') }}" width="50" height="50" />
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon w3-text-white"></span>
       </button>
       <div class="collapse navbar-collapse home-nav" id="navbarNav" dir="rtl">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link w3-large" href="{{ route('home') }}">الرئيسية <span class="sr-only">(current)</span></a>
+            <a class="nav-link w3-large w3-text-white w3-hover-text-grey" href="{{ route('home') }}">الرئيسية <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link w3-large" href="{{ route('agars.agarsList') }}"> تصفح العقارات </a>
+            <a class="nav-link w3-large w3-text-white w3-hover-text-grey" href="{{ route('agars.agarsList') }}"> تصفح العقارات </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link w3-large" href="#">تحميل التطبيق</a>
+            <a class="nav-link w3-large w3-text-white w3-hover-text-grey" href="#">تحميل التطبيق</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link w3-large" href="{{ route('login') }}">  دخول جديد  </a>
+            <a class="nav-link w3-large w3-text-white w3-hover-text-grey" href="{{ route('login') }}">  دخول جديد  </a>
           </li>
         </ul>
       </div>
@@ -45,17 +45,19 @@
 
   <br>
   <!-- Header -->
-  <header class="container w3-light-grey" style="z-index: 99;height: 500px!important">
-    <div class="w3-display-middle home-search-model">
-      <div class="container w3-padding-64 text-center" style="">
-        <h3 class="">برندا دليل العقارات المفروشة في السودان</h3>
-        <div class="row">
-          <div class="col-md-12">
-            <form action="{{ route('home.search') }}" method="post">
-              @csrf
-              <input style="position: relative;" class="form-control w3-padding-32 text-right" name="query" type="text" placeholder="ابحث عن عقار..">
-              <button type="submit" class="btn w3-black" style="position: absolute; top: 0px; left: 18px;padding: 21px 35px"> <i class="fa fa-search w3-large"></i> </button>
-            </form>
+  <header class="w3-light-grey home_header">
+    <div class="inner_content">
+      <div class="w3-display-middle home-search-model">
+        <div class="w3-padding-32 text-center" style="">
+          <h3 class="slogan w3-padding-48 w3-text-white">برندا دليل العقارات المفروشة في السودان</h3>
+          <div class="row">
+            <div class="col-md-12">
+              <form action="{{ route('home.search') }}" method="post">
+                @csrf
+                <input style="position: relative;" class="form-control w3-padding-32 text-right" name="query" type="text" placeholder="ابحث عن عقار..">
+                <button type="submit" class="btn" style="position: absolute; top: 0px; left: 15px;padding: 21px 35px"> <i class="fa fa-search w3-large w3-text-grey"></i> </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -66,8 +68,8 @@
   <div class="container w3-white text-center w3-padding-32" style="margin-top: 50px;" id="services">
     <div class="row w3-large">
       <div class="col-md-4 w3-margin-bottom">
-        <h4 class="w3-xlarge">فتش</h4>
-        <div class="">
+        <h4 class="w3-xlarge w3-text-grey">فتش</h4>
+        <div class="w3-text-grey">
           <i class="fa fa-check w3-xxlarge w3-right about_brnda_icons"></i>
           <p class="">
             هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى
@@ -75,8 +77,8 @@
         </div>
       </div>
       <div class="col-md-4 w3-margin-bottom">
-        <h4 class="w3-xlarge">احجز</h4>
-        <div class="">
+        <h4 class="w3-xlarge w3-text-grey">احجز</h4>
+        <div class="w3-text-grey">
           <i class="fa fa-check w3-xxlarge w3-right about_brnda_icons"></i>
           <p class="">
             هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى
@@ -84,8 +86,8 @@
         </div>
       </div>
       <div class="col-md-4 w3-margin-bottom">
-        <h4 class="w3-xlarge">اسكن</h4>
-        <div class="">
+        <h4 class="w3-xlarge w3-text-grey">اسكن</h4>
+        <div class="w3-text-grey">
           <i class="fa fa-check w3-xxlarge w3-right about_brnda_icons"></i>
           <p class="">
             هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى
@@ -134,7 +136,7 @@
           <p class="w3-padding">
             هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة
           </p>
-          <a href="#places" class="w3-button w3-hover-none w3-padding-16 w3-black w3-round w3-margin-bottom"> تعرف على اماكن السكن </a>
+          <a href="#places" class="w3-hover-light-grey w3-button w3-border w3-padding-16 w3-round w3-margin-bottom"> تعرف على اماكن السكن </a>
         </div>
       </div>
       <div class="col-md-6 w3-margin-bottom">
@@ -143,7 +145,7 @@
           <p class="w3-padding">
             هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة
           </p>
-          <a href="{{ route('agars.agarsList') }}" class="w3-button w3-hover-none w3-padding-16 w3-black w3-round w3-margin-bottom">تصفح العقارات</a>
+          <a href="{{ route('agars.agarsList') }}" class="w3-hover-light-grey w3-button w3-border w3-padding-16 w3-round w3-margin-bottom">تصفح العقارات</a>
         </div>
       </div>
     </div>

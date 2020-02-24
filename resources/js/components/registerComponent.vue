@@ -29,7 +29,7 @@
       </validation-provider>
     </div>
     <div class="form-group">
-      <validation-provider name="phone" rules="required|max:11" v-slot="{ errors }">
+      <validation-provider name="phone" rules="required|max:12|min:9" v-slot="{ errors }">
         <input class="w3-input w3-hover-border-gray @error('phone') is-invalid @enderror" v-model="phone" type="tel" placeholder="رقم الهاتف" style="text-align: right;"  name="phone"  required autocomplete="phone" autofocus/>
         <span v-show="errors[0]" :class="{'form-control': true, 'alert-danger text-right': errors[0] }">
           {{ errors[0] }}
