@@ -1899,6 +1899,129 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agar/addAgarComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/agar/addAgarComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    types: {
+      require: true
+    },
+    states: {
+      require: true
+    }
+  },
+  data: function data() {
+    return {
+      citys: [],
+      agarFloor: []
+    };
+  },
+  methods: {
+    getCity: function getCity(state_id) {
+      var _this = this;
+
+      axios.post('/agars/add/get_city_as_json', {
+        state_id: state_id,
+        _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      }).then(function (response) {
+        console.log(response.data);
+        _this.citys = response.data;
+      });
+    },
+    getFloor: function getFloor(type_id) {
+      var _this2 = this;
+
+      axios.post('/agars/add/get_floor_as_json', {
+        type_id: type_id,
+        _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      }).then(function (response) {
+        console.log(response.data);
+        _this2.agarFloor = response.data;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/filter/agarsComponent.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/filter/agarsComponent.vue?vue&type=script&lang=js& ***!
@@ -1908,6 +2031,12 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1977,6 +2106,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1985,6 +2121,18 @@ __webpack_require__.r(__webpack_exports__);
       type: Array
     },
     agarFloor: {
+      type: Array
+    },
+    agar_b_extra: {
+      type: Array
+    },
+    agar_a_extra: {
+      type: Array
+    },
+    agar_s_extra: {
+      type: Array
+    },
+    agar_cond: {
       type: Array
     }
   },
@@ -2252,13 +2400,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 // to import datepicker component
 
  // to import slider component
@@ -2278,19 +2419,38 @@ __webpack_require__.r(__webpack_exports__);
     agarFloor: {
       type: Array,
       "default": []
+    },
+    agar_b_extra: {
+      type: Array,
+      "default": []
+    },
+    agar_a_extra: {
+      type: Array,
+      "default": []
+    },
+    agar_s_extra: {
+      type: Array,
+      "default": []
+    },
+    agar_cond: {
+      type: Array,
+      "default": []
     }
   },
   data: function data() {
     return {
       date: '',
-      range: '',
+      range: [],
+      price: 0,
       rooms_number: 0,
       bathrooms_number: 0,
       floor_id: 0,
       type_id: 0,
-      price: 0,
+      currency: '',
+      b_extra: [],
       a_extra: [],
-      sf_extra: []
+      sf_extra: [],
+      cond_extra: []
     };
   },
   methods: {
@@ -2304,8 +2464,11 @@ __webpack_require__.r(__webpack_exports__);
         type_id: this.type_id,
         range: this.range,
         price: this.price,
+        b_extra: this.b_extra,
         a_extra: this.a_extra,
         sf_extra: this.sf_extra,
+        cond_extra: this.cond_extra,
+        currency: this.currency,
         _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
       }).then(function (response) {
         _this.$emit('new', response.data);
@@ -2835,7 +2998,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         if (response.data.code == 200) {
           document.getElementById('reservation_success').style.display = 'block';
-        }
+        } else document.getElementById('reservation_error').style.display = 'block';
       });
     }
   }
@@ -68558,6 +68721,258 @@ var version = '3.2.3';
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agar/addAgarComponent.vue?vue&type=template&id=4afa3942&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/agar/addAgarComponent.vue?vue&type=template&id=4afa3942& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "w3-row-padding" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "w3-margin-bottom w3-third" }, [
+        _c("label", { attrs: { for: "type_id" } }, [_vm._v("نوع العقار")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            staticClass: "w3-input",
+            attrs: { id: "type_id", name: "type_id" }
+          },
+          [
+            _c("option", { attrs: { value: "" } }),
+            _vm._v(" "),
+            _vm._l(_vm.types, function(type) {
+              return _c(
+                "option",
+                {
+                  attrs: { required: "required", id: "type_id" },
+                  domProps: { value: type.type_id },
+                  on: {
+                    click: function($event) {
+                      return _vm.getFloor(type.type_id)
+                    }
+                  }
+                },
+                [_vm._v(_vm._s(type.type_name))]
+              )
+            })
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "w3-margin-bottom w3-third",
+          attrs: { id: "floor_container" }
+        },
+        [
+          _c("label", { attrs: { for: "floor_id" } }, [_vm._v("الطابق")]),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              staticClass: "w3-input",
+              attrs: { id: "floor_id", name: "floor_id" }
+            },
+            _vm._l(_vm.agarFloor, function(floor) {
+              return _c(
+                "option",
+                {
+                  attrs: { id: "floor_id" },
+                  domProps: { value: floor.floor_id }
+                },
+                [_vm._v(_vm._s(floor.floor_name))]
+              )
+            }),
+            0
+          )
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "w3-margin-bottom" }, [_vm._v("الموقع الجغرافي")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "w3-row-padding" }, [
+      _c("div", { staticClass: "w3-margin-bottom w3-third" }, [
+        _c("label", { attrs: { for: "state_id" } }, [_vm._v("الولاية")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            staticClass: "w3-input",
+            attrs: { id: "state_id", name: "state_id" }
+          },
+          [
+            _c("option", { attrs: { value: "" } }),
+            _vm._v(" "),
+            _vm._l(_vm.states, function(state) {
+              return _c(
+                "option",
+                {
+                  attrs: { id: "state_id" },
+                  domProps: { value: state.state_id },
+                  on: {
+                    click: function($event) {
+                      return _vm.getCity(state.state_id)
+                    }
+                  }
+                },
+                [_vm._v(_vm._s(state.state_name))]
+              )
+            })
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "w3-margin-bottom w3-third" }, [
+        _c("label", { attrs: { for: "city_id" } }, [_vm._v("المدينة")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            staticClass: "w3-input",
+            attrs: { id: "city_id", name: "city_id" }
+          },
+          [
+            _vm._v(
+              "\n              @foreach($citys as $city)\n                "
+            ),
+            _vm._l(_vm.citys, function(city) {
+              return _c(
+                "option",
+                { attrs: { id: "city_id" }, domProps: { value: city.city_id } },
+                [_vm._v(_vm._s(city.city_name))]
+              )
+            }),
+            _vm._v("\n              @endforeach\n            ")
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(1)
+    ]),
+    _vm._v(" "),
+    _vm._m(2),
+    _vm._v(" "),
+    _vm._m(3)
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "w3-margin-bottom w3-third" }, [
+      _c("label", { attrs: { for: "agar_name" } }, [_vm._v("الاسم")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "w3-input",
+        attrs: {
+          id: "agar_name",
+          name: "agar_name",
+          type: "text",
+          placeholder: "الاسم",
+          required: ""
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "w3-margin-bottom w3-third" }, [
+      _c("label", { attrs: { for: "area" } }, [_vm._v("الحي")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "w3-input",
+        attrs: {
+          id: "area",
+          name: "area",
+          type: "text",
+          placeholder: "الحي",
+          required: "",
+          value: "",
+          value: ""
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "w3-row-padding" }, [
+      _c("div", { staticClass: "w3-margin-bottom w3-half" }, [
+        _c("label", { attrs: { for: "rooms_number" } }, [_vm._v("عدد الغرف")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "w3-input",
+          attrs: {
+            id: "rooms_number",
+            name: "rooms_number",
+            type: "number",
+            placeholder: "عدد الغرف",
+            required: "",
+            value: "",
+            value: ""
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "w3-margin-bottom w3-half" }, [
+        _c("label", { attrs: { for: "bathrooms_number" } }, [
+          _vm._v("عدد الحمامات")
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "w3-input",
+          attrs: {
+            id: "bathrooms_number",
+            name: "bathrooms_number",
+            type: "number",
+            placeholder: "عدد الحمامات",
+            required: ""
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "w3-margin-bottom" }, [
+      _c("label", { attrs: { for: "agar_desc" } }, [_vm._v("الوصف")]),
+      _vm._v(" "),
+      _c("textarea", {
+        staticClass: "w3-input",
+        attrs: { id: "agar_desc", name: "agar_desc", required: "" }
+      })
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/filter/agarsComponent.vue?vue&type=template&id=7342c3c6&":
 /*!************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/filter/agarsComponent.vue?vue&type=template&id=7342c3c6& ***!
@@ -68696,13 +69111,29 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", [
-                _c("p", [
-                  _vm._v(
-                    "ابتداءا من  : " + _vm._s(agar.price.day) + " $ / لليوم"
-                  )
-                ])
-              ])
+              agar.price != _vm.NULL
+                ? _c("div", [
+                    agar.price.currency == 1
+                      ? _c("p", [
+                          _vm._v(
+                            "ابتداءا من  : " +
+                              _vm._s(agar.price.day) +
+                              " جنيه / لليوم"
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    agar.price.currency == 2
+                      ? _c("p", [
+                          _vm._v(
+                            "ابتداءا من  : " +
+                              _vm._s(agar.price.day) +
+                              " دولار / لليوم "
+                          )
+                        ])
+                      : _vm._e()
+                  ])
+                : _vm._e()
             ]),
             _c("br")
           ]
@@ -68741,7 +69172,14 @@ var render = function() {
       _c("br"),
       _vm._v(" "),
       _c("formfilter", {
-        attrs: { agarType: _vm.agarType, agarFloor: _vm.agarFloor },
+        attrs: {
+          agarType: _vm.agarType,
+          agarFloor: _vm.agarFloor,
+          agar_b_extra: _vm.agar_b_extra,
+          agar_a_extra: _vm.agar_a_extra,
+          agar_s_extra: _vm.agar_s_extra,
+          agar_cond: _vm.agar_cond
+        },
         on: { new: _vm.pushResult }
       }),
       _vm._v(" "),
@@ -68924,7 +69362,7 @@ var render = function() {
                 attrs: { type: "number", name: "rooms_number" },
                 domProps: { value: _vm.rooms_number },
                 on: {
-                  change: function($event) {
+                  click: function($event) {
                     return _vm.filter()
                   },
                   input: function($event) {
@@ -69004,7 +69442,7 @@ var render = function() {
               _c("vue-slider", {
                 attrs: { min: 0, max: 400, interval: 1 },
                 on: {
-                  change: function($event) {
+                  click: function($event) {
                     return _vm.filter()
                   }
                 },
@@ -69026,294 +69464,306 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "card", staticStyle: { width: "18rem" } }, [
         _c("div", { staticClass: "card-header" }, [
-          _vm._v("\n        الخصائص\n      ")
+          _vm._v("\n        المرافق\n      ")
         ]),
         _vm._v(" "),
         _c("ul", { staticClass: "list-group list-group-flush " }, [
-          _c("li", { staticClass: "list-group-item" }, [
-            _c("h4", [_vm._v(" المزايا الاضافية ")]),
-            _vm._v(" "),
-            _c("div", [
-              _c("span", [_vm._v(" انترنت ")]),
+          _c(
+            "li",
+            { staticClass: "list-group-item" },
+            [
+              _c("h4", [_vm._v(" المرافق الاساسية  ")]),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.a_extra,
-                    expression: "a_extra"
-                  }
-                ],
-                attrs: { value: "انترنت", type: "checkbox" },
-                domProps: {
-                  checked: Array.isArray(_vm.a_extra)
-                    ? _vm._i(_vm.a_extra, "انترنت") > -1
-                    : _vm.a_extra
-                },
-                on: {
-                  change: [
-                    function($event) {
-                      var $$a = _vm.a_extra,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = "انترنت",
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 && (_vm.a_extra = $$a.concat([$$v]))
-                        } else {
-                          $$i > -1 &&
-                            (_vm.a_extra = $$a
-                              .slice(0, $$i)
-                              .concat($$a.slice($$i + 1)))
-                        }
-                      } else {
-                        _vm.a_extra = $$c
+              _vm._l(_vm.agar_b_extra, function(b) {
+                return _c("div", [
+                  _c("span", [_vm._v(" " + _vm._s(b.name) + " ")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.b_extra,
+                        expression: "b_extra"
                       }
+                    ],
+                    attrs: { type: "checkbox" },
+                    domProps: {
+                      value: b.name,
+                      checked: Array.isArray(_vm.b_extra)
+                        ? _vm._i(_vm.b_extra, b.name) > -1
+                        : _vm.b_extra
                     },
-                    function($event) {
-                      return _vm.filter()
-                    }
-                  ]
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", [
-              _c("span", [_vm._v(" غسالة ")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.a_extra,
-                    expression: "a_extra"
-                  }
-                ],
-                attrs: { value: "غسالة", type: "checkbox" },
-                domProps: {
-                  checked: Array.isArray(_vm.a_extra)
-                    ? _vm._i(_vm.a_extra, "غسالة") > -1
-                    : _vm.a_extra
-                },
-                on: {
-                  change: [
-                    function($event) {
-                      var $$a = _vm.a_extra,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = "غسالة",
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 && (_vm.a_extra = $$a.concat([$$v]))
+                    on: {
+                      click: function($event) {
+                        return _vm.filter()
+                      },
+                      change: function($event) {
+                        var $$a = _vm.b_extra,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = b.name,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 && (_vm.b_extra = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.b_extra = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
                         } else {
-                          $$i > -1 &&
-                            (_vm.a_extra = $$a
-                              .slice(0, $$i)
-                              .concat($$a.slice($$i + 1)))
+                          _vm.b_extra = $$c
                         }
-                      } else {
-                        _vm.a_extra = $$c
                       }
-                    },
-                    function($event) {
-                      return _vm.filter()
                     }
-                  ]
-                }
+                  })
+                ])
               })
-            ]),
-            _vm._v(" "),
-            _c("div", [
-              _c("span", [_vm._v(" مصعد ")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.a_extra,
-                    expression: "a_extra"
-                  }
-                ],
-                attrs: { value: "مصعد", type: "checkbox" },
-                domProps: {
-                  checked: Array.isArray(_vm.a_extra)
-                    ? _vm._i(_vm.a_extra, "مصعد") > -1
-                    : _vm.a_extra
-                },
-                on: {
-                  change: [
-                    function($event) {
-                      var $$a = _vm.a_extra,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = "مصعد",
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 && (_vm.a_extra = $$a.concat([$$v]))
-                        } else {
-                          $$i > -1 &&
-                            (_vm.a_extra = $$a
-                              .slice(0, $$i)
-                              .concat($$a.slice($$i + 1)))
-                        }
-                      } else {
-                        _vm.a_extra = $$c
-                      }
-                    },
-                    function($event) {
-                      return _vm.filter()
-                    }
-                  ]
-                }
-              })
-            ])
-          ]),
+            ],
+            2
+          ),
           _vm._v(" "),
-          _c("li", { staticClass: "list-group-item" }, [
-            _c("h4", [_vm._v(" مزايا خاصة ")]),
-            _vm._v(" "),
-            _c("div", [
-              _c("span", [_vm._v(" حراسة امنية ")]),
+          _c(
+            "li",
+            { staticClass: "list-group-item" },
+            [
+              _c("h4", [_vm._v(" المرافق الاضافية  ")]),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.sf_extra,
-                    expression: "sf_extra"
-                  }
-                ],
-                attrs: { value: "حراسة امنية", type: "checkbox" },
-                domProps: {
-                  checked: Array.isArray(_vm.sf_extra)
-                    ? _vm._i(_vm.sf_extra, "حراسة امنية") > -1
-                    : _vm.sf_extra
-                },
-                on: {
-                  change: function($event) {
-                    var $$a = _vm.sf_extra,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = "حراسة امنية",
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 && (_vm.sf_extra = $$a.concat([$$v]))
-                      } else {
-                        $$i > -1 &&
-                          (_vm.sf_extra = $$a
-                            .slice(0, $$i)
-                            .concat($$a.slice($$i + 1)))
+              _vm._l(_vm.agar_a_extra, function(a) {
+                return _c("div", [
+                  _c("span", [_vm._v(" " + _vm._s(a.name) + " ")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.a_extra,
+                        expression: "a_extra"
                       }
-                    } else {
-                      _vm.sf_extra = $$c
+                    ],
+                    attrs: { type: "checkbox" },
+                    domProps: {
+                      value: a.name,
+                      checked: Array.isArray(_vm.a_extra)
+                        ? _vm._i(_vm.a_extra, a.name) > -1
+                        : _vm.a_extra
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.filter()
+                      },
+                      change: function($event) {
+                        var $$a = _vm.a_extra,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = a.name,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 && (_vm.a_extra = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.a_extra = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
+                        } else {
+                          _vm.a_extra = $$c
+                        }
+                      }
                     }
-                  }
-                }
+                  })
+                ])
               })
-            ]),
-            _vm._v(" "),
-            _c("div", [
-              _c("span", [_vm._v(" توصيل من المطار ")]),
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "li",
+            { staticClass: "list-group-item" },
+            [
+              _c("h4", [_vm._v(" المرافق الخاصة  ")]),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.sf_extra,
-                    expression: "sf_extra"
-                  }
-                ],
-                attrs: { value: "توصيل من المطار", type: "checkbox" },
-                domProps: {
-                  checked: Array.isArray(_vm.sf_extra)
-                    ? _vm._i(_vm.sf_extra, "توصيل من المطار") > -1
-                    : _vm.sf_extra
-                },
-                on: {
-                  change: function($event) {
-                    var $$a = _vm.sf_extra,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = "توصيل من المطار",
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 && (_vm.sf_extra = $$a.concat([$$v]))
-                      } else {
-                        $$i > -1 &&
-                          (_vm.sf_extra = $$a
-                            .slice(0, $$i)
-                            .concat($$a.slice($$i + 1)))
+              _vm._l(_vm.agar_s_extra, function(s) {
+                return _c("div", [
+                  _c("span", [_vm._v(" " + _vm._s(s.name) + "  ")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.sf_extra,
+                        expression: "sf_extra"
                       }
-                    } else {
-                      _vm.sf_extra = $$c
+                    ],
+                    attrs: { type: "checkbox" },
+                    domProps: {
+                      value: s.name,
+                      checked: Array.isArray(_vm.sf_extra)
+                        ? _vm._i(_vm.sf_extra, s.name) > -1
+                        : _vm.sf_extra
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.filter()
+                      },
+                      change: function($event) {
+                        var $$a = _vm.sf_extra,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = s.name,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 && (_vm.sf_extra = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.sf_extra = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
+                        } else {
+                          _vm.sf_extra = $$c
+                        }
+                      }
                     }
-                  }
-                }
+                  })
+                ])
               })
-            ]),
-            _vm._v(" "),
-            _c("div", [
-              _c("span", [_vm._v(" امكانية الاستلام على مدار اليوم ")]),
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "li",
+            { staticClass: "list-group-item" },
+            [
+              _c("h4", [_vm._v("  شروط السكن  ")]),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.sf_extra,
-                    expression: "sf_extra"
-                  }
-                ],
-                attrs: {
-                  value: "امكانية الاستلام على مدار اليو",
-                  type: "checkbox"
-                },
-                domProps: {
-                  checked: Array.isArray(_vm.sf_extra)
-                    ? _vm._i(_vm.sf_extra, "امكانية الاستلام على مدار اليو") >
-                      -1
-                    : _vm.sf_extra
-                },
-                on: {
-                  change: function($event) {
-                    var $$a = _vm.sf_extra,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = "امكانية الاستلام على مدار اليو",
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 && (_vm.sf_extra = $$a.concat([$$v]))
-                      } else {
-                        $$i > -1 &&
-                          (_vm.sf_extra = $$a
-                            .slice(0, $$i)
-                            .concat($$a.slice($$i + 1)))
+              _vm._l(_vm.agar_cond, function(cond) {
+                return _c("div", [
+                  _c("span", [_vm._v(" " + _vm._s(cond.name) + "  ")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.cond_extra,
+                        expression: "cond_extra"
                       }
-                    } else {
-                      _vm.sf_extra = $$c
+                    ],
+                    attrs: { type: "checkbox" },
+                    domProps: {
+                      value: cond.name,
+                      checked: Array.isArray(_vm.cond_extra)
+                        ? _vm._i(_vm.cond_extra, cond.name) > -1
+                        : _vm.cond_extra
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.filter()
+                      },
+                      change: function($event) {
+                        var $$a = _vm.cond_extra,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = cond.name,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 && (_vm.cond_extra = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.cond_extra = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
+                        } else {
+                          _vm.cond_extra = $$c
+                        }
+                      }
                     }
-                  }
-                }
+                  })
+                ])
               })
-            ])
-          ])
+            ],
+            2
+          )
         ])
       ]),
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
-      _vm._m(1),
+      _c("div", { staticClass: "card", staticStyle: { width: "18rem" } }, [
+        _c("ul", { staticClass: "list-group list-group-flush" }, [
+          _c("li", { staticClass: "list-group-item" }, [
+            _vm._v("\n          العملة\n          "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.currency,
+                    expression: "currency"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { name: "currency" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.currency = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              [
+                _c(
+                  "option",
+                  {
+                    attrs: { value: "1" },
+                    on: {
+                      click: function($event) {
+                        return _vm.filter()
+                      }
+                    }
+                  },
+                  [_vm._v(" جنيه ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "option",
+                  {
+                    attrs: { value: "2" },
+                    on: {
+                      click: function($event) {
+                        return _vm.filter()
+                      }
+                    }
+                  },
+                  [_vm._v(" دولار ")]
+                )
+              ]
+            )
+          ])
+        ])
+      ]),
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
@@ -69346,7 +69796,7 @@ var render = function() {
         attrs: { id: "filter_sidebar" }
       },
       [
-        _vm._m(2),
+        _vm._m(1),
         _vm._v(" "),
         _c("div", {}, [
           _c("div", { staticClass: "card" }, [
@@ -69361,7 +69811,7 @@ var render = function() {
                   _c("vue-slider", {
                     attrs: { min: 0, max: 400, interval: 1 },
                     on: {
-                      change: function($event) {
+                      click: function($event) {
                         return _vm.filter()
                       }
                     },
@@ -69383,275 +69833,237 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-header" }, [
-              _vm._v("\n          الخصائص\n        ")
+              _vm._v("\n          المرافق\n        ")
             ]),
             _vm._v(" "),
             _c("ul", { staticClass: "list-group list-group-flush " }, [
-              _c("li", { staticClass: "list-group-item" }, [
-                _c("h4", [_vm._v(" المزايا الاضافية ")]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("span", [_vm._v(" انترنت ")]),
+              _c(
+                "li",
+                { staticClass: "list-group-item" },
+                [
+                  _c("h4", [_vm._v(" المرافق الاساسية  ")]),
                   _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.a_extra,
-                        expression: "a_extra"
-                      }
-                    ],
-                    attrs: { type: "checkbox", value: "انترنت" },
-                    domProps: {
-                      checked: Array.isArray(_vm.a_extra)
-                        ? _vm._i(_vm.a_extra, "انترنت") > -1
-                        : _vm.a_extra
-                    },
-                    on: {
-                      change: function($event) {
-                        var $$a = _vm.a_extra,
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = "انترنت",
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 && (_vm.a_extra = $$a.concat([$$v]))
-                          } else {
-                            $$i > -1 &&
-                              (_vm.a_extra = $$a
-                                .slice(0, $$i)
-                                .concat($$a.slice($$i + 1)))
+                  _vm._l(_vm.agar_b_extra, function(b) {
+                    return _c("div", [
+                      _c("span", [_vm._v(" " + _vm._s(b.name) + " ")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.b_extra,
+                            expression: "b_extra"
                           }
-                        } else {
-                          _vm.a_extra = $$c
-                        }
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("span", [_vm._v(" غسالة ")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.a_extra,
-                        expression: "a_extra"
-                      }
-                    ],
-                    attrs: { type: "checkbox", value: "غسالة" },
-                    domProps: {
-                      checked: Array.isArray(_vm.a_extra)
-                        ? _vm._i(_vm.a_extra, "غسالة") > -1
-                        : _vm.a_extra
-                    },
-                    on: {
-                      change: function($event) {
-                        var $$a = _vm.a_extra,
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = "غسالة",
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 && (_vm.a_extra = $$a.concat([$$v]))
-                          } else {
-                            $$i > -1 &&
-                              (_vm.a_extra = $$a
-                                .slice(0, $$i)
-                                .concat($$a.slice($$i + 1)))
+                        ],
+                        attrs: { type: "checkbox" },
+                        domProps: {
+                          value: b.name,
+                          checked: Array.isArray(_vm.b_extra)
+                            ? _vm._i(_vm.b_extra, b.name) > -1
+                            : _vm.b_extra
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.filter()
+                          },
+                          change: function($event) {
+                            var $$a = _vm.b_extra,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = b.name,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 && (_vm.b_extra = $$a.concat([$$v]))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.b_extra = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.b_extra = $$c
+                            }
                           }
-                        } else {
-                          _vm.a_extra = $$c
                         }
-                      }
-                    }
+                      })
+                    ])
                   })
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("span", [_vm._v(" مصعد ")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.a_extra,
-                        expression: "a_extra"
-                      }
-                    ],
-                    attrs: { type: "checkbox", value: "مصعد" },
-                    domProps: {
-                      checked: Array.isArray(_vm.a_extra)
-                        ? _vm._i(_vm.a_extra, "مصعد") > -1
-                        : _vm.a_extra
-                    },
-                    on: {
-                      change: function($event) {
-                        var $$a = _vm.a_extra,
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = "مصعد",
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 && (_vm.a_extra = $$a.concat([$$v]))
-                          } else {
-                            $$i > -1 &&
-                              (_vm.a_extra = $$a
-                                .slice(0, $$i)
-                                .concat($$a.slice($$i + 1)))
-                          }
-                        } else {
-                          _vm.a_extra = $$c
-                        }
-                      }
-                    }
-                  })
-                ])
-              ]),
+                ],
+                2
+              ),
               _vm._v(" "),
-              _c("li", { staticClass: "list-group-item" }, [
-                _c("h4", [_vm._v(" مزايا خاصة ")]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("span", [_vm._v(" حراسة امنية ")]),
+              _c(
+                "li",
+                { staticClass: "list-group-item" },
+                [
+                  _c("h4", [_vm._v(" المرافق الاضافية  ")]),
                   _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.sf_extra,
-                        expression: "sf_extra"
-                      }
-                    ],
-                    attrs: { type: "checkbox", value: " حراسة امني" },
-                    domProps: {
-                      checked: Array.isArray(_vm.sf_extra)
-                        ? _vm._i(_vm.sf_extra, " حراسة امني") > -1
-                        : _vm.sf_extra
-                    },
-                    on: {
-                      change: function($event) {
-                        var $$a = _vm.sf_extra,
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = " حراسة امني",
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 && (_vm.sf_extra = $$a.concat([$$v]))
-                          } else {
-                            $$i > -1 &&
-                              (_vm.sf_extra = $$a
-                                .slice(0, $$i)
-                                .concat($$a.slice($$i + 1)))
+                  _vm._l(_vm.agar_a_extra, function(a) {
+                    return _c("div", [
+                      _c("span", [_vm._v(" " + _vm._s(a.name) + " ")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.a_extra,
+                            expression: "a_extra"
                           }
-                        } else {
-                          _vm.sf_extra = $$c
+                        ],
+                        attrs: { type: "checkbox" },
+                        domProps: {
+                          value: a.name,
+                          checked: Array.isArray(_vm.a_extra)
+                            ? _vm._i(_vm.a_extra, a.name) > -1
+                            : _vm.a_extra
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.filter()
+                          },
+                          change: function($event) {
+                            var $$a = _vm.a_extra,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = a.name,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 && (_vm.a_extra = $$a.concat([$$v]))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.a_extra = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.a_extra = $$c
+                            }
+                          }
                         }
-                      }
-                    }
+                      })
+                    ])
                   })
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("span", [_vm._v(" توصيل من المطار ")]),
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "list-group-item" },
+                [
+                  _c("h4", [_vm._v(" المرافق الخاصة  ")]),
                   _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.sf_extra,
-                        expression: "sf_extra"
-                      }
-                    ],
-                    attrs: { type: "checkbox", value: "توصيل من المطا" },
-                    domProps: {
-                      checked: Array.isArray(_vm.sf_extra)
-                        ? _vm._i(_vm.sf_extra, "توصيل من المطا") > -1
-                        : _vm.sf_extra
-                    },
-                    on: {
-                      change: function($event) {
-                        var $$a = _vm.sf_extra,
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = "توصيل من المطا",
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 && (_vm.sf_extra = $$a.concat([$$v]))
-                          } else {
-                            $$i > -1 &&
-                              (_vm.sf_extra = $$a
-                                .slice(0, $$i)
-                                .concat($$a.slice($$i + 1)))
+                  _vm._l(_vm.agar_s_extra, function(s) {
+                    return _c("div", [
+                      _c("span", [_vm._v(" " + _vm._s(s.name) + "  ")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.sf_extra,
+                            expression: "sf_extra"
                           }
-                        } else {
-                          _vm.sf_extra = $$c
+                        ],
+                        attrs: { type: "checkbox" },
+                        domProps: {
+                          value: s.name,
+                          checked: Array.isArray(_vm.sf_extra)
+                            ? _vm._i(_vm.sf_extra, s.name) > -1
+                            : _vm.sf_extra
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.filter()
+                          },
+                          change: function($event) {
+                            var $$a = _vm.sf_extra,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = s.name,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 && (_vm.sf_extra = $$a.concat([$$v]))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.sf_extra = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.sf_extra = $$c
+                            }
+                          }
                         }
-                      }
-                    }
+                      })
+                    ])
                   })
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("span", [_vm._v(" امكانية الاستلام على مدار اليوم ")]),
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "list-group-item" },
+                [
+                  _c("h4", [_vm._v("  شروط السكن  ")]),
                   _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.sf_extra,
-                        expression: "sf_extra"
-                      }
-                    ],
-                    attrs: {
-                      type: "checkbox",
-                      value: "امكانية الاستلام على مدار اليو"
-                    },
-                    domProps: {
-                      checked: Array.isArray(_vm.sf_extra)
-                        ? _vm._i(
-                            _vm.sf_extra,
-                            "امكانية الاستلام على مدار اليو"
-                          ) > -1
-                        : _vm.sf_extra
-                    },
-                    on: {
-                      change: function($event) {
-                        var $$a = _vm.sf_extra,
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = "امكانية الاستلام على مدار اليو",
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 && (_vm.sf_extra = $$a.concat([$$v]))
-                          } else {
-                            $$i > -1 &&
-                              (_vm.sf_extra = $$a
-                                .slice(0, $$i)
-                                .concat($$a.slice($$i + 1)))
+                  _vm._l(_vm.agar_cond, function(cond) {
+                    return _c("div", [
+                      _c("span", [_vm._v(" " + _vm._s(cond.name) + "  ")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.cond_extra,
+                            expression: "cond_extra"
                           }
-                        } else {
-                          _vm.sf_extra = $$c
+                        ],
+                        attrs: { type: "checkbox" },
+                        domProps: {
+                          value: cond.name,
+                          checked: Array.isArray(_vm.cond_extra)
+                            ? _vm._i(_vm.cond_extra, cond.name) > -1
+                            : _vm.cond_extra
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.filter()
+                          },
+                          change: function($event) {
+                            var $$a = _vm.cond_extra,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = cond.name,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 && (_vm.cond_extra = $$a.concat([$$v]))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.cond_extra = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.cond_extra = $$c
+                            }
+                          }
                         }
-                      }
-                    }
+                      })
+                    ])
                   })
-                ])
-              ])
+                ],
+                2
+              )
             ])
           ]),
           _vm._v(" "),
@@ -69675,7 +70087,7 @@ var render = function() {
                   attrs: { type: "number", name: "rooms_number" },
                   domProps: { value: _vm.rooms_number },
                   on: {
-                    change: function($event) {
+                    click: function($event) {
                       return _vm.filter()
                     },
                     input: function($event) {
@@ -69694,22 +70106,22 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.bathroms_number,
-                      expression: "bathroms_number"
+                      value: _vm.bathrooms_number,
+                      expression: "bathrooms_number"
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { type: "number", name: "bathroms_number" },
-                  domProps: { value: _vm.bathroms_number },
+                  attrs: { type: "number", name: "bathrooms_number" },
+                  domProps: { value: _vm.bathrooms_number },
                   on: {
-                    change: function($event) {
+                    click: function($event) {
                       return _vm.filter()
                     },
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.bathroms_number = $event.target.value
+                      _vm.bathrooms_number = $event.target.value
                     }
                   }
                 })
@@ -69757,7 +70169,7 @@ var render = function() {
                       {
                         domProps: { value: type.type_id },
                         on: {
-                          change: function($event) {
+                          click: function($event) {
                             return _vm.filter()
                           }
                         }
@@ -69805,7 +70217,7 @@ var render = function() {
                       {
                         domProps: { value: floor.floor_id },
                         on: {
-                          change: function($event) {
+                          click: function($event) {
                             return _vm.filter()
                           }
                         }
@@ -69821,11 +70233,74 @@ var render = function() {
           _vm._v(" "),
           _c("br"),
           _vm._v(" "),
-          _vm._m(3),
+          _c("div", { staticClass: "card" }, [
+            _c("ul", { staticClass: "list-group list-group-flush" }, [
+              _c("li", { staticClass: "list-group-item" }, [
+                _vm._v("\n            العملة\n            "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.currency,
+                        expression: "currency"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { name: "currency" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.currency = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "option",
+                      {
+                        attrs: { value: "1" },
+                        on: {
+                          click: function($event) {
+                            return _vm.filter()
+                          }
+                        }
+                      },
+                      [_vm._v(" جنيه ")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "option",
+                      {
+                        attrs: { value: "2" },
+                        on: {
+                          click: function($event) {
+                            return _vm.filter()
+                          }
+                        }
+                      },
+                      [_vm._v(" دولار ")]
+                    )
+                  ]
+                )
+              ])
+            ])
+          ]),
           _vm._v(" "),
           _c("br"),
           _vm._v(" "),
-          _vm._m(4)
+          _vm._m(2)
         ])
       ]
     )
@@ -69855,27 +70330,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card", staticStyle: { width: "18rem" } }, [
-      _c("ul", { staticClass: "list-group list-group-flush" }, [
-        _c("li", { staticClass: "list-group-item" }, [
-          _vm._v("\n          العملة\n          "),
-          _c(
-            "select",
-            { staticClass: "form-control", attrs: { name: "currency" } },
-            [
-              _c("option", { attrs: { value: "sdg" } }, [_vm._v(" SDG ")]),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "usd" } }, [_vm._v(" USD ")])
-            ]
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c(
       "a",
       {
@@ -69888,27 +70342,6 @@ var staticRenderFns = [
         })
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card" }, [
-      _c("ul", { staticClass: "list-group list-group-flush" }, [
-        _c("li", { staticClass: "list-group-item" }, [
-          _vm._v("\n            العملة\n            "),
-          _c(
-            "select",
-            { staticClass: "form-control", attrs: { name: "currency" } },
-            [
-              _c("option", { attrs: { value: "sdg" } }, [_vm._v(" SDG ")]),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "usd" } }, [_vm._v(" USD ")])
-            ]
-          )
-        ])
-      ])
-    ])
   },
   function() {
     var _vm = this
@@ -70946,7 +71379,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "w3-btn w3-block w3-flat-peter-river",
+          staticClass: "w3-btn w3-block w3-brnda",
           attrs: {
             form: "booking_form",
             type: "button",
@@ -87539,6 +87972,7 @@ Vue.component('filter-app', __webpack_require__(/*! ./components/filter/filterCo
 Vue.component('agars-app', __webpack_require__(/*! ./components/filter/agarsComponent.vue */ "./resources/js/components/filter/agarsComponent.vue")["default"]);
 Vue.component('formfilter-app', __webpack_require__(/*! ./components/filter/formComponent.vue */ "./resources/js/components/filter/formComponent.vue")["default"]);
 Vue.component('reservation-app', __webpack_require__(/*! ./components/reservations/sentReservationComponent.vue */ "./resources/js/components/reservations/sentReservationComponent.vue")["default"]);
+Vue.component('addagar-app', __webpack_require__(/*! ./components/agar/addAgarComponent.vue */ "./resources/js/components/agar/addAgarComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -87568,6 +88002,9 @@ var notification = new Vue({
 });
 var reservation = new Vue({
   el: '#reservation'
+});
+var add_agar = new Vue({
+  el: '#add_agar'
 });
 
 /***/ }),
@@ -87618,6 +88055,75 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   cluster: "mt1",
   encrypted: true
 });
+
+/***/ }),
+
+/***/ "./resources/js/components/agar/addAgarComponent.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/agar/addAgarComponent.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _addAgarComponent_vue_vue_type_template_id_4afa3942___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./addAgarComponent.vue?vue&type=template&id=4afa3942& */ "./resources/js/components/agar/addAgarComponent.vue?vue&type=template&id=4afa3942&");
+/* harmony import */ var _addAgarComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./addAgarComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/agar/addAgarComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _addAgarComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _addAgarComponent_vue_vue_type_template_id_4afa3942___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _addAgarComponent_vue_vue_type_template_id_4afa3942___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/agar/addAgarComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/agar/addAgarComponent.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/agar/addAgarComponent.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_addAgarComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./addAgarComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agar/addAgarComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_addAgarComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/agar/addAgarComponent.vue?vue&type=template&id=4afa3942&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/agar/addAgarComponent.vue?vue&type=template&id=4afa3942& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_addAgarComponent_vue_vue_type_template_id_4afa3942___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./addAgarComponent.vue?vue&type=template&id=4afa3942& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/agar/addAgarComponent.vue?vue&type=template&id=4afa3942&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_addAgarComponent_vue_vue_type_template_id_4afa3942___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_addAgarComponent_vue_vue_type_template_id_4afa3942___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 

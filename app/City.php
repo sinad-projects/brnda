@@ -15,7 +15,7 @@ class City extends Model
   ];
 
   public function state(){
-      return $this->belongsTo(State::class,'state_id');
+      return $this->belongsTo(State::class,'state_id','state_id');
   }
 
   public function location(){

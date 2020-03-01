@@ -3,80 +3,10 @@
         <h4><i class="fa fa-home"></i> نموذج عقار</h4>
         <a href="javascript::void()" onclick="document.getElementById('NEW_AGAR_FORM').style.display='none'" class="w3-btn w3-display-topleft">&times;</a>
     </header>
-    <div class="">
-        <form id="agar" action="{{ route('agars.add') }}" method="post" enctype="multipart/form-data" class="w3-padding-large">
-           @csrf
-            <div class="w3-row-padding">
-                <div class="w3-margin-bottom w3-third">
-                    <label for="agar_name">الاسم</label>
-                    <input id="agar_name"  name="agar_name" class="w3-input" type="text" placeholder="الاسم"
-                           required value="" value="">
-                </div>
-                <div class="w3-margin-bottom w3-third">
-                    <label for="type_id">نوع العقار</label>
-                    <select id="type_id" class="w3-input" name="type_id">
-                      @foreach($agarType as $type)
-                        <option required="required" id="type_id_1"
-                                value="{{ $type->type_id }}">{{ $type->type_name }}</option>
-                      @endforeach
-                    </select>
-                </div>
-                <div id="floor_container" class="w3-margin-bottom w3-third">
-                    <label for="floor_id">الطابق</label>
-                    <select id="floor_id" class="w3-input" name="floor_id">
-                      @foreach($agarFloor as $floor)
-                        <option id="floor_id_0"
-                                value="{{ $floor->floor_id }}">{{ $floor->floor_name }}</option>
-                      @endforeach
-                    </select>
-                </div>
-            </div>
-            <div class="w3-margin-bottom">الموقع الجغرافي</div>
-            <div class="w3-row-padding">
-                <div class="w3-margin-bottom w3-third">
-                    <label for="state_id">الولاية</label>
-                    <select id="state_id" class="w3-input" name="state_id">
-                      @foreach($states as $state)
-                        <option id="state_id_1"
-                                selected value="{{ $state->state_id }}">{{ $state->state_name }}</option>
-                      @endforeach
-                    </select>
-                </div>
-                <div class="w3-margin-bottom w3-third">
-                    <label for="city_id">المدينة</label>
-                    <select id="city_id" class="w3-input" name="city_id">
-                      @foreach($citys as $city)
-                        <option id="city_id_1"
-                                value="{{ $city->city_id }}">{{ $city->city_name }}</option>
-                      @endforeach
-                    </select>
-                </div>
-                <div class="w3-margin-bottom w3-third">
-                    <label for="area">الحي</label>
-                    <input id="area"  name="area" class="w3-input" type="text"
-                           placeholder="الحي" required value=""
-                           value="">
-                </div>
-            </div>
-            <div class="w3-row-padding">
-                <div class="w3-margin-bottom w3-half">
-                    <label for="rooms_number">عدد الغرف</label>
-                    <input id="rooms_number"  name="rooms_number" class="w3-input" type="number"
-                           placeholder="عدد الغرف" required  value=""
-                           value="">
-                </div>
-                <div class="w3-margin-bottom w3-half">
-                    <label for="bathrooms_number">عدد الحمامات</label>
-                    <input id="bathrooms_number"  name="bathrooms_number" class="w3-input" type="number"
-                           placeholder="عدد الحمامات" required value=""
-                           value=""
-                </div>
-            </div>
-
-            <div class="w3-margin-bottom">
-                <label for="agar_desc">الوصف</label>
-                <textarea id="agar_desc" name="agar_desc" class="w3-input" required></textarea>
-            </div>
+    <div id="add_agar">
+        <form id="agar" action="agars/add" method="post" enctype="multipart/form-data" class="w3-padding-large">
+          @csrf
+          <addagar-app :types="{{ $agarType }}" :states="{{ $states }}"></addagar-app>
         </form>
     </div>
     <footer class="w3-container">

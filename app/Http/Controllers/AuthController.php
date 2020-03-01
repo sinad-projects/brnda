@@ -31,7 +31,8 @@ class authController extends Controller
               'email'     => $request->email,
               'phone'     => $request->phone,
               'verifi_code' => $code,
-              'password'  => Hash::make($request->password)
+              'password'  => Hash::make($request->password),
+              'status' => 1
           ]);
           $user->save();
           return response()->json([
@@ -40,7 +41,7 @@ class authController extends Controller
           ]);
         }
         return response()->json([
-          'code' => 400, 
+          'code' => 400,
           'error'=>$validator->errors()->all()
         ]);
 

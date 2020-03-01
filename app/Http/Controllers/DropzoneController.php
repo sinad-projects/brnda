@@ -8,20 +8,25 @@ use App\AgarImg;
 class DropzoneController extends Controller
 {
 
-  public function dropzoneStore(Request $request)
-  {
-      $image = $request->file('file');
+  public function dropzoneStore(Request $request){
 
-      $imageName = time().'_'. rand(1000, 9999). '.' .$image->extension();
-      $image->move(public_path('agar/images'),$imageName);
+      $images = $request->file('files');
+      $agar_id = (int) $_GET['agar_id'];
 
-      AgarImg::create([
-          'agar_id' => $request->agar_id,
-          'img_wide' => $imageName,
-          'thumbnail' => $imageName
+      foreach ($images as $image) {
+        $imageName = time().'_'. rand(1000, 9999). '.' .$image->extension();
+        $image->move(public_path('agar/images'),$imageName);
+        AgarImg::create([
+            'agar_id' => $agar_id,
+            'img_wide' => $imageName,
+            'thumbnail' => $imageName
+        ]);
+      }
+      
+      return response()->json([
+        'code' => 200,
+        'success' => true
       ]);
 
-      return response()->json(['success'=>$imageName]);
   }
-
 }

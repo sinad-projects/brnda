@@ -143,9 +143,9 @@
                       <span>تعديل</span>
                     </span>
                 </div>
-                <?php if($agar->agar_extra->b_extra != NULL): ?>
+                <?php if($agar->agar_extra->b_extra != 'null'): ?>
                   <?php $b_extra = json_decode($agar->agar_extra->b_extra); foreach ($b_extra as $b_extra):?>
-                    <span class="w3-show-inline-block w3-padding w3-margin-left-8 w3-color-brnda">
+                    <span class="w3-show-inline-block w3-padding w3-margin-left-8 w3-text-flat-peter-river">
                         <i class="fa fa-check-circle w3-margin-left-8"></i>
                     <?php echo $b_extra; ?> </span>
                   <?php endforeach ; ?>
@@ -168,9 +168,9 @@
                 </div>
                 <br />
 
-              <?php if($agar->agar_extra->a_extra != NULL): ?>
+              <?php if($agar->agar_extra->a_extra != null): ?>
                 <?php $a_extra = json_decode($agar->agar_extra->a_extra); foreach ($a_extra as $a_extra):?>
-                  <span class="w3-show-inline-block w3-padding w3-margin-left-8 w3-color-brnda">
+                  <span class="w3-show-inline-block w3-padding w3-margin-left-8 w3-text-flat-peter-river">
                       <i class="fa fa-check-circle w3-margin-left-8"></i> <?php echo $a_extra; ?> </span>
                 <?php endforeach ; ?>
               <?php else: ?>
@@ -193,9 +193,9 @@
                 </div>
                 <br />
 
-                <?php if($agar->agar_extra->sf_extra != NULL): ?>
+                <?php if($agar->agar_extra->sf_extra != null): ?>
                   <?php $sf_extra = json_decode($agar->agar_extra->sf_extra); foreach ($sf_extra as $sf_extra):?>
-                    <span class="w3-show-inline-block w3-padding w3-margin-left-8 w3-color-brnda">
+                    <span class="w3-show-inline-block w3-padding w3-margin-left-8 w3-text-flat-peter-river">
                         <i class="fa fa-check-circle w3-margin-left-8"></i> <?php echo $sf_extra; ?> </span>
                   <?php endforeach ; ?>
                 <?php else: ?>
@@ -219,9 +219,9 @@
                   </div>
                 <br />
 
-                <?php if($agar->agar_extra->cond_extra != NULL): ?>
+                <?php if($agar->agar_extra->cond_extra != null): ?>
                   <?php $cond_extra = json_decode($agar->agar_extra->cond_extra); foreach ($cond_extra as $cond_extra):?>
-                    <span class="w3-show-inline-block w3-padding w3-margin-left-8 w3-color-brnda">
+                    <span class="w3-show-inline-block w3-padding w3-margin-left-8 w3-text-flat-peter-river">
                         <i class="fa fa-check-circle w3-margin-left-8"></i> <?php echo $cond_extra; ?> </span>
                   <?php endforeach ; ?>
                 <?php else: ?>
@@ -463,28 +463,25 @@
                 <input type="hidden" name="agar_id" value="{{ $agar->id }}">
                 @foreach($agar_b_extra as $b_extra)
                   <div class="w3-bar-block">
-                    <?php if($agar->agar_extra->b_extra != NULL) : ?>
+                    <?php if($agar->agar_extra->b_extra != 'null') : ?>
                       <?php $selected_array = json_decode($agar->agar_extra->b_extra);?>
                         <?php if (in_array($b_extra->name,$selected_array)): ?>
-                          <label onclick="statusToggle(event)" for="b_extra_{{ $b_extra->id }}" class="w3-btn w3-bar-item w3-animate-color w3-color-brnda" >
-                            <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $b_extra->name }}</span>
-                            <i class="fa fa-check-circle-o w3-left"></i>
-                          </label>
+                          <label onclick="statusToggle(event)" for="b_extra_{{ $b_extra->id }}" class="w3-btn w3-bar-item w3-animate-color w3-text-flat-peter-river" />
+                          <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $b_extra->name }}</span>
+                          <i class="fa fa-check-circle-o w3-left"></i>
                           <input id="b_extra_{{ $b_extra->id }}" name="b_extra[]" value="{{ $b_extra->name }}" class="w3-hide" type="checkbox" checked>
                           <div class="w3-clear"></div>
                         <?php else: ?>
-                          <label onclick="statusToggle(event)" for="b_extra_{{ $b_extra->id }}" class="w3-btn w3-bar-item w3-animate-color" >
-                            <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $b_extra->name }}</span>
-                            <i class="fa fa-check-circle-o w3-left"></i>
-                          </label>
+                          <label onclick="statusToggle(event)" for="b_extra_{{ $b_extra->id }}" class="w3-btn w3-bar-item w3-animate-color" />
+                          <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $b_extra->name }}</span>
+                          <i class="fa fa-check-circle-o w3-left"></i>
                           <input id="b_extra_{{ $b_extra->id }}" name="b_extra[]" value="{{ $b_extra->name }}" class="w3-hide" type="checkbox">
                           <div class="w3-clear"></div>
                         <?php endif ;?>
                       <?php else: ?>
-                        <label onclick="statusToggle(event)" for="b_extra_{{ $b_extra->id }}" class="w3-btn w3-bar-item w3-animate-color" >
-                          <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $b_extra->name }}</span>
-                          <i class="fa fa-check-circle-o w3-left"></i>
-                        </label>
+                        <label onclick="statusToggle(event)" for="b_extra_{{ $b_extra->id }}" class="w3-btn w3-bar-item w3-animate-color" />
+                        <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $b_extra->name }}</span>
+                        <i class="fa fa-check-circle-o w3-left"></i>
                         <input id="b_extra_{{ $b_extra->id }}" name="b_extra[]" value="{{ $b_extra->name }}" class="w3-hide" type="checkbox">
                         <div class="w3-clear"></div>
                     <?php endif ;?>
@@ -518,28 +515,25 @@
                 <input type="hidden" name="agar_id" value="{{ $agar->id }}">
                 @foreach($agar_a_extra as $a_extra)
                   <div class="w3-bar-block">
-                    <?php if($agar->agar_extra->a_extra != NULL) : ?>
+                    <?php if($agar->agar_extra->a_extra != null) : ?>
                       <?php $selected_array = json_decode($agar->agar_extra->a_extra);?>
                         <?php if (in_array($a_extra->name,$selected_array)): ?>
-                          <label onclick="statusToggle(event)" for="a_extra_{{ $a_extra->id }}" class="w3-btn w3-bar-item w3-animate-color w3-color-brnda" >
-                            <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $a_extra->name }}</span>
-                            <i class="fa fa-check-circle-o w3-left"></i>
-                          </label>
+                          <label onclick="statusToggle(event)" for="a_extra_{{ $a_extra->id }}" class="w3-btn w3-bar-item w3-animate-color w3-text-flat-peter-river" />
+                          <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $a_extra->name }}</span>
+                          <i class="fa fa-check-circle-o w3-left"></i>
                           <input id="a_extra_{{ $a_extra->id }}" name="a_extra[]" value="{{ $a_extra->name }}" class="w3-hide" type="checkbox" checked>
                           <div class="w3-clear"></div>
                         <?php else: ?>
-                          <label onclick="statusToggle(event)" for="a_extra_{{ $a_extra->id }}" class="w3-btn w3-bar-item w3-animate-color" >
-                            <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $a_extra->name }}</span>
-                            <i class="fa fa-check-circle-o w3-left"></i>
-                          </label>
+                          <label onclick="statusToggle(event)" for="a_extra_{{ $a_extra->id }}" class="w3-btn w3-bar-item w3-animate-color" />
+                          <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $a_extra->name }}</span>
+                          <i class="fa fa-check-circle-o w3-left"></i>
                           <input id="a_extra_{{ $a_extra->id }}" name="a_extra[]" value="{{ $a_extra->name }}" class="w3-hide" type="checkbox">
                           <div class="w3-clear"></div>
                         <?php endif ;?>
                       <?php else: ?>
-                        <label onclick="statusToggle(event)" for="a_extra_{{ $a_extra->id }}" class="w3-btn w3-bar-item w3-animate-color" >
-                          <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $a_extra->name }}</span>
-                          <i class="fa fa-check-circle-o w3-left"></i>
-                        </label>
+                        <label onclick="statusToggle(event)" for="a_extra_{{ $a_extra->id }}" class="w3-btn w3-bar-item w3-animate-color" />
+                        <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $a_extra->name }}</span>
+                        <i class="fa fa-check-circle-o w3-left"></i>
                         <input id="a_extra_{{ $a_extra->id }}" name="a_extra[]" value="{{ $a_extra->name }}" class="w3-hide" type="checkbox">
                         <div class="w3-clear"></div>
                     <?php endif ;?>
@@ -571,28 +565,25 @@
                 <input type="hidden" name="agar_id" value="{{ $agar->id }}">
                 @foreach($agar_s_extra as $s_extra)
                   <div class="w3-bar-block">
-                    <?php if($agar->agar_extra->sf_extra != NULL) : ?>
+                    <?php if($agar->agar_extra->sf_extra != null) : ?>
                       <?php $selected_array = json_decode($agar->agar_extra->sf_extra);?>
                         <?php if (in_array($s_extra->name,$selected_array)): ?>
-                          <label onclick="statusToggle(event)" for="s_extra_{{ $s_extra->id }}" class="w3-btn w3-bar-item w3-animate-color w3-color-brnda" >
-                            <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $s_extra->name }}</span>
-                            <i class="fa fa-check-circle-o w3-left"></i>
-                          </label>
+                          <label onclick="statusToggle(event)" for="s_extra_{{ $s_extra->id }}" class="w3-btn w3-bar-item w3-animate-color w3-text-flat-peter-river" />
+                          <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $s_extra->name }}</span>
+                          <i class="fa fa-check-circle-o w3-left"></i>
                           <input id="s_extra_{{ $s_extra->id }}" name="sf_extra[]" value="{{ $s_extra->name }}" class="w3-hide" type="checkbox" checked>
                           <div class="w3-clear"></div>
                         <?php else: ?>
-                          <label onclick="statusToggle(event)" for="s_extra_{{ $s_extra->id }}" class="w3-btn w3-bar-item w3-animate-color" >
-                            <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $s_extra->name }}</span>
-                            <i class="fa fa-check-circle-o w3-left"></i>
-                          </label>
+                          <label onclick="statusToggle(event)" for="s_extra_{{ $s_extra->id }}" class="w3-btn w3-bar-item w3-animate-color" />
+                          <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $s_extra->name }}</span>
+                          <i class="fa fa-check-circle-o w3-left"></i>
                           <input id="s_extra_{{ $s_extra->id }}" name="sf_extra[]" value="{{ $s_extra->name }}" class="w3-hide" type="checkbox">
                           <div class="w3-clear"></div>
                         <?php endif ;?>
                       <?php else: ?>
-                        <label onclick="statusToggle(event)" for="s_extra_{{ $s_extra->id }}" class="w3-btn w3-bar-item w3-animate-color" >
-                          <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $s_extra->name }}</span>
-                          <i class="fa fa-check-circle-o w3-left"></i>
-                        </label>
+                        <label onclick="statusToggle(event)" for="a_extra_{{ $s_extra->id }}" class="w3-btn w3-bar-item w3-animate-color" />
+                        <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $s_extra->name }}</span>
+                        <i class="fa fa-check-circle-o w3-left"></i>
                         <input id="s_extra_{{ $s_extra->id }}" name="sf_extra[]" value="{{ $s_extra->name }}" class="w3-hide" type="checkbox">
                         <div class="w3-clear"></div>
                     <?php endif ;?>
@@ -610,7 +601,6 @@
             </form>
         </div>
     </div><!-- END NEW_SF_FORM -->
-  </div>
 
 
     <div id="NEW_COND_FORM" class="w3-modal" style="display: none;"><!-- START NEW_COND_FORM -->
@@ -625,31 +615,11 @@
                   <input type="hidden" name="agar_id" value="{{ $agar->id }}">
                   @foreach($agar_cond as $cond)
                     <div class="w3-bar-block">
-                      <?php if($agar->agar_extra->cond_extra != NULL) : ?>
-                        <?php $selected_array = json_decode($agar->agar_extra->cond_extra);?>
-                          <?php if (in_array($cond->name,$selected_array)): ?>
-                            <label onclick="statusToggle(event)" for="cond_extra_{{ $cond->id }}" class="w3-btn w3-bar-item w3-animate-color w3-color-brnda" >
-                              <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $cond->name }}</span>
-                              <i class="fa fa-check-circle-o w3-left"></i>
-                            </label>
-                            <input id="cond_extra_{{ $cond->id }}" name="cond_extra[]" value="{{ $cond->name }}" class="w3-hide" type="checkbox" checked>
-                            <div class="w3-clear"></div>
-                          <?php else: ?>
-                            <label onclick="statusToggle(event)" for="cond_extra_{{ $cond->id }}" class="w3-btn w3-bar-item w3-animate-color" >
-                              <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $cond->name }}</span>
-                              <i class="fa fa-check-circle-o w3-left"></i>
-                            </label>
-                            <input id="cond_extra_{{ $cond->id }}" name="cond_extra[]" value="{{ $cond->name }}" class="w3-hide" type="checkbox">
-                            <div class="w3-clear"></div>
-                          <?php endif ;?>
-                        <?php else: ?>
-                          <label onclick="statusToggle(event)" for="cond_extra_{{ $cond->id }}" class="w3-btn w3-bar-item w3-animate-color" >
-                            <span class="w3-right"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $cond->name }}</span>
-                            <i class="fa fa-check-circle-o w3-left"></i>
-                          </label>
-                          <input id="cond_extra_{{ $cond->id }}" name="cond_extra[]" value="{{ $cond->name }}" class="w3-hide" type="checkbox">
-                          <div class="w3-clear"></div>
-                      <?php endif ;?>
+                      <label onclick="statusToggle(event)" for="cond_extra_{{ $cond->id }}" class="w3-btn w3-bar-item w3-animate-color" />
+                      <span class="w3-right w3-text-gray"><i class="fa fa-tag w3-margin-left w3-text-gray"></i>{{ $cond->name }}</span>
+                      <i class="fa fa-check-circle-o w3-left w3-text-gray"></i>
+                      <input id="cond_extra_{{ $cond->id }}" name="cond_extra[]" value="{{ $cond->name }}" class="w3-hide" type="checkbox">
+                      <div class="w3-clear"></div>
                     </div>
                   @endforeach
               </div>
@@ -759,11 +729,11 @@
     <br>
     <!-- END MODALS -->
 
-    <!-- End page content -->
-    </div>
-
     <!-- Footer -->
     @include('layouts/footer')
+
+    <!-- End page content -->
+    </div>
 
     </script>
     <script src="{{ asset('js/script.js') }}"></script>

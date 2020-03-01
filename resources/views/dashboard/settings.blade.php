@@ -31,13 +31,6 @@
                           <label>اسم الموقع</label>
                           <input type="text" name="site_name" value="{{ $settings->site_name }}" class="form-control text-right" >
                         </div>
-                        <div class="form-group text-right">
-                            <label for="lang">لغة الموقع</label>
-                            <select id="lang" name="lang" class="form-control text-right">
-                              <option value="ar">عربي</option>
-                              <option value="en">انجليزي</option>
-                            </select>
-                        </div>
                         <div class="form-group row text-right">
                           <div class="col-md-6">
                             <label for="email_two"> الايميل الثاني  </label>
@@ -50,7 +43,7 @@
                         </div>
                         <div class="form-group text-right">
                           <label for="region">المقر</label>
-                          <input id="region" type="text" value="{{ $settings->region }}"  name="region" class="form-control text-right" >
+                          <input id="region" type="text" value="{{ $settings->address }}"  name="address" class="form-control text-right" >
                         </div>
                         <div class="form-group text-right">
                           <label for="logo">شعار الموقع</label>

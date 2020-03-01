@@ -31,14 +31,35 @@
             <a class="nav-link w3-large w3-text-white w3-hover-text-grey" href="{{ route('home') }}">الرئيسية <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link w3-large w3-text-white w3-hover-text-grey" href="{{ route('agars.agarsList') }}"> تصفح العقارات </a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link w3-large w3-text-white w3-hover-text-grey" href="#">تحميل التطبيق</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link w3-large w3-text-white w3-hover-text-grey" href="{{ route('login') }}">  دخول جديد  </a>
-          </li>
+          @if(Auth::check())
+            <li class="nav-item dropdown">
+             <a class="nav-link w3-large w3-text-white w3-hover-text-grey dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               تصفح الموقع
+             </a>
+             <div class="dropdown-menu text-right" aria-labelledby="navbarDropdown">
+               <a class="dropdown-item text-right" href="{{ route('agars.agarsList') }}">العقارات</a>
+               <a class="dropdown-item text-right" href="{{ route('agars.myAgars') }}">عقاراتي</a>
+               <div class="dropdown-divider"></div>
+               <a class="dropdown-item text-right" href="{{ route('reservation.sent') }}">طلبات الايجار المرسلة</a>
+               <a class="dropdown-item text-right" href="{{ route('reservation.index') }}"> طلبات الايجار على عقاراتي </a>
+             </div>
+            </li>
+            <li class="nav-item">
+              <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button style="background: inherit!important;border: 0px;cursor: pointer" type="submit" name="logout" class="nav-link w3-large w3-text-white w3-hover-text-grey"> تسجيل خروج </button>
+              </form>
+            </li>
+          @else
+            <li class="nav-item">
+              <a class="nav-link w3-large w3-text-white w3-hover-text-grey" href="{{ route('agars.agarsList') }}"> تصفح العقارات </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link w3-large w3-text-white w3-hover-text-grey" href="{{ route('login') }}">  دخول جديد  </a>
+            </li>
+          @endif
         </ul>
       </div>
   </nav>

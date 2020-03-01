@@ -19,4 +19,10 @@
   <link href="{{ asset('css/w3.css') }}" rel="stylesheet">
   <link href="{{ asset('dashboard/css/sb-admin-2.css') }}" rel="stylesheet">
 
+  <style media="screen">
+    table{
+      direction: rtl;
+    }
+  </style>
+
 </head>

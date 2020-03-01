@@ -27,7 +27,7 @@
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary text-right">
                  جدول الولايات
-                 <a class="w3-text-red" style="text-decoration: underline" href="{{ route('dashboard.add_states') }}" >اضافة ولاية جديدة </a>
+                 <a class="w3-text-red w3-left w3-button w3-card w3-white" href="{{ route('dashboard.add_states') }}" >اضافة ولاية جديدة </a>
               </h6>
             </div>
             <div class="card-body">
@@ -36,14 +36,14 @@
                   <thead>
                     <tr class="text-right">
                       <th> اسم الولاية </th>
-                      <th> الخالة  </th>
+                      <th> الحالة  </th>
                       <th>العمليات</th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr class="text-right">
                       <th> اسم الولاية </th>
-                      <th> الخالة  </th>
+                      <th> الحالة  </th>
                       <th>العمليات</th>
                     </tr>
                   </tfoot>
@@ -51,7 +51,13 @@
                     @foreach($states as $state)
                       <tr class="text-right">
                         <td>{{ $state->state_name }}</td>
-                        <td>{{ $state->status }}</td>
+                        <td>
+                          @if($state->status == 1)
+                            <p>متاح</p>
+                          @else
+                            <p>غير متاح</p>
+                          @endif
+                        </td>
                         <td>
                           <form action="{{ route('dashboard.states') }}" method="post">
                             @csrf

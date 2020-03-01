@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ asset('datepicker/css/bootstrap-datepicker.css') }}" />
   <link rel="stylesheet" href="{{ asset('css/agarsList.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/w3-colors-flat.css') }}">
 
    <!-- for vue js app.js file -->
   <script src="{{ asset('js/app.js') }}" defer></script>
@@ -37,7 +38,14 @@
 
     <section class="container">
       <section class="filter-body" id="filter">
-        <filter-app :agar-type="{{ $agarType }}" :agar-floor="{{ $agarFloor }}"></filter-app>
+        <filter-app
+              :agar-type="{{ $agarType }}"
+              :agar-floor="{{ $agarFloor }}"
+              :agar_b_extra="{{ $agar_b_extra }}"
+              :agar_a_extra="{{ $agar_a_extra }}"
+              :agar_s_extra="{{ $agar_s_extra }}"
+              :agar_cond="{{ $agar_cond }}">
+        </filter-app>
       </section>
     </section>
 

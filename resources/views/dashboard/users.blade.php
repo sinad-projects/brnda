@@ -54,7 +54,13 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->phone }}</td>
-                        <td>{{ $user->role }}</td>
+                        <td>
+                          @if($user->role == 1)
+                            <p>ادمن</p>
+                          @else
+                            <p>مستخدم عادي</p>
+                          @endif
+                        </td>
                         <td>
                           <form action="{{ route('dashboard.users') }}" method="post">
                             @csrf

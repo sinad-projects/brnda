@@ -91,6 +91,15 @@ Route::get('my-agars',[
     'middleware' => ['auth']
 ]);
 
+Route::post('agars/add/get_city_as_json',[
+    'uses' => 'agarController@get_city_as_json_to_add_agarModel',
+    'middleware' => ['auth']
+]);
+Route::post('agars/add/get_floor_as_json',[
+    'uses' => 'agarController@get_floor_as_json_to_add_agarModel',
+    'middleware' => ['auth']
+]);
+
 Route::post('agars/add',[
     'uses' => 'agarController@add',
     'as' => 'agars.add',
@@ -197,6 +206,12 @@ Route::get('dashboard/agars',[
     'as' => 'dashboard.agars',
     'middleware' => ['isAdmin']
 ]);
+# get single agar
+Route::get('dashboard/agar/{agar_id}',[
+    'uses' => 'dashboardController@getAgar',
+    'as' => 'dashboard.agar',
+    'middleware' => ['isAdmin']
+]);
 Route::post('dashboard/agars',[
     'uses' => 'dashboardController@postAgars',
     'middleware' => ['isAdmin']
@@ -219,8 +234,30 @@ Route::get('dashboard/payment',[
     'as' => 'dashboard.payment',
     'middleware' => ['isAdmin']
 ]);
+
 Route::post('dashboard/payment',[
     'uses' => 'dashboardController@postPayment',
+    'middleware' => ['isAdmin']
+]);
+
+// manage  payment address
+Route::get('dashboard/payment/address',[
+    'uses' => 'dashboardController@getPaymentAddress',
+    'as' => 'dashboard.paymentAddress',
+    'middleware' => ['isAdmin']
+]);
+Route::post('dashboard/payment/address',[
+    'uses' => 'dashboardController@postPaymentAddress',
+    'middleware' => ['isAdmin']
+]);
+
+Route::get('dashboard/payment/table',[
+    'uses' => 'dashboardController@getPaymentAddressTable',
+    'as' => 'dashboard.paymentAddressTable',
+    'middleware' => ['isAdmin']
+]);
+Route::post('dashboard/payment/table',[
+    'uses' => 'dashboardController@postPaymentAddressTable',
     'middleware' => ['isAdmin']
 ]);
 

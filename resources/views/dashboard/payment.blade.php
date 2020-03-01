@@ -22,9 +22,12 @@
                 <div class="row">
                   <div class="col-lg-12">
                     <div class="p-5">
-                      <div class="text-center">
-                        <h1 class="h4 text-gray-900 mb-4"> ادارة عمليات الدفع في الموقع </h1>
+                      <div class="text-center container">
+                        <h1 class="h4 text-gray-900 mb-4 w3-right"> ادارة عمليات الدفع في الموقع </h1>
+                        <a class="w3-text-red w3-left w3-button w3-card w3-white" href="{{ route('dashboard.paymentAddressTable') }}" > جدول عناوين الدفع  </a>
                       </div>
+
+                      <div class="w3-clear"></div>
 
                       <div class="container">
                         @foreach($reservations as $reservation)

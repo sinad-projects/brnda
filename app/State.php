@@ -11,7 +11,7 @@ class State extends Model
     'state_id',
     'state_name',
     'status'
-  ];
+  ]; 
 
   public function city()
   {

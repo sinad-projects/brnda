@@ -27,7 +27,7 @@
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary text-right">
                 جدول المرافق الخاصة
-                <a class="w3-text-red" style="text-decoration: underline" href="{{ route('dashboard.add_sf_extra') }}" >اضافة مرفق جديد</a>
+                <a class="w3-text-red w3-left w3-button w3-card w3-white" href="{{ route('dashboard.add_sf_extra') }}" >اضافة مرفق جديد</a>
               </h6>
             </div>
             <div class="card-body">
@@ -51,7 +51,13 @@
                     @foreach($sf_extra as $extra)
                       <tr class="text-right">
                         <td>{{ $extra->name }}</td>
-                        <td>{{ $extra->status }}</td>
+                        <td>
+                          @if($extra->status == 1)
+                            <p>متاح</p>
+                          @else
+                            <p>غير متاح</p>
+                          @endif
+                        </td>
                         <td>
                           <form action="{{ route('dashboard.sf_extra') }}" method="post">
                             @csrf

@@ -84,42 +84,81 @@
                         <td>{{ $reservation->start_date  }}</td>
                         <td>{{ $reservation->end_date }}</td>
                         <td>{{ $reservation->created_at->diffForHumans() }}</td>
-                        <td>
-                          <div class="">
-                              <div class="w3-bar">
-                                  <button onclick="document.getElementById('pay_{{ $reservation->id }}').style.display='block'" class=" w3-btn w3-mobile w3-text-gray w3-border col-md-12" style="padding: 0;"><i class="fa fa-credit-card" style="padding: 5px;"></i></button>
-                              </div>
-                          </div>
-                        </td>
+                        @if($reservation->bill)
+                          <td>
+                            <div class="w3-display-container w3-tooltip">
+                                <img  class="w3-hover-grayscale" src="{{ asset('bill/images/'.$reservation->bill->bill_image) }}" height="100" width="100">
+                                <form action="{{ route('reservation.sent') }}" method="post">
+                                  @csrf
+                                  <input type="hidden" name="reserv_id" value="{{ $reservation->id }}">
+                                  <button style="width: 80%;margin: 0 10%"  type="submit" name='delete_bill_btn'
+                                    class="w3-btn w3-text w3-display-bottommiddle w3-flat-pomegranate"><i class="fa fa-trash-o"></i></button>
+                                </form>
+                            </div>
+                          </td>
+                        @else
+                          <td>
+                            <div class="">
+                                <div class="w3-bar">
+                                    <button onclick="document.getElementById('pay_{{ $reservation->id }}').style.display='block'" class=" w3-btn w3-mobile w3-text-gray w3-border col-md-12" style="padding: 0;"><i class="fa fa-credit-card" style="padding: 5px;"></i></button>
+                                </div>
+                            </div>
+                          </td>
+                        @endif
                       </tr>
                       <!-- START pay for reservation  MODAL -->
                       <div id="pay_{{ $reservation->id }}" class="w3-modal">
                         <div class="w3-modal-content brnda-card-4 w3-animate-zoom" style="max-width:480px">
                             <header class="w3-container brnda-card">
-                                <span onclick="document.getElementById('pay_{{ $reservation->id }}').style.display='none'"
-                                  class="w3-btn w3-display-topleft">&times;</span>
-                                <h4>  كيف تود اتمام عملية الدفع </h4>
-                                 <ol>
-                                   <li>دفع مباشر</li>
-                                   <li>تحويل بنكي</li>
-                                 </ol>
+                              <span onclick="document.getElementById('pay_{{ $reservation->id }}').style.display='none'"class="w3-btn w3-display-topleft">&times;</span>
+                              <h4>  كيف تود اتمام عملية الدفع </h4>
+                              <ol>
+                                <li><a href="#" class="paymentLink" onclick="paymentTab(event,'cash')" > دفع مباشر </a></li>
+                                <li><a href="#" class="paymentLink" onclick="paymentTab(event,'bank')" > تحويل بنكي </a></li>
+                              </ol>
                             </header>
-                            <form action="{{ route('reservation.sent') }}" method="post" id="pay_form_{{ $reservation->id }}" enctype="multipart/form-data">
-                                @csrf
-                                <footer class="w3-container ">
-                                    <div class="w3-margin-top w3-margin-bottom w3-left">
-                                        <input type="hidden" value="{{ $reservation->id }}" name="reservation_id" />
-                                        <hr>
-                                        <label for="bill_file" class="w3-large">صورة لفاتورة الدفع</label>
-                                        <input type="file" name="bill_file" id="bill_file"><br>
-                                        <hr>
-                                        <button form="pay_form_{{ $reservation->id }}" name="pay_btn" value="دفع"class="w3-btn brnda-card w3-ripple w3-margin-left"><i class="fa fa-check-square"></i> موافق</button>
-                                        <button type="button" onclick="document.getElementById('pay_{{ $reservation->id }}').style.display='none'"class="w3-btn w3-white w3-ripple"><i class="fa fa-arrow-right"></i> إلغاء</button>
-                                    </div>
-                                  </footer>
-                                </form>
+                            <div class="payment_tabs" id='cash' style="display: none">
+                              <div class="w3-margin w3-card w3-padding w3-light-grey">
+                                <h4>شكرا جزيلا لاختيارك التعامل مع برندا</h4>
+                                  <p>
+                                    لاتمام عملية الدفع يمكنك التفضل بزيارة مكتبنا في
+                                     <address class="">{{ $settings->address }}</address>
+                                  </p>
+                                    او الاتصال علينا في الارقام التالية
+                                    <ol>
+                                      <li>{{ $settings ->phone_one }}</li>
+                                      <li>{{ $settings ->phone_two }}</li>
+                                    </ol>
+                                </p>
+                            </div><br>
                             </div>
-                        </div><!-- END pay for reservation  MODAL -->
+                            <div class="payment_tabs" id='bank' style="display: none">
+                              <form action="{{ route('reservation.sent') }}" method="post" id="pay_form_{{ $reservation->id }}" enctype="multipart/form-data">
+                                @csrf
+                                <footer class="w3-margin w3-padding w3-light-grey text-right w3-container">
+                                  <div class="">
+                                    @foreach($paymentAddress as $address)
+                                      <p>
+                                        {{ $address->name }}, {{ $address->branch }}, {{ $address->address }}
+                                        <span> حساب رقم {{ $address->account_number }} </span>
+                                      </p>
+                                    @endforeach
+                                  </div>
+                                  <div class="w3-margin-top w3-margin-bottom">
+                                    <input type="hidden" value="{{ $reservation->id }}" name="reservation_id" /><hr>
+                                    <label for="bill_file" class="w3-large">صورة لفاتورة الدفع</label><br>
+                                    <input type="file" name="bill_file" id="bill_file"><br><hr>
+                                  </div>
+                                </footer>
+                                <div class="w3-container">
+                                  <button form="pay_form_{{ $reservation->id }}" name="pay_btn" value="دفع"class="w3-btn w3-card w3-ripple w3-margin-left"><i class="fa fa-check-square"></i> ارسال</button>
+                                  <button type="button" onclick="document.getElementById('pay_{{ $reservation->id }}').style.display='none'"class="w3-btn w3-card w3-white w3-ripple"><i class="fa fa-arrow-right"></i> إلغاء</button>
+                                </div>
+                                <br>
+                              </form>
+                            </div>
+                          </div>
+                      </div><!-- END pay for reservation  MODAL -->
                     @endforeach
                   </tbody>
                 </table>
@@ -224,9 +263,7 @@
 
 @include('layouts/footer')
 
-<script type="text/javascript" src="{{ asset('js/script.js') }}">
-
-</script>
+<script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
 
 <script>
   function openTab(evt, TabName) {
@@ -244,6 +281,25 @@
   }
   // Click on the first tablink on load
   document.getElementsByClassName("tablink")[0].click();
+</script>
+
+<script>
+  function paymentTab(evt, TabName) {
+    var i, x, tablinks;
+    console.log('ik');
+    x = document.getElementsByClassName("payment_tabs");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("paymentLink");
+    for (i = 0; i < x.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" w3-white", "");
+    }
+    document.getElementById(TabName).style.display = "block";
+    evt.currentTarget.className += " w3-white";
+  }
+  // Click on the first tablink on load
+  //document.getElementsByClassName("paymentLink")[0].click();
 
 </script>
 

@@ -14,7 +14,6 @@ class Settings extends Model
       'email_one',
       'email_two',
       'logo',
-      'region',
-      'lang'
+      'address'
     ];
 }

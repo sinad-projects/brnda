@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSettingsTable extends Migration
+class CreatePaymentAddressTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('settings', function (Blueprint $table) {
+        Schema::create('payment_address', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('site_name');
-            $table->integer('phone_one');
-            $table->integer('phone_two');
-            $table->string('email_one');
-            $table->string('email_two');
+            $table->string('name');
+            $table->string('branch');
             $table->string('address');
-            $table->string('logo');
+            $table->string('account_number');
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ class CreateSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('settings');
+        Schema::dropIfExists('payment_address');
     }
 }

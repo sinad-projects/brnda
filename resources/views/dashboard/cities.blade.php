@@ -27,7 +27,7 @@
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary text-right">
                  جدول المدن
-                 <a class="w3-text-red" style="text-decoration: underline" href="{{ route('dashboard.add_cities') }}" >اضافة مدينة جديدة  </a>
+                 <a class="w3-text-red w3-left w3-button w3-card w3-white" href="{{ route('dashboard.add_cities') }}" >اضافة مدينة جديدة  </a>
                </h6>
             </div>
             <div class="card-body">
@@ -36,6 +36,7 @@
                   <thead>
                     <tr class="text-right">
                       <th> اسم المدينة </th>
+                      <th> الولاية </th>
                       <th> الحالة  </th>
                       <th>العمليات</th>
                     </tr>
@@ -43,6 +44,7 @@
                   <tfoot>
                     <tr class="text-right">
                       <th> اسم المدينة </th>
+                      <th> الولاية </th>
                       <th> الحالة  </th>
                       <th>العمليات</th>
                     </tr>
@@ -51,7 +53,14 @@
                     @foreach($cities as $city)
                       <tr class="text-right">
                         <td>{{ $city->city_name }}</td>
-                        <td>{{ $city->status }}</td>
+                        <td> {{ $city->state->state_name }} </td>
+                        <td>
+                          @if($city->status == 1)
+                            <p>متاح</p>
+                          @else
+                            <p>غير متاح</p>
+                          @endif
+                        </td>
                         <td>
                           <form action="{{ route('dashboard.cities') }}" method="post">
                             @csrf

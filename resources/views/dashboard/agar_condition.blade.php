@@ -27,7 +27,7 @@
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary text-right">
                  جدول شروط السكن
-                 <a class="w3-text-red" style="text-decoration: underline" href="{{ route('dashboard.add_agar_condition') }}" >اضافة شرط جديد </a>
+                 <a class="w3-text-red w3-left w3-button w3-card w3-white" href="{{ route('dashboard.add_agar_condition') }}" >اضافة شرط جديد </a>
               </h6>
             </div>
             <div class="card-body">
@@ -51,7 +51,13 @@
                     @foreach($condition as $condition)
                       <tr class="text-right">
                         <td>{{ $condition->name }}</td>
-                        <td>{{ $condition->status }}</td>
+                        <td>
+                          @if($condition->status == 1)
+                            <p>متاح</p>
+                          @else
+                            <p>غير متاح</p>
+                          @endif
+                        </td>
                         <td>
                           <form action="{{ route('dashboard.agar_condition') }}" method="post">
                             @csrf

@@ -30,7 +30,7 @@
     <br>
 
     <div class="w3-bar-block">
-        <a href="javascript::void()" class="w3-bar-item text-right w3-btn w3-padding-16 w3-hide-large1 w3-dark-grey w3-hover-black"onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  اغلق القائمة</a>
+        <a href="javascript::void()" class="w3-bar-item text-right w3-btn w3-padding-16 w3-hide-large1 w3-brnda w3-hover-black"onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  اغلق القائمة</a>
 
         <a href="{{ route('home') }}" class="w3-bar-item w3-large w3-btn w3-padding text-right">
           <i class="fa fa-home"></i> الرئيسية

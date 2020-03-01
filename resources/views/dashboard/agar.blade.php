@@ -1,41 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>  برندة    </title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+@include('dashboard/layouts/header')
 
-    <link rel="stylesheet"  href="{{ asset('lib/lightslider-master/src/css/lightslider.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('lib/dropzone/dropzone.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/w3.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/w3-colors-windows.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/w3-colors-flat.css') }}">
-    <link rel="stylesheet"
-          href="{{ asset('lib/fontawesome-free-5.0.13/web-fonts-with-css/css/fontawesome-all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    @include('dashboard/layouts/aside')
 
 
-    <!-- for vue js app.js file -->
-   <script src="{{ asset('js/app.js') }}" defer></script>
 
-</head>
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
 
+      <!-- Main Content -->
+      <div id="content">
 
-  <body dir="rtl" class="text-right">
-    <div class="w3-white">
+        @include('dashboard/layouts/nav')
 
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
 
-    <!-- sidebar menu -->
-      @include('layouts/aside')
-
-      <!-- Overlay effect when opening sidebar on small screens -->
-      <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
-
-    <!-- !PAGE CONTENT! -->
-    <div class="wrapper"><!-- START view agar -->
        <div class="w3-container w3-margin-top brnda-card-4">
 
 
@@ -53,9 +37,9 @@
             <div class="w3-main" style=""><!-- START view agar -->
               <!-- Container for the image gallery -->
               @if($agar->image->count())
-                <div class="container">
+                <div class="">
                     <!-- slider -->
-                    <div class="w3-content w3-display-container">
+                    <div class="w3-margin-top w3-display-container">
                       @foreach($agar->image as $image)
                         <div class="w3-display-container w3-tooltip">
                             <img width="100%" class="mySlides" src="{{ asset('agar/images/'.$image->img_wide) }}" alt="{{$image->img_wide}}">
@@ -71,12 +55,15 @@
 
               <div class="wrapper">
                 <div class="w3-row-padding">
-                  <section class="w3-twothird">
+                  <section class="w3-right">
                       <section class="w3-section">
-                          <h2>{{ $agar->agar_name }}</h2>
-                          <h6>
+                          <h2 class="text-right">
+                            {{ $agar->agar_name }}
+                          </h2>
+
+                          <h6 class="text-right w3-margin-top">
                               موقع العقار
-                              <i class="fa fa-map-marker w3-margin-left-8"></i>
+                              <i class="fa fa-map-marker-alt w3-margin-left-8"></i>
                               <span>
                                 <a class="decoration-none hover-underline" href="#">{{ $agar->location->state->state_name }} /</a>
                                 <a class="decoration-none hover-underline" href="#">{{ $agar->location->city->city_name }} /</a>
@@ -84,9 +71,9 @@
                               </span>
                           </h6>
                       </section>
-                      <section class="w3-section" style="margin-bottom: 64px !important;">
+                      <section style="margin-bottom: 32px !important;">
                           <div class="w3-bar">
-                              <span class="w3-bar-item w3-margin-left-8 w3-text-gray">
+                              <span class="w3-bar-item  w3-text-gray">
                                   <i class="fa fa-bed w3-margin-left-8"></i>
                                   <span>{{ $agar->rooms_number }} غرف نوم</span>
                               </span>
@@ -101,9 +88,9 @@
                           </div>
                           <div id="agar_desc"></div>
                       </section>
-                      <section class="w3-section" style="margin-bottom: 64px !important;">
-                          <h3>الوصف</h3>
-                          <span class="more">{{ $agar->agar_desc }}</span>
+                      <section class="w3-section" style="margin-bottom: 32px !important;">
+                          <h3 class="text-right">الوصف</h3>
+                          <p class="more text-right">{{ $agar->agar_desc }}</p>
                           <div id="agar_loc"></div>
                       </section>
                       <section class="w3-section" style="margin-bottom: 64px !important;" >
@@ -124,15 +111,15 @@
 
                           <div id="agar_feature"></div>
                       </section>
-                      <section class="w3-section">
+                      <section class="w3-section text-right">
                           <h3>المميزات</h3>
                           <hr/>
                           <h4>المرافق الأساسية</h4>
-                          <section>
+                          <section class="w3-section">
                             <span class="w3-show-inline-block w3-padding w3-margin-left-8 w3-text-dark-gray">
                                 <?php if($agar->agar_extra->b_extra != null): ?>
                                   <?php $b_extra = json_decode($agar->agar_extra->b_extra); foreach ($b_extra as $b_extra):?>
-                                    <span class="w3-show-inline-block w3-padding w3-margin-left-8 w3-color-brnda">
+                                    <span class="w3-show-inline-block w3-padding w3-margin-left-8 w3-text-flat-peter-river">
                                         <i class="fa fa-check-circle w3-margin-left-8"></i> <?php echo $b_extra; ?> </span>
                                   <?php endforeach ; ?>
                                 <?php else: ?>
@@ -148,7 +135,7 @@
                             <span class="w3-show-inline-block w3-padding w3-margin-left-8 w3-text-black-gray">
                               <?php if($agar->agar_extra->a_extra != null): ?>
                                 <?php $a_extra = json_decode($agar->agar_extra->a_extra); foreach ($a_extra as $a_extra):?>
-                                  <span class="w3-show-inline-block w3-padding w3-margin-left-8 w3-color-brnda">
+                                  <span class="w3-show-inline-block w3-padding w3-margin-left-8 w3-text-flat-peter-river">
                                       <i class="fa fa-check-circle w3-margin-left-8"></i> <?php echo $a_extra; ?> </span>
                                 <?php endforeach ; ?>
                               <?php else: ?>
@@ -164,7 +151,7 @@
                               <span class="w3-show-inline-block w3-padding w3-margin-left-8 w3-text-black-gray">
                                   <?php if($agar->agar_extra->sf_extra != null): ?>
                                     <?php $sf_extra = json_decode($agar->agar_extra->sf_extra); foreach ($sf_extra as $sf_extra):?>
-                                      <span class="w3-show-inline-block w3-padding w3-margin-left-8 w3-color-brnda">
+                                      <span class="w3-show-inline-block w3-padding w3-margin-left-8 w3-text-flat-peter-river">
                                           <i class="fa fa-check-circle w3-margin-left-8"></i> <?php echo $sf_extra; ?> </span>
                                     <?php endforeach ; ?>
                                   <?php else: ?>
@@ -181,7 +168,7 @@
                             <span class="w3-show-inline-block w3-padding w3-margin-left-8 w3-text-black-gray">
                                 <?php if($agar->agar_extra->cond_extra != null): ?>
                                   <?php $cond_extra = json_decode($agar->agar_extra->cond_extra); foreach ($cond_extra as $cond_extra):?>
-                                    <span class="w3-show-inline-block w3-padding w3-margin-left-8 w3-color-brnda">
+                                    <span class="w3-show-inline-block w3-padding w3-margin-left-8 w3-text-flat-peter-river">
                                         <i class="fa fa-check-circle w3-margin-left-8"></i> <?php echo $cond_extra; ?> </span>
                                   <?php endforeach ; ?>
                                 <?php else: ?>
@@ -193,36 +180,7 @@
                           </section>
                       </section>
                   </section>
-                  <section class="w3-third">
-                      <div class="w3-card w3-animate-zoom w3-flat-clouds"><!-- START CALENDAR_FORM -->
-                          <div class="w3-container">
-                              <input type="hidden" name="agar_id" value="{{ $agar->id }}">
-                              <input type="hidden" name="calendar_id" value="{{ $agar->calender }}">
-                              <div class="" id="reservation">
-                                  <reservation-app :owner_id="{{ $agar->owner_id }}" :agar_id="{{ $agar->id }}"></reservation-app>
-                              </div>
-                          </div>
-                      </div><!-- END CALENDAR_FORM -->
 
-                      <!-- reservation success message -->
-                      <div class="w3-modal" id="reservation_success" style="display: none">
-                        <div class="w3-panel w3-modal-content w3-card-4 w3-padding-64 w3-animate-zoom" style="max-width:480px">
-                          <span onclick="document.getElementById('reservation_success').style.display='none'"
-                          class="w3-button w3-large w3-display-topright">&times;</span>
-                          <h3 class="w3-center"> تم ارسال طلب الايجار بنجاح </h3>
-                        </div>
-                      </div>
-
-                      <!-- reservation error message -->
-                      <div class="w3-modal" id="reservation_error" style="display: none">
-                        <div class="w3-panel w3-modal-content w3-card-4 w3-padding-64 w3-animate-zoom" style="max-width:480px">
-                          <span onclick="document.getElementById('reservation_error').style.display='none'"
-                          class="w3-button w3-large w3-display-topright">&times;</span>
-                          <h3 class="w3-center"> حصل خطأ ما اثناء ارسال الطلب </h3>
-                        </div>
-                      </div>
-
-                  </section>
               </div>
             </div>
           </div>
@@ -231,29 +189,46 @@
     </div>
 
 
-    @include('layouts/footer')
+    <!-- Footer -->
+  @include('dashboard/layouts/footer')
 
-    <script src="{{ asset('js/script.js') }}"></script>
+  <script>
+    var slideIndex = 1;
+    showDivs(slideIndex);
 
-    <script>
-      var slideIndex = 1;
-      showDivs(slideIndex);
+    function plusDivs(n) {
+      showDivs(slideIndex += n);
+    }
 
-      function plusDivs(n) {
-        showDivs(slideIndex += n);
+    function showDivs(n) {
+      var i;
+      var x = document.getElementsByClassName("mySlides");
+      if (n > x.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = x.length}
+      for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
       }
+      x[slideIndex-1].style.display = "block";
+    }
+  </script>
 
-      function showDivs(n) {
-        var i;
-        var x = document.getElementsByClassName("mySlides");
-        if (n > x.length) {slideIndex = 1}
-        if (n < 1) {slideIndex = x.length}
-        for (i = 0; i < x.length; i++) {
-          x[i].style.display = "none";
-        }
-        x[slideIndex-1].style.display = "block";
-      }
-    </script>
+<!-- Bootstrap core JavaScript-->
+<script src="{{  asset('dashboard/vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="{{ asset('dashboard/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{{ asset('dashboard/js/sb-admin-2.min.js') }}"></script>
+
+<!-- Page level plugins -->
+<script src="{{ asset('dashboard/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('dashboard/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+
+<!-- Page level custom scripts -->
+<script src="{{ asset('dashboard/js/demo/datatables-demo.js') }}"></script>
 
 </body>
+
 </html>

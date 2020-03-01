@@ -30,7 +30,13 @@
                <p>الخرطوم - السودان - امدرمان</p>
            </div>
            <div><p> <span>{{ agar.rooms_number }} غرف</span> و <span>{{ agar.bathrooms_number }} حمامات</span> </p></div>
-           <div><p>ابتداءا من  : {{ agar.price.day }} $ / لليوم</p></div>
+           <div v-if="agar.price != NULL">
+             <p v-if="agar.price.currency == 1">ابتداءا من  : {{ agar.price.day }} جنيه / لليوم</p>
+             <p v-if="agar.price.currency == 2">ابتداءا من  : {{ agar.price.day }} دولار / لليوم </p>
+             <!--
+             <p class="w3-small"> {{ agar.price.week }} / {{ agar.price.month }} </p>
+           -->
+           </div>
           </div><br>
       </div>
     </div>

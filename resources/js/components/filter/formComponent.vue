@@ -17,11 +17,8 @@
           <p> تاريخ الحجز <date-picker v-model="range" range @change="filter()" lang="en" type="date" formate="YYYY-MM-dd"></date-picker> </p>
         </div>
         <div class="form-group mx-sm-3 mb-2">
-          <p>عدد الغرف <input type="number" @change="filter()" class="form-control" v-model="rooms_number" name="rooms_number" style="width: 100px!important" /> </p>
+          <p>عدد الغرف <input type="number" @click="filter()" class="form-control" v-model="rooms_number" name="rooms_number" style="width: 100px!important" /> </p>
         </div>
-        <!--<div class="form-group mx-sm-3 mb-2">
-          <p> عدد الحمامات <input type="number" @change="filter()" class="form-control" v-model="bathroms_number" name="bathroms_number" style="width: 50px!important" /> </p>
-        </div> -->
       </form>
     </div>
 
@@ -47,7 +44,7 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
             سعر الايجار لليوم الواحد
-            <vue-slider  @change="filter()"
+            <vue-slider  @click="filter()"
               v-model="price"
               :min="0"
               :max="400"
@@ -59,37 +56,35 @@
 
       <div class="card" style="width: 18rem;">
         <div class="card-header">
-          الخصائص
+          المرافق
         </div>
         <ul class="list-group list-group-flush ">
           <li class="list-group-item">
-            <h4> المزايا الاضافية </h4>
-            <div>
-              <span> انترنت </span>
-              <input value="انترنت" @change="filter()"   v-model="a_extra" type="checkbox" class="" />
-            </div>
-            <div>
-              <span> غسالة </span>
-              <input value="غسالة" @change="filter()"  v-model="a_extra" type="checkbox" class="" />
-            </div>
-            <div>
-              <span> مصعد </span>
-              <input value="مصعد" @change="filter()"  v-model="a_extra" type="checkbox" class="" />
+            <h4> المرافق الاساسية  </h4>
+            <div v-for="b in agar_b_extra">
+              <span> {{ b.name }} </span>
+              <input :value="b.name" @click="filter()" v-model="b_extra" type="checkbox" class="" />
             </div>
           </li>
           <li class="list-group-item">
-            <h4> مزايا خاصة </h4>
-            <div>
-              <span> حراسة امنية </span>
-              <input value="حراسة امنية" v-model="sf_extra" type="checkbox" class="" />
+            <h4> المرافق الاضافية  </h4>
+            <div v-for="a in agar_a_extra">
+              <span> {{ a.name }} </span>
+              <input :value="a.name" @click="filter()" v-model="a_extra" type="checkbox" class="" />
             </div>
-            <div>
-              <span> توصيل من المطار </span>
-              <input value="توصيل من المطار" v-model="sf_extra" type="checkbox" class="" />
+          </li>
+          <li class="list-group-item">
+            <h4> المرافق الخاصة  </h4>
+            <div v-for="s in agar_s_extra">
+              <span> {{ s.name }}  </span>
+              <input :value="s.name" @click="filter()" v-model="sf_extra" type="checkbox" class="" />
             </div>
-            <div>
-              <span> امكانية الاستلام على مدار اليوم </span>
-              <input value="امكانية الاستلام على مدار اليو" v-model="sf_extra" type="checkbox" class="" />
+          </li>
+          <li class="list-group-item">
+            <h4>  شروط السكن  </h4>
+            <div v-for="cond in agar_cond">
+              <span> {{ cond.name }}  </span>
+              <input :value="cond.name" @click="filter()" v-model="cond_extra" type="checkbox" class="" />
             </div>
           </li>
         </ul>
@@ -99,9 +94,9 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
             العملة
-            <select name="currency" class="form-control" >
-              <option value="sdg"> SDG </option>
-              <option value="usd"> USD </option>
+            <select name="currency" v-model="currency" class="form-control" >
+              <option @click="filter()" value="1"> جنيه </option>
+              <option @click="filter()" value="2"> دولار </option>
             </select>
           </li>
         </ul>
@@ -125,7 +120,7 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
               سعر الايجار لليوم الواحد
-              <vue-slider  @change="filter()"
+              <vue-slider  @click="filter()"
                 v-model="price"
                 :min="0"
                 :max="400"
@@ -138,37 +133,35 @@
         <br>
         <div class="card">
           <div class="card-header">
-            الخصائص
+            المرافق
           </div>
           <ul class="list-group list-group-flush ">
             <li class="list-group-item">
-              <h4> المزايا الاضافية </h4>
-              <div>
-                <span> انترنت </span>
-                <input type="checkbox" value="انترنت" v-model="a_extra" class="" />
-              </div>
-              <div>
-                <span> غسالة </span>
-                <input type="checkbox" value="غسالة" v-model="a_extra" class="" />
-              </div>
-              <div>
-                <span> مصعد </span>
-                <input type="checkbox" value="مصعد" v-model="a_extra" class="" />
+              <h4> المرافق الاساسية  </h4>
+              <div v-for="b in agar_b_extra">
+                <span> {{ b.name }} </span>
+                <input :value="b.name" @click="filter()"   v-model="b_extra" type="checkbox" class="" />
               </div>
             </li>
             <li class="list-group-item">
-              <h4> مزايا خاصة </h4>
-              <div>
-                <span> حراسة امنية </span>
-                <input type="checkbox" value=" حراسة امني" v-model="sf_extra" class="" />
+              <h4> المرافق الاضافية  </h4>
+              <div v-for="a in agar_a_extra">
+                <span> {{ a.name }} </span>
+                <input :value="a.name" @click="filter()"  v-model="a_extra" type="checkbox" class="" />
               </div>
-              <div>
-                <span> توصيل من المطار </span>
-                <input type="checkbox" value="توصيل من المطا" v-model="sf_extra" class="" />
+            </li>
+            <li class="list-group-item">
+              <h4> المرافق الخاصة  </h4>
+              <div v-for="s in agar_s_extra">
+                <span> {{ s.name }}  </span>
+                <input :value="s.name" @click="filter()" v-model="sf_extra" type="checkbox" class="" />
               </div>
-              <div>
-                <span> امكانية الاستلام على مدار اليوم </span>
-                <input type="checkbox" value="امكانية الاستلام على مدار اليو" v-model="sf_extra" class="" />
+            </li>
+            <li class="list-group-item">
+              <h4>  شروط السكن  </h4>
+              <div v-for="cond in agar_cond">
+                <span> {{ cond.name }}  </span>
+                <input :value="cond.name" @click="filter()" v-model="cond_extra" type="checkbox" class="" />
               </div>
             </li>
           </ul>
@@ -178,9 +171,9 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <span>عدد الغرف</span>
-              <input type="number" @change="filter()" class="form-control" v-model="rooms_number" name="rooms_number" >
+              <input type="number" @click="filter()" class="form-control" v-model="rooms_number" name="rooms_number" >
               <span>عدد الحمامات</span>
-              <input type="number" @change="filter()" v-model="bathroms_number" name="bathroms_number" class="form-control" >
+              <input type="number" @click="filter()" v-model="bathrooms_number" name="bathrooms_number" class="form-control" >
             </li>
           </ul>
         </div>
@@ -189,11 +182,11 @@
             <li class="list-group-item">
               <span>نوع العقار</span>
               <select name="type_id" v-model=type_id class="form-control">
-                <option v-for="type in agarType" @change="filter()"  :value="type.type_id"> {{ type.type_name }} </option>
+                <option v-for="type in agarType" @click="filter()"  :value="type.type_id"> {{ type.type_name }} </option>
               </select>
               <span>الطابق</span>
               <select name="floor_id" v-model="floor_id" class="form-control">
-                  <option v-for="floor in agarFloor" @change="filter()" :value="floor.floor_id"> {{ floor.floor_name }} </option>
+                  <option v-for="floor in agarFloor" @click="filter()" :value="floor.floor_id"> {{ floor.floor_name }} </option>
               </select>
             </li>
           </ul>
@@ -203,9 +196,9 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
               العملة
-              <select name="currency" class="form-control" >
-                <option value="sdg"> SDG </option>
-                <option value="usd"> USD </option>
+              <select name="currency" v-model="currency" class="form-control" >
+                <option @click="filter()" value="1"> جنيه </option>
+                <option @click="filter()" value="2"> دولار </option>
               </select>
             </li>
           </ul>
@@ -242,19 +235,38 @@
       agarFloor: {
         type: Array,
         default: []
+      },
+      agar_b_extra: {
+        type: Array,
+        default: []
+      },
+      agar_a_extra: {
+        type: Array,
+        default: []
+      },
+      agar_s_extra: {
+        type: Array,
+        default: []
+      },
+      agar_cond: {
+        type: Array,
+        default: []
       }
     },
 		data(){
 			return{
         date: '',
-        range: '',
+        range: [],
+        price: 0,
         rooms_number: 0,
         bathrooms_number: 0,
         floor_id: 0,
         type_id: 0,
-				price: 0,
+        currency: '',
+        b_extra: [],
         a_extra: [],
-        sf_extra: []
+        sf_extra: [],
+        cond_extra: []
 			}
 		},
 		methods:{
@@ -266,8 +278,11 @@
           type_id: this.type_id,
           range: this.range,
           price: this.price,
+          b_extra: this.b_extra,
           a_extra: this.a_extra,
           sf_extra: this.sf_extra,
+          cond_extra: this.cond_extra,
+          currency: this.currency,
           _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         }).then((response) => {
             this.$emit('new', response.data);

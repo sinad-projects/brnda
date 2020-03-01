@@ -21,13 +21,13 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800 text-right"> ادارة المرافق الاساسية </h1>
+          <h1 class="h3 mb-2 text-gray-800 text-right"> ادارة عناوين الدفع  </h1>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary text-right">
-                جدول المرافق الاساسية
-                <a class="w3-text-red w3-left w3-button w3-card w3-white"  href="{{ route('dashboard.add_b_extra') }}" >اضافة مرفق جديد</a>
+                جدول العناوين البنكية
+                <a class="w3-text-red w3-left w3-button w3-card w3-white"  href="{{ route('dashboard.paymentAddress') }}" > اضافة عنوان جديد </a>
               </h6>
             </div>
             <div class="card-body">
@@ -35,34 +35,34 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr class="text-right">
-                      <th> اسم المرفق </th>
-                      <th> حالة المرفق </th>
-                      <th>العمليات</th>
+                      <th> اسم البنك </th>
+                      <th> الفرع  </th>
+                      <th>العنوان</th>
+                      <th>  رقم الحساب </th>
+                      <th>  العمليات </th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr class="text-right">
-                      <th> اسم المرفق </th>
-                      <th> حالة المرفق </th>
-                      <th>العمليات</th>
+                      <th> اسم البنك </th>
+                      <th> الفرع  </th>
+                      <th>العنوان</th>
+                      <th>  رقم الحساب </th>
+                      <th> العمليات </th>
                     </tr>
                   </tfoot>
                   <tbody>
-                    @foreach($b_extra as $extra)
+                    @foreach($paymentAddress as $address)
                       <tr class="text-right">
-                        <td>{{ $extra->name }}</td>
+                        <td>{{ $address->name }}</td>
+                        <td>{{ $address->branch }}</td>
+                        <td>{{ $address->address }}</td>
+                        <td>{{ $address->account_number }}</td>
                         <td>
-                          @if($extra->status == 1)
-                            <p>متاح</p>
-                          @else
-                            <p>غير متاح</p>
-                          @endif
-                        </td>
-                        <td>
-                          <form action="{{ route('dashboard.b_extra') }}" method="post">
+                          <form action="{{ route('dashboard.paymentAddressTable') }}" method="post">
                             @csrf
-                            <input type="hidden" name="id" value="{{ $extra->id }}" />
-                            <button type="submit" name="delete_btn" class="btn btn-danger" > حذف المرفق </button>
+                            <input type="hidden" name="id" value="{{ $address->id }}" />
+                            <button type="submit" name="delete_btn" class="btn btn-danger" > حذف العنوان </button>
                             <!--
                             <button class="btn btn-info" type="submit">تعديل الصلاحية</button>
                           -->

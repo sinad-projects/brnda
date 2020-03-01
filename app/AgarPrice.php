@@ -19,5 +19,5 @@ class AgarPrice extends Model
   public function agar(){
       return $this->belongsTo(Agar::class,'agar_id');
   }
-  
+
 }

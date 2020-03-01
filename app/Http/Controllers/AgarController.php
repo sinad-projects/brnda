@@ -21,6 +21,7 @@ use App\AgarImg;
 use App\State;
 use App\City;
 
+use Carbon;
 use Validator;
 use Auth;
 use DB;
@@ -44,21 +45,32 @@ class AgarController extends Controller
       $states = State::where('status',1)->get();
       $citys = City::where('status',1)->get();
 
+      // get agar basic extract
+      $agar_b_extra = B_extra::where('status',1)->get();
+      // get agar addithonal extract
+      $agar_a_extra = A_extra::where('status',1)->get();
+      // get special extra
+      $agar_s_extra = Sf_extra::where('status',1)->get();
+      // get agar condation
+      $agar_cond = AgarCond::where('status',1)->get();
+
       return view('agars.agarsList')
               ->with('agars',$agars)
               ->with('agarType',$agarType)
               ->with('agarFloor',$agarFloor)
               ->with('states',$states)
-              ->with('citys',$citys);
+              ->with('citys',$citys)
+              ->with('agar_b_extra',$agar_b_extra)
+              ->with('agar_a_extra',$agar_a_extra)
+              ->with('agar_s_extra',$agar_s_extra)
+              ->with('agar_cond',$agar_cond);
     }
 
     public function agars_as_json()
     {
       $agars = Agar::where('status',2)
               ->with('image')->with('price')->get();
-      return response()->json(
-          $agars
-      );
+      return response()->json($agars);
     }
 
     // get agars for spacific user
@@ -145,41 +157,74 @@ class AgarController extends Controller
 
       if($request->has('save_b')){
         $b_extra = json_encode($request->b_extra,JSON_UNESCAPED_UNICODE);
+        if($b_extra == 'null'){
+          AgarExtra::where('agar_id',$request->agar_id)
+            ->update([
+              'agar_id' => $request->agar_id,
+              'b_extra' => NULL
+            ]);
+        }else{
         AgarExtra::where('agar_id',$request->agar_id)
           ->update([
             'agar_id' => $request->agar_id,
             'b_extra' => $b_extra
           ]);
-          return redirect()->back()->with('info','تم تعديل المرافق الاساسية');
+        }
+        return redirect()->back()->with('info','تم تعديل المرافق الاساسية');
       }
 
       if($request->has('save_a')){
         $a_extra = json_encode($request->a_extra,JSON_UNESCAPED_UNICODE);
-        AgarExtra::where('agar_id',$request->agar_id)
-          ->update([
-            'agar_id' => $request->agar_id,
-            'a_extra' => $a_extra
-          ]);
-          return redirect()->back()->with('info','تم تحديث المرافق الاضافية');
+        if($a_extra == 'null'){
+          AgarExtra::where('agar_id',$request->agar_id)
+            ->update([
+              'agar_id' => $request->agar_id,
+              'a_extra' => NULL
+            ]);
+        }else{
+          AgarExtra::where('agar_id',$request->agar_id)
+            ->update([
+              'agar_id' => $request->agar_id,
+              'a_extra' => $a_extra
+            ]);
+        }
+        return redirect()->back()->with('info','تم تحديث المرافق الاضافية');
       }
 
       if($request->has('save_sf')){
         $sf_extra = json_encode($request->sf_extra,JSON_UNESCAPED_UNICODE);
-        AgarExtra::where('agar_id',$request->agar_id)
-          ->update([
-            'agar_id' => $request->agar_id,
-            'sf_extra' => $sf_extra
-          ]);
-          return redirect()->back()->with('info','تم تحديث المميزات الخاصة');
+        if($sf_extra == 'null'){
+          AgarExtra::where('agar_id',$request->agar_id)
+            ->update([
+              'agar_id' => $request->agar_id,
+              'sf_extra' => NULL
+            ]);
+        }else{
+          AgarExtra::where('agar_id',$request->agar_id)
+            ->update([
+              'agar_id' => $request->agar_id,
+              'sf_extra' => $sf_extra
+            ]);
+        }
+        return redirect()->back()->with('info','تم تحديث المميزات الخاصة');
       }
 
       if($request->has('save_cond')){
         $cond_extra = json_encode($request->cond_extra,JSON_UNESCAPED_UNICODE);
-        AgarExtra::where('agar_id',$request->agar_id)
-          ->update([
-            'agar_id' => $request->agar_id,
-            'cond_extra' => $cond_extra
-          ]);
+        if($cond_extra == 'null'){
+          AgarExtra::where('agar_id',$request->agar_id)
+            ->update([
+              'agar_id' => $request->agar_id,
+              'cond_extra' => NULL
+            ]);
+        }else{
+          AgarExtra::where('agar_id',$request->agar_id)
+            ->update([
+              'agar_id' => $request->agar_id,
+              'cond_extra' => $cond_extra
+            ]);
+        }
+
           return redirect()->back()->with('info','تم تحديث شروط السكن');
       }
 
@@ -229,13 +274,31 @@ class AgarController extends Controller
 
     }
     // to add new agar
+    public function get_city_as_json_to_add_agarModel(Request $request){
+      if($request->has('state_id')){
+        $citys = City::where('state_id',$request->state_id)->get();
+        return response()->json($citys);
+      }
+    }
+    public function get_floor_as_json_to_add_agarModel(Request $request){
+      if($request->has('type_id')){
+        if($request->type_id == 1){
+          $floors = agarFloor::where('floor_id',0)->where('status',1)->get();
+        }else{
+          $floors = agarFloor::where('status',1)->get();
+        }
+        return response()->json($floors);
+      }
+    }
     public function add(Request $request){
       $this->validate($request,[
         'agar_name'        => 'required|string',
         'area'             => 'required|string',
         'rooms_number'     => 'required|integer',
         'bathrooms_number' => 'required|integer',
-        'agar_desc'        => 'required|string'
+        'agar_desc'        => 'required|string',
+        'state_id'         => 'required',
+        'type_id'          => 'required'
       ]);
 
       $state = State::where('state_id',$request->state_id)->first()->state_name;
@@ -352,23 +415,41 @@ class AgarController extends Controller
       if($request->type_id != 0){
         $agar->where('type_id',$request->type_id)->where('status',2)->with('image')->with('price');
       }
-      if($request->range != ''){
+
+      if($request->range != NULL){
         $agar->join('agar_calendar','agar.id','agar_calendar.agar_id')
-            ->where('start_date','<=',$request->range[0])
-            ->where('end_date','>=',$request->range[1])->where('status',2)->with('image')->with('price');
+            ->where('start_date','<=',Carbon\Carbon::parse($request->range[0])->toDateTimeString())
+            ->where('end_date','>=',Carbon\Carbon::parse($request->range[1])->toDateTimeString())
+            ->where('status',2)
+            ->with('image')->with('price');
       }
-      if($request->a_extra != []){
-          $agar->join('agar_extra','agar.id','agar_extra.agar_id')
-          ->whereJsonContains('a_extra',[$request->a_extra])->where('status',2)->with('image')->with('price');
+
+      if($request->b_extra != NULL OR $request->a_extra != NULL OR $request->sf_extra != NULL OR $request->cond_extra != NULL){
+        $agar->join('agar_extra','agar.id','agar_extra.agar_id');
       }
-      if($request->sf_extra != []){
-          $agar->join('agar_extra','agar.id','agar_extra.agar_id')
-          ->whereJsonContains('sf_extra',[$request->sf_extra])->where('status',2)->with('image')->with('price');
+      if($request->b_extra != NULL){
+          $agar->whereJsonContains('b_extra',$request->b_extra)->where('status',2)->with('image')->with('price');
       }
+      if($request->a_extra != NULL){
+          $agar->whereJsonContains('a_extra',$request->a_extra)->where('status',2)->with('image')->with('price');
+      }
+      if($request->sf_extra != NULL){
+          $agar->whereJsonContains('sf_extra',$request->sf_extra)->where('status',2)->with('image')->with('price');
+      }
+      if($request->cond_extra != NULL){
+          $agar->whereJsonContains('cond_extra',$request->cond_extra)->where('status',2)->with('image')->with('price');
+      }
+
       if($request->price != 0){
           $agar->join('agar_price','agar.id','agar_price.agar_id')
           ->where('day','<=',$request->price)->where('status',2)->with('image')->with('price');
       }
+
+      if($request->currency != ''){
+          $agar->join('agar_price','agar.id','agar_price.agar_id')
+          ->where('currency',$request->currency)->where('status',2)->with('image')->with('price');
+      }
+
       return response()->json($agar->get());
 
     }
@@ -421,21 +502,51 @@ class AgarController extends Controller
       return agarResource::collection($agars);
     }
 
-    public function agar_filter_api(Request $request){
-    $agars = Agar::where('status',2)
-                    ->where('rooms_number',$request->rooms_number)
-                    ->where('bathrooms_number',$request->bathrooms_number)
-                    ->join('agar_price','agar.id','agar_price.agar_id')
-                    // befor discount
-                    ->whereBetween('day',[$request->min_price,$request->max_price])
-                    ->join('agar_calendar','agar.id','agar_calendar.agar_id')
-                    ->where('start_date','<=',$request->start_date)
-                    ->where('end_date','>=',$request->end_date)
-                    ->join('agar_extra','agar.id','agar_extra.agar_id')
-                    ->whereIn('b_extra',[$request->b_extra])
-                    ->select('agar.*')
-                    ->get();
-      return agarResource::collection($agars);
+    public function agar_filter_api(Request $request, Agar $agar){
+
+      $agar = $agar->newQuery();
+      if($request->rooms_number != 0){
+        $agar->where('rooms_number',$request->rooms_number)->where('status',2)->with('image')->with('price');
+      }
+      if($request->bathrooms_number != 0){
+        $agar->where('bathrooms_number',$request->bathrooms_number)->where('status',2)->with('image')->with('price');
+      }
+      if($request->floor_id != 0){
+        $agar->where('floor_id',$request->floor_id)->where('status',2)->with('image')->with('price');
+      }
+      if($request->type_id != 0){
+        $agar->where('type_id',$request->type_id)->where('status',2)->with('image')->with('price');
+      }
+      if($request->range != ''){
+        $agar->join('agar_calendar','agar.id','agar_calendar.agar_id')
+            ->where('start_date','<=',Carbon\Carbon::parse($request->range[0])->toDateTimeString())
+            ->where('end_date','>=',Carbon\Carbon::parse($request->range[1])->toDateTimeString())->where('status',2)->with('image')->with('price');
+      }
+
+      if($request->b_extra != NULL OR $request->a_extra != NULL OR $request->sf_extra != NULL OR $request->cond_extra != NULL){
+        $agar->join('agar_extra','agar.id','agar_extra.agar_id');
+      }
+      if($request->b_extra != NULL){
+          $agar->whereJsonContains('b_extra',$request->b_extra)->where('status',2)->with('image')->with('price');
+      }
+      if($request->a_extra != NULL){
+          $agar->whereJsonContains('a_extra',$request->a_extra)->where('status',2)->with('image')->with('price');
+      }
+      if($request->sf_extra != NULL){
+          $agar->whereJsonContains('sf_extra',$request->sf_extra)->where('status',2)->with('image')->with('price');
+      }
+      if($request->cond_extra != NULL){
+          $agar->whereJsonContains('cond_extra',$request->cond_extra)->where('status',2)->with('image')->with('price');
+      }
+
+
+
+      if($request->price != 0){
+          $agar->join('agar_price','agar.id','agar_price.agar_id')
+          ->where('day','<=',$request->price)->where('status',2)->with('image')->with('price');
+      }
+
+      return response()->json($agar->get());
     }
 
     public function store(Request $request)

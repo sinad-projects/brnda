@@ -21,7 +21,9 @@ use App\AgarFloor;
 use App\AgarImg;
 use App\State;
 use App\City;
+use App\Message;
 use App\Settings;
+use App\PaymentAddress;
 use Auth;
 
 class dashboardController extends Controller
@@ -30,11 +32,13 @@ class dashboardController extends Controller
 
       $users_count = User::get()->count();
       $agars_count = Agar::get()->count();
+      $message_count = Message::get()->count();
       $reservation_count = Reservation::get()->count();
 
       return view('dashboard.index')
               ->with('users_count',$users_count)
               ->with('agars_count',$agars_count)
+              ->with('message_count',$message_count)
               ->with('reservation_count',$reservation_count);
     }
 
@@ -57,6 +61,13 @@ class dashboardController extends Controller
               ->with('agars',$agars);
     }
 
+    # get single agar page
+    public function getAgar($agar_id){
+      $agar = Agar::where('status','<>',0)->where('id',$agar_id)->first();
+      return view('dashboard.agar')
+              ->with('agar',$agar);
+    }
+
     public function postAgars(Request $request){
         if($request->has('approve_btn')){
           Agar::where('id',$request->agar_id)->update(['status' => 2]);
@@ -70,11 +81,11 @@ class dashboardController extends Controller
           Agar::where('id',$request->agar_id)->update(['featured' => 0]);
           return redirect()->back()->with('info','  تم تحويل العقار الى عادي ');
         }
-        if($request->has('delete_btn')){
+        if($request->has('reject_btn')){
 
           Agar::where('id',$request->agar_id)->update([
             'admin_comments' => $request->comments,
-            'status' => 1
+            'status' => 3
           ]);
           return redirect()->back()->with('info','  تم تعطيل عرض العقار');
         }
@@ -118,6 +129,45 @@ class dashboardController extends Controller
         }
       }
       return redirect()->back()->with('info','قم باختيار عملية اولا');
+    }
+
+    // add new payment address
+    public function getPaymentAddress(){
+      return view('dashboard.paymentAddress');
+    }
+
+    public function postPaymentAddress(Request $request){
+      if($request->has('add_btn')){
+        PaymentAddress::create([
+          'name' => $request->name,
+          'branch' => $request->branch,
+          'address' => $request->address,
+          'account_number' => $request->account_number,
+        ]);
+        return redirect()->back()->with('info','تم اضافة العنوان بنجاح');
+      }
+    }
+
+    public function getPaymentAddressTable(){
+      $paymentAddress = PaymentAddress::get();
+      return view('dashboard.paymentAddressTable')
+                  ->with('paymentAddress',$paymentAddress);
+    }
+
+    public function postPaymentAddressTable(Request $request){
+      if($request->has('delete_btn')){
+        PaymentAddress::where('id',$request->id)->delete();
+        return redirect()->back()->with('info',' تم حذف العنوان بنجاح  ');
+      }
+      if($request->has('update_btn')){
+        PaymentAddress::where('id',$request->id)->update([
+          'name' => $request->name,
+          'branch' => $request->branch,
+          'address' => $request->address,
+          'account_number' => $request->account_number
+        ]);
+        return redirect()->back()->with('info',' تم تحديث العنوان بنجاح  ');
+      }
     }
 
     // manage b_extra info
@@ -319,13 +369,12 @@ class dashboardController extends Controller
 
       Settings::where('id',$request->id)->update([
         'site_name' => $request->site_name,
-        'region'    => $request->region,
+        'address'    => $request->address,
         'logo'      => $logo,
         'email_one' => $request->email_one,
         'email_two' => $request->email_two,
         'phone_one' => $request->phone_one,
-        'phone_two' => $request->phone_two,
-        'lang' => $request->lang
+        'phone_two' => $request->phone_two
       ]);
 
       return redirect()->back()->with('info','تم تحديث البيانات بنجاح');

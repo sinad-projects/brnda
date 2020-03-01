@@ -57,7 +57,15 @@
                         <td><a href="#">{{ $reservation->user->name }}</a></td>
                         <td>{{ $reservation->start_date }}</td>
                         <td>{{ $reservation->end_date }}</td>
-                        <td>{{ $reservation->status }}</td>
+                        <td>
+                          @if($reservation->status == 0)
+                            <p>لم يتم القبول بعد</p>
+                          @elseif($reservation->status == 1)
+                            <p> تم القبول </p>
+                          @elseif($reservation->status == 2)
+                            <p> تم التأكيد </p>
+                          @endif
+                        </td>
                         <td>
                           <form action="{{ route('dashboard.reservations') }}" method="post">
                             @csrf

@@ -27,7 +27,7 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary text-right"> جدول العفارات</h6>
+              <h6 class="m-0 font-weight-bold text-primary text-right"> جدول العقارات</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -57,7 +57,11 @@
                   <tbody>
                     @foreach($agars as $agar)
                       <tr class="text-right">
-                        <td>{{ $agar->agar_name }}</td>
+                        <td>
+                          <a href="{{ route('dashboard.agar',['agar_id' => $agar->id]) }}">
+                            {{ $agar->agar_name }}
+                          </a>
+                        </td>
                         <td>
                           @foreach($agar->image as $image)
                             <img src="{{ asset('agar/images/'.$image->img_wide) }}" width="100" height="100" />
@@ -72,17 +76,15 @@
                         </td>
                         <td><a href="#">{{ $agar->user->name }}</a></td>
                         <td>
-                          @if($agar->status == 1)
-                            <form action="{{ route('dashboard.agars') }}" method="post">
-                              @csrf
-                              <input type="hidden" name="agar_id" value="{{ $agar->id }}" />
-                              <button type="submit" name="approve_btn" class="btn btn-success form-control">موافقة</button>
-                            </form>
-                            @else
-                            متاح
+                          @if($agar->status == 2)
+                              <p> متاح </p>
+                          @elseif($agar->status == 3)
+                            <p> مرفوض </p>
+                          @elseif($agar->status == 1)
+                            <p>لم يتم الموافقة عليه</p>
                           @endif
                         </td>
-                        <td class="">
+                        <td style="width: 100px">
                           <form action="{{ route('dashboard.agars') }}" method="post">
                             @csrf
                             <input type="hidden" name="agar_id" value="{{ $agar->id }}" />
@@ -94,17 +96,25 @@
                                 <div class="w3-margin">
                                   <textarea name="comments" class="form-control" placeholder="كتابة ملاحظة لصاحب العقار" rows="8" cols="20"></textarea>
                                   <hr>
-                                  <button type="submit" name="delete_btn" class="btn btn-danger form-control" > حذف العقار  </button>
+                                  <button type="submit" name="reject_btn" class="w3-btn btn-danger w3-round" > رفض العقار </button>
                                 </div>
                               </div>
                             </div>
+                            @if($agar->status == 1)
+                              <form action="{{ route('dashboard.agars') }}" method="post">
+                                @csrf
+                                <input type="hidden" name="agar_id" value="{{ $agar->id }}" />
+                                <button type="submit" name="approve_btn" class="w3-btn btn-success w3-round" style="width: 150px;margin: 2px;">موافقة</button>
+                              </form>
+                            @endif
+
                             <!-- end delete with comments model -->
-                            <button type="button" onclick="document.getElementById('admin_comments_{{ $agar->id }}').style.display = 'block'"  class="btn btn-danger form-control" > حذف العقار  </button>
-                            <hr>
+                            <button type="button" onclick="document.getElementById('admin_comments_{{ $agar->id }}').style.display = 'block'"  class="w3-btn btn-danger w3-round"  style="width: 150px;margin: 2px;"> رفض العقار </button>
+
                             @if($agar->featured == 0)
-                              <button class="btn btn-success form-control" name="featured_btn" type="submit"> تحويل الى مميز </button>
+                              <button class="w3-btn btn-warning w3-round" name="featured_btn" type="submit" style="width: 150px;margin: 2px;"> تحويل الى مميز </button>
                             @else
-                              <button class="btn btn-info form-control" name="notfeatured_btn" type="submit"> تحويل الى عادي  </button>
+                              <button class="w3-btn btn-info w3-round" name="notfeatured_btn" type="submit" style="width: 150px;margin: 2px;"> تحويل الى عادي  </button>
                             @endif
                           </form>
                         </td>

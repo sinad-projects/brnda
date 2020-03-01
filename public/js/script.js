@@ -18,3 +18,15 @@ function w3_close() {
     mySidebar.style.display = "none";
     overlayBg.style.display = "none";
 }
+
+
+function statusToggle(evt) {
+    let item = evt.currentTarget;
+    console.log(item);
+    if (item.className.indexOf("w3-color-brnda") == -1) {
+        item.className += " w3-color-brnda";
+
+    } else {
+        item.className = item.className.replace(" w3-color-brnda", "");
+    }
+}

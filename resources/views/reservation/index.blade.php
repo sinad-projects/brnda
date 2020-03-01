@@ -71,13 +71,16 @@
                                   <span onclick="document.getElementById('accept_reservation_{{ $reservation->id }}').style.display='none'"
                                     class="w3-btn w3-display-topleft">&times;</span>
                                   <h4>الموافقة على طلب الحجز</h4>
+                                  <p>هل انت متأكد من رغبتك في قبول طلب الحجز </p>
                               </header>
                               <form action="{{ route('reservation.index') }}" method="post" id="accept_reservation_form_{{ $reservation->id }}">
                                   @csrf
                                   <footer class="w3-container ">
                                       <div class="w3-margin-top w3-margin-bottom w3-left">
                                           <input type="hidden" value="{{ $reservation->id }}" name="reserv_id" />
-                                              <button form="accept_reservation_form_{{ $reservation->id }}" name="accept_reserv" value="موافق"class="w3-btn brnda-card w3-ripple w3-margin-left"><i class="fa fa-check-square"></i> موافق</button>
+                                              @if($reservation->status != 1 and $reservation->status != 2)
+                                                <button form="accept_reservation_form_{{ $reservation->id }}" name="accept_reserv" value="موافق"class="w3-btn brnda-card w3-ripple w3-margin-left"><i class="fa fa-check-square"></i> موافق</button>
+                                              @endif
                                               <button type="button" onclick="document.getElementById('accept_reservation_{{ $reservation->id }}').style.display='none'"class="w3-btn w3-white w3-ripple"><i class="fa fa-arrow-right"></i> إلغاء</button>
                                           </div>
                                     </footer>
@@ -145,37 +148,10 @@
                           <td>{{ $reservation->created_at->diffForHumans() }}</td>
                           <td>
                             <div class="w3-bar">
-                                <button onclick="document.getElementById('accept_accepted_reservation_{{ $reservation->id }}').style.display='block'" class=" w3-btn w3-mobile w3-text-gray w3-border" style="padding: 0;"><i class="fa fa-check" style="padding: 5px;"></i></button>
                                 <button type="button" onclick="document.getElementById('delete_accepted_reservation_{{ $reservation->id }}').style.display='block'" class="w3-btn w3-mobile"><i class="fa fa-times w3-text-gray w3-border" style="padding: 5px;"></i></button>
                             </div>
                           </td>
                         </tr>
-                        <!-- START reservation_ accept confirm MODAL -->
-                        <div id="accept_accepted_reservation_{{ $reservation->id }}" class="w3-modal">
-                          <div class="w3-modal-content brnda-card-4 w3-animate-zoom" style="max-width:480px">
-                              <header class="w3-container brnda-card">
-                                  <span onclick="document.getElementById('accept_accepted_reservation_{{ $reservation->id }}').style.display='none'"
-                                    class="w3-btn w3-display-topleft">&times;</span>
-                                  <h4>الموافقة على طلب الحجز</h4>
-                              </header>
-                              <form action="{{ route('reservation.index') }}" method="post" id="accept_accepted_reservation_form{{ $reservation->id }}">
-                                  @csrf
-                                  <div class="w3-container">
-                                      <div class="w3-section">
-                                          <p><i class="fa fa-2x w3-padding fa-trash-o w3-text-flat-midnight-blue w3-text-gray"></i><span> هل أنت متأكد من أنك تريد حذف هذا العنصر؟، هذه العملية لا يمكن التراجع عنها.</span></p>
-                                      </div>
-                                  </div>
-
-                                  <footer class="w3-container ">
-                                      <div class="w3-margin-top w3-margin-bottom w3-left">
-                                          <input type="hidden" value="{{ $reservation->id }}" name="reserv_id" />
-                                              <button form="accept_accepted_reservation_form{{ $reservation->id }}" name="accept_reserv" value="موافق"class="w3-btn brnda-card w3-ripple w3-margin-left"><i class="fa fa-check-square"></i> موافق</button>
-                                              <button type="button" onclick="document.getElementById('accept_accepted_reservation_{{ $reservation->id }}').style.display='none'"class="w3-btn w3-white w3-ripple"><i class="fa fa-arrow-right"></i> إلغاء</button>
-                                          </div>
-                                    </footer>
-                                  </form>
-                              </div>
-                          </div><!-- END reservation accepted MODAL -->
 
                         <!-- START reservation_confirm MODAL -->
                         <div id="delete_accepted_reservation_{{ $reservation->id }}" class="w3-modal">
@@ -237,37 +213,10 @@
                               <td>{{ $reservation->created_at->diffForHumans() }}</td>
                               <td>
                                 <div class="w3-bar">
-                                    <button onclick="document.getElementById('accept_confirmable_reservation_{{ $reservation->id }}').style.display='block'" class=" w3-btn w3-mobile w3-text-gray w3-border" style="padding: 0;"><i class="fa fa-check" style="padding: 5px;"></i></button>
                                     <button type="button" onclick="document.getElementById('delete_confirmable_reservation_{{ $reservation->id }}').style.display='block'" class="w3-btn w3-mobile"><i class="fa fa-times w3-text-gray w3-border" style="padding: 5px;"></i></button>
                                 </div>
                               </td>
                             </tr>
-                            <!-- START reservation_ accept confirm MODAL -->
-                            <div id="accept_confirmable_reservation_{{ $reservation->id }}" class="w3-modal">
-                              <div class="w3-modal-content brnda-card-4 w3-animate-zoom" style="max-width:480px">
-                                  <header class="w3-container brnda-card">
-                                      <span onclick="document.getElementById('accept_confirmable_reservation_{{ $reservation->id }}').style.display='none'"
-                                        class="w3-btn w3-display-topleft">&times;</span>
-                                      <h4>الموافقة على طلب الحجز</h4>
-                                  </header>
-                                  <form action="{{ route('reservation.index') }}" method="post" id="accept_confirmable_reservation_form{{ $reservation->id }}">
-                                      @csrf
-                                      <div class="w3-container">
-                                          <div class="w3-section">
-                                              <p><i class="fa fa-2x w3-padding fa-trash-o w3-text-flat-midnight-blue w3-text-gray"></i><span> هل أنت متأكد من أنك تريد حذف هذا العنصر؟، هذه العملية لا يمكن التراجع عنها.</span></p>
-                                          </div>
-                                      </div>
-
-                                      <footer class="w3-container ">
-                                          <div class="w3-margin-top w3-margin-bottom w3-left">
-                                              <input type="hidden" value="{{ $reservation->id }}" name="reserv_id" />
-                                                  <button form="accept_confirmable_reservation_form{{ $reservation->id }}" name="accept_reserv" value="موافق"class="w3-btn brnda-card w3-ripple w3-margin-left"><i class="fa fa-check-square"></i> موافق</button>
-                                                  <button type="button" onclick="document.getElementById('accept_confirmable_reservation_{{ $reservation->id }}').style.display='none'"class="w3-btn w3-white w3-ripple"><i class="fa fa-arrow-right"></i> إلغاء</button>
-                                              </div>
-                                        </footer>
-                                      </form>
-                                  </div>
-                              </div><!-- END reservation accepted MODAL -->
                             <!-- START reservation_confirm MODAL -->
                             <div id="delete_confirmable_reservation_{{ $reservation->id }}" class="w3-modal">
                               <div class="w3-modal-content brnda-card-4 w3-animate-zoom" style="max-width:480px">

@@ -11,7 +11,7 @@
 
 
     <div class="w3-section">
-        <button form="booking_form" type="button" @click="sent()" id="request_booking" name="request_booking" value="" class="w3-btn w3-block w3-flat-peter-river">
+        <button form="booking_form" type="button" @click="sent()" id="request_booking" name="request_booking" value="" class="w3-btn w3-block w3-brnda">
             <i class="fa fa-calendar"></i> طلب الحجز</button>
     </div>
   </div>
@@ -53,6 +53,8 @@
           if(response.data.code == 200){
               document.getElementById('reservation_success').style.display = 'block';
           }
+          else document.getElementById('reservation_error').style.display = 'block';
+
         });
       }
     }
