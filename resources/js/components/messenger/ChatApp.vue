@@ -5,7 +5,7 @@
     </div>
 </template>
 
-<script>
+<script> 
     import Conversation from './Conversation';
     import ContactsList from './ContactsList';
 

@@ -24,7 +24,7 @@ class Location extends Model
         return $this->hasOne(State::class,'state_id','state_id');
     }
 
-    public function city(){
+    public function city(){ 
         return $this->hasOne(City::class,'city_id','city_id');
     }
 

@@ -14,96 +14,94 @@
 
         @include('dashboard/layouts/nav')
 
-          <div class="container">
+          <div class="container-fluid">
 
-            <div class="card o-hidden border-0 shadow-lg my-5">
-              <div class="card-body p-0">
-                <!-- Nested Row within Card Body -->
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="p-5">
-                      <div class="text-center container">
-                        <h1 class="h4 text-gray-900 mb-4 w3-right"> ادارة عمليات الدفع في الموقع </h1>
-                        <a class="w3-text-red w3-left w3-button w3-card w3-white" href="{{ route('dashboard.paymentAddressTable') }}" > جدول عناوين الدفع  </a>
-                      </div>
+            <!-- Page Heading -->
+            <h1 class="h3 mb-2 text-gray-800 text-right"> ادارة عمليات الدفع</h1>
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary text-right">
+                   جدول عمليات الدفع
+                   <a class="w3-text-red w3-left w3-button w3-card w3-white" href="{{ route('dashboard.add_cities') }}" >
+                     <i class="fa fa-plus w3-large"></i>
+                   </a>
+                 </h6>
+              </div>
 
-                      <div class="w3-clear"></div>
-
-                      <div class="container">
-                        @foreach($reservations as $reservation)
-                        <div class="card shadow mb-4" dir="rtl">
-                          <div class="card-body">
-                            <div class="table-responsive">
-                              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                  <tr class="text-right">
-                                    <th> اسم العقار   </th>
-                                    <th> مقدم طلب الاستئجار </th>
-                                    <th> صورة للفاتورة </th>
-                                    <th>العمليات</th>
-                                  </tr>
-                                </thead>
-                                <tfoot>
-                                  <tr class="text-right">
-                                    <th> اسم العقار   </th>
-                                    <th> مقدم طلب الاستئجار </th>
-                                    <th> صورة للفاتورة </th>
-                                    <th>العمليات</th>
-                                  </tr>
-                                </tfoot>
-                                <tbody>
-                                  <tr class="text-right">
-                                    <td>{{ $reservation->agar->agar_name }}</td>
-                                    <td>{{ $reservation->user->name }}</td>
-                                    @if($reservation->bill)
-                                      <td>
-                                        <a href="http://localhost:8000/bill/images/{{$reservation->bill->bill_image}}">
-                                          <img src="{{ asset('bill/images/'.$reservation->bill->bill_image) }}" width="100" height="100"></td>
-                                        </a>
-                                    @else
-                                      <td></td>
-                                    @endif
-                                    <td>
-                                      <form class="user" id="payment_{{ $reservation->id }}" method="post" action="{{ route('dashboard.payment') }}">
-                                        @csrf
-                                        <input type="hidden" value="{{ $reservation->id }}" name="reservation_id" />
-                                        <input type="hidden" name="user_id" value="{{ $reservation->user_id }}">
-                                        <input type="hidden" name="reciver_id" value="{{ $reservation->reciver_id }}">
-                                        <div class="form-group text-right">
-                                          <div class="">
-                                            <label for="confirm"> تم الدفع </label>
-                                            <input id="confirm" type="radio" class="form-control-user" name="action" value="confirm">
-                                          </div>
-                                          <div class="">
-                                            <label for="delete"> حذف الطلب  </label>
-                                            <input id="delete" type="radio" class="form-control-user" name="action" value="delete">
-                                          </div>
-                                        </div>
-                                        <button type="submit" form="payment_{{ $reservation->id }}" class="btn btn-primary w3-right">
-                                          اتمام
-                                        </button>
-                                      </form>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="w3-clear"></div>
-                        <hr>
-                        @endforeach
-                      </div>
+              @foreach($reservations as $reservation)
+                <div class="card shadow" dir="rtl">
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                          <tr class="text-right">
+                            <th> اسم العقار   </th>
+                            <th> مقدم طلب الاستئجار </th>
+                            <th> صورة للفاتورة </th>
+                            <th>العمليات</th>
+                          </tr>
+                        </thead>
+                        <tfoot>
+                          <tr class="text-right">
+                            <th> اسم العقار   </th>
+                            <th> مقدم طلب الاستئجار </th>
+                            <th> صورة للفاتورة </th>
+                            <th>العمليات</th>
+                          </tr>
+                        </tfoot>
+                        <tbody>
+                          <tr class="text-right">
+                            <td>{{ $reservation->agar->agar_name }}</td>
+                            <td>{{ $reservation->user->name }}</td>
+                            @if($reservation->bill)
+                              <td>
+                                <a target="_blank" href="/bill/images/{{$reservation->bill->bill_image}}">
+                                  <img src="{{ asset('bill/images/'.$reservation->bill->bill_image) }}" width="100" height="100"></td>
+                                </a>
+                            @else
+                              <td></td>
+                            @endif
+                            <td>
+                              <form class="user" id="payment_{{ $reservation->id }}" method="post" action="{{ route('dashboard.payment') }}">
+                                @csrf
+                                <input type="hidden" value="{{ $reservation->id }}" name="reservation_id" />
+                                <input type="hidden" name="user_id" value="{{ $reservation->user_id }}">
+                                <input type="hidden" name="reciver_id" value="{{ $reservation->reciver_id }}">
+                                <div class="form-group text-right">
+                                  <div class="">
+                                    <label for="confirm"> تم الدفع </label>
+                                    <input id="confirm" type="radio" class="form-control-user" name="action" value="confirm">
+                                  </div>
+                                  <div class="">
+                                    <label for="delete"> حذف الطلب  </label>
+                                    <input id="delete" type="radio" class="form-control-user" name="action" value="delete">
+                                  </div>
+                                </div>
+                                <button type="submit" form="payment_{{ $reservation->id }}" class="btn btn-primary w3-right">
+                                  اتمام
+                                </button>
+                              </form>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
-                </div>
+                 </div>
+                <div class="w3-clear"></div><hr>
+                @endforeach
               </div>
             </div>
-
           </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 
 
-      @include('dashboard/layouts/footer')
+@include('dashboard/layouts/footer')
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('dashboard/vendor/jquery/jquery.min.js') }}"></script>

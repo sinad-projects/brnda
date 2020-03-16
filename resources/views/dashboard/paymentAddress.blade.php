@@ -24,11 +24,13 @@
                     <div class="p-5">
                       <div class="text-center">
                         <h1 class="h4 text-gray-900 mb-4 w3-right"> اضافة عنوان بنكي جديد  </h1>
-                        <a class="w3-text-red w3-left w3-button w3-card w3-white"  href="{{ route('dashboard.paymentAddressTable') }}" > جدول عناوين الدفع </a>
+                        <a class="w3-text-red w3-left w3-button w3-card w3-white"  href="{{ route('dashboard.paymentAddressTable') }}" >
+                          <i class="fa fa-plus w3-large"></i>
+                        </a>
                       </div>
 
                       <div class="w3-clear"></div>
-                      
+
                       <form class="user" method="post" action="{{ route('dashboard.paymentAddress') }}">
                         @csrf
                         <div class="row">

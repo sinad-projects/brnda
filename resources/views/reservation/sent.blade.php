@@ -86,15 +86,9 @@
                         <td>{{ $reservation->created_at->diffForHumans() }}</td>
                         @if($reservation->bill)
                           <td>
-                            <div class="w3-display-container w3-tooltip">
-                                <img  class="w3-hover-grayscale" src="{{ asset('bill/images/'.$reservation->bill->bill_image) }}" height="100" width="100">
-                                <form action="{{ route('reservation.sent') }}" method="post">
-                                  @csrf
-                                  <input type="hidden" name="reserv_id" value="{{ $reservation->id }}">
-                                  <button style="width: 80%;margin: 0 10%"  type="submit" name='delete_bill_btn'
-                                    class="w3-btn w3-text w3-display-bottommiddle w3-flat-pomegranate"><i class="fa fa-trash-o"></i></button>
-                                </form>
-                            </div>
+                            <a href="#">
+                                <img  onclick="document.getElementById('bill_image_{{ $reservation->bill->id }}').style.display='block'" class="w3-hover-grayscale" src="{{ asset('bill/images/'.$reservation->bill->bill_image) }}" height="100" width="100">
+                            </a>
                           </td>
                         @else
                           <td>
@@ -106,6 +100,38 @@
                           </td>
                         @endif
                       </tr>
+
+                      @if($reservation->bill)
+                      <!-- START delete bill image MODAL -->
+                      <div id="bill_image_{{ $reservation->bill->id }}" class="w3-modal">
+                        <div class="w3-modal-content brnda-card-4 w3-animate-zoom" style="max-width:480px">
+                            <header class="w3-container brnda-card">
+                                <span onclick="document.getElementById('bill_image_{{ $reservation->bill->id }}').style.display='none'"
+                                  class="w3-btn w3-display-topleft">&times;</span>
+                                <h4>حذف</h4>
+                            </header>
+                            <form action="{{ route('reservation.sent') }}" method="post" id="bill_image_form_{{ $reservation->bill->id }}">
+                                @csrf
+                                <input type="hidden" name="reserv_id" value="{{ $reservation->id }}">
+                                <div class="w3-container">
+                                    <div class="w3-section">
+                                        <p><i class="fa fa-2x w3-padding fa-trash-o w3-text-flat-midnight-blue w3-text-gray"></i><span> هل أنت متأكد من أنك تريد حذف هذا العنصر؟، هذه العملية لا يمكن التراجع عنها.</span></p>
+                                    </div>
+                                </div>
+
+                                <footer class="w3-container ">
+                                    <div class="w3-margin-top w3-margin-bottom w3-left">
+                                        <input type="hidden" value="{{ $reservation->id }}" name="reserv_id" />
+                                            <button form="bill_image_form_{{ $reservation->bill->id }}" name="delete_bill_btn" value="موافق"class="w3-btn brnda-card w3-ripple w3-margin-left"><i class="fa fa-check-square"></i> موافق</button>
+                                            <button type="button" onclick="document.getElementById('bill_image_{{ $reservation->bill->id }}').style.display='none'"class="w3-btn w3-white w3-ripple"><i class="fa fa-arrow-right"></i> إلغاء</button>
+                                        </div>
+                                  </footer>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- END delete bill image MODAL -->
+                        @endif
+
                       <!-- START pay for reservation  MODAL -->
                       <div id="pay_{{ $reservation->id }}" class="w3-modal">
                         <div class="w3-modal-content brnda-card-4 w3-animate-zoom" style="max-width:480px">

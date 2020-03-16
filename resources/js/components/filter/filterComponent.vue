@@ -8,7 +8,8 @@
           :agar_a_extra="agar_a_extra"
           :agar_s_extra="agar_s_extra"
           :agar_cond="agar_cond"
-          @new="pushResult"/>
+          @new="pushResult"
+          />
       <agars :agars="agars"/>
     </div>
 </template>
@@ -36,6 +37,10 @@
           },
           agar_cond: {
             type: Array,
+          },
+          query: {
+            type: String,
+            default: ''
           }
         },
         data() {
@@ -47,14 +52,17 @@
             }
         },
         mounted() {
-            axios.get('/agars/json')
+            axios.post('/agars/json',{
+              query: this.query,
+              _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            })
             .then((response) => {
                 this.agars = response.data;
             });
 
         },
         methods: {
-            pushResult(result) { 
+            pushResult(result) {
               console.log(result)
               this.agars = result;
             }

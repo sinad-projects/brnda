@@ -4,7 +4,7 @@
     <div class="container w3-card w3-padding filter-header filter-header-web">
       <form class="form-inline">
         <div class="form-group mb-2">
-          <select name="type_id" v-model=type_id class="form-control">
+          <select name="type_id" v-model="type_id" class="form-control">
             <option v-for="type in agarType" @click="filter()"  :value="type.type_id"> {{ type.type_name }} </option>
           </select>
         </div>
@@ -17,7 +17,7 @@
           <p> تاريخ الحجز <date-picker v-model="range" range @change="filter()" lang="en" type="date" formate="YYYY-MM-dd"></date-picker> </p>
         </div>
         <div class="form-group mx-sm-3 mb-2">
-          <p>عدد الغرف <input type="number" @click="filter()" class="form-control" v-model="rooms_number" name="rooms_number" style="width: 100px!important" /> </p>
+          <p>عدد الغرف <input type="number" @change="filter()" class="form-control" v-model="rooms_number" name="rooms_number" style="width: 100px!important" /> </p>
         </div>
       </form>
     </div>
@@ -44,7 +44,7 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
             سعر الايجار لليوم الواحد
-            <vue-slider  @click="filter()"
+            <vue-slider  @change="filter()"
               v-model="price"
               :min="0"
               :max="400"
@@ -63,28 +63,28 @@
             <h4> المرافق الاساسية  </h4>
             <div v-for="b in agar_b_extra">
               <span> {{ b.name }} </span>
-              <input :value="b.name" @click="filter()" v-model="b_extra" type="checkbox" class="" />
+              <input :value="b.name" @change="filter()" v-model="b_extra" type="checkbox" class="" />
             </div>
           </li>
           <li class="list-group-item">
             <h4> المرافق الاضافية  </h4>
             <div v-for="a in agar_a_extra">
               <span> {{ a.name }} </span>
-              <input :value="a.name" @click="filter()" v-model="a_extra" type="checkbox" class="" />
+              <input :value="a.name" @change="filter()" v-model="a_extra" type="checkbox" class="" />
             </div>
           </li>
           <li class="list-group-item">
             <h4> المرافق الخاصة  </h4>
             <div v-for="s in agar_s_extra">
               <span> {{ s.name }}  </span>
-              <input :value="s.name" @click="filter()" v-model="sf_extra" type="checkbox" class="" />
+              <input :value="s.name" @change="filter()" v-model="sf_extra" type="checkbox" class="" />
             </div>
           </li>
           <li class="list-group-item">
             <h4>  شروط السكن  </h4>
             <div v-for="cond in agar_cond">
               <span> {{ cond.name }}  </span>
-              <input :value="cond.name" @click="filter()" v-model="cond_extra" type="checkbox" class="" />
+              <input :value="cond.name" @change="filter()" v-model="cond_extra" type="checkbox" class="" />
             </div>
           </li>
         </ul>
@@ -105,11 +105,12 @@
       <div class="card" style="width: 18rem;">
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
-            <button type="button" @click="filter()" name="search_btn" class="w3-button w3-black">بحث</button>
+            <button type="button" @change="filter()" name="search_btn" class="w3-button w3-black">بحث</button>
           </li>
         </ul>
       </div>
     </div>
+
 
     <!-- sidebar for mobile screen -->
     <div class="w3-sidebar w3-animate-left" id="filter_sidebar" style="display: none">
@@ -120,7 +121,7 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
               سعر الايجار لليوم الواحد
-              <vue-slider  @click="filter()"
+              <vue-slider  @change="filter()"
                 v-model="price"
                 :min="0"
                 :max="400"
@@ -140,28 +141,28 @@
               <h4> المرافق الاساسية  </h4>
               <div v-for="b in agar_b_extra">
                 <span> {{ b.name }} </span>
-                <input :value="b.name" @click="filter()"   v-model="b_extra" type="checkbox" class="" />
+                <input :value="b.name" @change="filter()"   v-model="b_extra" type="checkbox" class="" />
               </div>
             </li>
             <li class="list-group-item">
               <h4> المرافق الاضافية  </h4>
               <div v-for="a in agar_a_extra">
                 <span> {{ a.name }} </span>
-                <input :value="a.name" @click="filter()"  v-model="a_extra" type="checkbox" class="" />
+                <input :value="a.name" @change="filter()"  v-model="a_extra" type="checkbox" class="" />
               </div>
             </li>
             <li class="list-group-item">
               <h4> المرافق الخاصة  </h4>
               <div v-for="s in agar_s_extra">
                 <span> {{ s.name }}  </span>
-                <input :value="s.name" @click="filter()" v-model="sf_extra" type="checkbox" class="" />
+                <input :value="s.name" @change="filter()" v-model="sf_extra" type="checkbox" class="" />
               </div>
             </li>
             <li class="list-group-item">
               <h4>  شروط السكن  </h4>
               <div v-for="cond in agar_cond">
                 <span> {{ cond.name }}  </span>
-                <input :value="cond.name" @click="filter()" v-model="cond_extra" type="checkbox" class="" />
+                <input :value="cond.name" @change="filter()" v-model="cond_extra" type="checkbox" class="" />
               </div>
             </li>
           </ul>
@@ -171,9 +172,9 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <span>عدد الغرف</span>
-              <input type="number" @click="filter()" class="form-control" v-model="rooms_number" name="rooms_number" >
+              <input type="number" @change="filter()" class="form-control" v-model="rooms_number" name="rooms_number" >
               <span>عدد الحمامات</span>
-              <input type="number" @click="filter()" v-model="bathrooms_number" name="bathrooms_number" class="form-control" >
+              <input type="number" @change="filter()" v-model="bathrooms_number" name="bathrooms_number" class="form-control" >
             </li>
           </ul>
         </div>
@@ -271,7 +272,7 @@
 		},
 		methods:{
       filter(){
-  			axios.post('agars/filter',{
+  			axios.post('/agars/filter',{
           rooms_number: this.rooms_number,
           bathrooms_number: this.bathrooms_number,
           floor_id: this.floor_id,

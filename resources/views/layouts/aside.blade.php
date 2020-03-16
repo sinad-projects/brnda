@@ -23,7 +23,11 @@
         </div>
 
         <div class="w3-col s8 w3-bar" dir="auto">
-            <span class="w3-bar-item w3-right w3-right-align">مرحباُ يا, <strong> {{ Auth::user()->name }} </strong></span><br>
+            <span class="w3-bar-item w3-right w3-right-align">مرحباُ  <strong>
+              @if(Auth::check())
+               {{ Auth::user()->name }}
+              @endif
+             </strong></span><br>
         </div>
     </div>
 

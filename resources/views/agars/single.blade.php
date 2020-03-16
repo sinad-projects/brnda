@@ -24,7 +24,7 @@
 </head>
 
 
-  <body dir="rtl" class="text-right">
+  <body  class="text-right">
     <div class="w3-white">
 
 
@@ -35,7 +35,7 @@
       <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
     <!-- !PAGE CONTENT! -->
-    <div class="wrapper"><!-- START view agar -->
+    <div class="wrapper" dir="rtl"><!-- START view agar -->
        <div class="w3-container w3-margin-top brnda-card-4">
 
 
@@ -136,7 +136,7 @@
                                         <i class="fa fa-check-circle w3-margin-left-8"></i> <?php echo $b_extra; ?> </span>
                                   <?php endforeach ; ?>
                                 <?php else: ?>
-                                  <div class="w3-panel w3-pale-blue w3-leftbar w3-rightbar w3-border-blue">
+                                  <div class="w3-panel w3-pale-blue w3-leftbar w3-rightbar w3-border-black">
                                       <h3 class="">فارغ! لا توجد بيانات هنا.</h3>
                                   </div>
                                 <?php endif ; ?>
@@ -152,7 +152,7 @@
                                       <i class="fa fa-check-circle w3-margin-left-8"></i> <?php echo $a_extra; ?> </span>
                                 <?php endforeach ; ?>
                               <?php else: ?>
-                                <div class="w3-panel w3-pale-blue w3-leftbar w3-rightbar w3-border-blue">
+                                <div class="w3-panel w3-pale-blue w3-leftbar w3-rightbar w3-border-black">
                                     <h3 class="">فارغ! لا توجد بيانات هنا.</h3>
                                 </div>
                               <?php endif ; ?>
@@ -168,7 +168,7 @@
                                           <i class="fa fa-check-circle w3-margin-left-8"></i> <?php echo $sf_extra; ?> </span>
                                     <?php endforeach ; ?>
                                   <?php else: ?>
-                                    <div class="w3-panel w3-pale-blue w3-leftbar w3-rightbar w3-border-blue">
+                                    <div class="w3-panel w3-pale-blue w3-leftbar w3-rightbar w3-border-black">
                                         <h3 class="">فارغ! لا توجد بيانات هنا.</h3>
                                     </div>
                                   <?php endif ; ?>
@@ -185,7 +185,7 @@
                                         <i class="fa fa-check-circle w3-margin-left-8"></i> <?php echo $cond_extra; ?> </span>
                                   <?php endforeach ; ?>
                                 <?php else: ?>
-                                  <div class="w3-panel w3-pale-blue w3-leftbar w3-rightbar w3-border-blue">
+                                  <div class="w3-panel w3-pale-blue w3-leftbar w3-rightbar w3-border-black">
                                       <h3 class="">فارغ! لا توجد بيانات هنا.</h3>
                                   </div>
                                 <?php endif ; ?>
@@ -194,6 +194,7 @@
                       </section>
                   </section>
                   <section class="w3-third">
+                    @if($agar->owner_id != Auth::user()->id)
                       <div class="w3-card w3-animate-zoom w3-flat-clouds"><!-- START CALENDAR_FORM -->
                           <div class="w3-container">
                               <input type="hidden" name="agar_id" value="{{ $agar->id }}">
@@ -221,7 +222,7 @@
                           <h3 class="w3-center"> حصل خطأ ما اثناء ارسال الطلب </h3>
                         </div>
                       </div>
-
+                    @endif
                   </section>
               </div>
             </div>

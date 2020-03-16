@@ -41,7 +41,7 @@ class Agar extends Model
     public function image()
     {
         return $this->hasMany(AgarImg::class,'agar_id');
-    }
+    } 
 
     public function price()
     {

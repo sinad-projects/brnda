@@ -100,21 +100,31 @@
                                 </div>
                               </div>
                             </div>
-                            @if($agar->status == 1)
+                            @if($agar->status == 1 OR $agar->status == 3)
                               <form action="{{ route('dashboard.agars') }}" method="post">
                                 @csrf
                                 <input type="hidden" name="agar_id" value="{{ $agar->id }}" />
-                                <button type="submit" name="approve_btn" class="w3-btn btn-success w3-round" style="width: 150px;margin: 2px;">موافقة</button>
+                                <button type="submit" name="approve_btn" class="w3-btn btn-success w3-round" style="width: 50px;margin: 2px;">
+                                  <i class="fa fa-check"></i>
+                                </button>
                               </form>
                             @endif
 
                             <!-- end delete with comments model -->
-                            <button type="button" onclick="document.getElementById('admin_comments_{{ $agar->id }}').style.display = 'block'"  class="w3-btn btn-danger w3-round"  style="width: 150px;margin: 2px;"> رفض العقار </button>
+                            @if($agar->status != 0  and $agar->status != 3)
+                              <button type="button" onclick="document.getElementById('admin_comments_{{ $agar->id }}').style.display = 'block'"  class="w3-btn btn-danger w3-round"  style="width: 50px;margin: 2px;">
+                                <i class="fa fa-times"></i>
+                              </button>
+                            @endif
 
-                            @if($agar->featured == 0)
-                              <button class="w3-btn btn-warning w3-round" name="featured_btn" type="submit" style="width: 150px;margin: 2px;"> تحويل الى مميز </button>
-                            @else
-                              <button class="w3-btn btn-info w3-round" name="notfeatured_btn" type="submit" style="width: 150px;margin: 2px;"> تحويل الى عادي  </button>
+                            @if($agar->featured == 0 and $agar->status != 0 and $agar->status != 1 and $agar->status != 3)
+                              <button class="w3-btn btn-warning w3-round" name="featured_btn" type="submit" style="width: 50px;margin: 2px;">
+                                <i class="fa fa-star"></i>
+                              </button>
+                            @elseif($agar->featured == 1 and $agar->status != 0 and $agar->status != 1 and $agar->status != 3)
+                              <button class="w3-btn btn-info w3-round" name="notfeatured_btn" type="submit" style="width: 50px;margin: 2px;">
+                                <i class="fa fa-asterisk"></i>
+                              </button>
                             @endif
                           </form>
                         </td>

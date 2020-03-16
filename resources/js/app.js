@@ -89,6 +89,8 @@ const formfilter = new Vue({
 });
 
 
+
+
 const contact = new Vue({
     el: '#contact'
 });

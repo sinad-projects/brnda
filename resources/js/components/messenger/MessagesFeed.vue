@@ -28,7 +28,7 @@
                 type: Array,
                 required: true
             }
-        },
+        }, 
         methods: {
             scrollToBottom() {
                 setTimeout(() => {

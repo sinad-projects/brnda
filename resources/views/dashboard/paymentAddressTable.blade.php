@@ -27,7 +27,9 @@
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary text-right">
                 جدول العناوين البنكية
-                <a class="w3-text-red w3-left w3-button w3-card w3-white"  href="{{ route('dashboard.paymentAddress') }}" > اضافة عنوان جديد </a>
+                <a class="w3-text-red w3-left w3-button w3-card w3-white"  href="{{ route('dashboard.paymentAddress') }}" >
+                  <i class="fa fa-plus w3-large"></i>
+                </a>
               </h6>
             </div>
             <div class="card-body">
@@ -58,11 +60,13 @@
                         <td>{{ $address->branch }}</td>
                         <td>{{ $address->address }}</td>
                         <td>{{ $address->account_number }}</td>
-                        <td>
+                        <td style="width: 50px">
                           <form action="{{ route('dashboard.paymentAddressTable') }}" method="post">
                             @csrf
                             <input type="hidden" name="id" value="{{ $address->id }}" />
-                            <button type="submit" name="delete_btn" class="btn btn-danger" > حذف العنوان </button>
+                            <button type="submit" name="delete_btn" class="btn btn-danger" >
+                              <i class="fa fa-times-circle"></i>
+                             </button>
                             <!--
                             <button class="btn btn-info" type="submit">تعديل الصلاحية</button>
                           -->

@@ -44,6 +44,7 @@
               :agar_b_extra="{{ $agar_b_extra }}"
               :agar_a_extra="{{ $agar_a_extra }}"
               :agar_s_extra="{{ $agar_s_extra }}"
+              :query="{{ $query }}"
               :agar_cond="{{ $agar_cond }}">
         </filter-app>
       </section>
@@ -51,15 +52,6 @@
 
 
   @include('layouts/footer')
-
-
-    <script>
-      $(document).ready(function(){
-       height = $('.agars-body').height();
-       console.log(height)
-      });
-    </script>
-
 
     <script>
       function open_filter() {
@@ -181,7 +173,6 @@
       });
     } );
   </script>
-
 
   </div>
 </body>

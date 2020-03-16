@@ -27,7 +27,9 @@
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary text-right">
                  جدول المدن
-                 <a class="w3-text-red w3-left w3-button w3-card w3-white" href="{{ route('dashboard.add_cities') }}" >اضافة مدينة جديدة  </a>
+                 <a class="w3-text-red w3-left w3-button w3-card w3-white" href="{{ route('dashboard.add_cities') }}" >
+                   <i class="fa fa-plus w3-large"></i>
+                 </a>
                </h6>
             </div>
             <div class="card-body">
@@ -61,11 +63,13 @@
                             <p>غير متاح</p>
                           @endif
                         </td>
-                        <td>
+                        <td style="width: 50px">
                           <form action="{{ route('dashboard.cities') }}" method="post">
                             @csrf
                             <input type="hidden" name="id" value="{{ $city->city_id }}" />
-                            <button type="submit" name="delete_btn" class="btn btn-danger"  > حذف المدينة </button>
+                            <button type="submit" name="delete_btn" class="btn btn-danger"  >
+                               <i class="fa fa-times-circle"></i>
+                             </button>
                             <!--
                             <button class="btn btn-info" type="submit">تعديل الصلاحية</button>
                           -->

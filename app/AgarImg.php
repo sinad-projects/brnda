@@ -13,7 +13,7 @@ class AgarImg extends Model
     'agar_id'
   ];
 
-  public function agar(){
+  public function agar(){ 
       return $this->belongsTo(Agar::class,'agar_id');
   }
 }

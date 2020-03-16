@@ -45,8 +45,8 @@ Route::get('/home',[
   'as' => 'home'
 ]);
 # search agar by name
-Route::post('home/search',[
-    'uses' => 'HomeController@search_by_name',
+Route::get('home/search',[
+    'uses' => 'HomeController@getsearch',
     'as' => 'home.search'
 ]);
 
@@ -57,11 +57,6 @@ Route::get('/messenger',[
   'middleware' => ['auth']
 ]);
 
-Route::get('/messenger/test',[
-  'uses'       => 'MessengerController@test',
-  'as'         => 'messages.testChat',
-  'middleware' => ['auth']
-]);
 
 Route::get('/messenger/count',function(){
     return Message::where('to','=',Auth::user()->id)
@@ -80,9 +75,8 @@ Route::get('agars',[
     'middleware' => ['auth']
 ]);
 // for filter component
-Route::get('agars/json',[
+Route::post('agars/json',[
     'uses' => 'agarController@agars_as_json',
-    'middleware' => ['auth']
 ]);
 // get agars for spacific user
 Route::get('my-agars',[
@@ -119,7 +113,6 @@ Route::post('agars/delete',[
 Route::post('agars/filter',[
     'uses' => 'agarController@agar_filter',
     'as' => 'agars.filter',
-    'middleware' => ['auth']
 ]);
 // single agar
 Route::get('agars/{agar_id}',[

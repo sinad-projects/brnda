@@ -27,7 +27,9 @@
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary text-right">
                  جدول الولايات
-                 <a class="w3-text-red w3-left w3-button w3-card w3-white" href="{{ route('dashboard.add_states') }}" >اضافة ولاية جديدة </a>
+                 <a class="w3-text-red w3-left w3-button w3-card w3-white" href="{{ route('dashboard.add_states') }}" >
+                   <i class="fa fa-plus w3-large"></i>
+                 </a>
               </h6>
             </div>
             <div class="card-body">
@@ -58,11 +60,13 @@
                             <p>غير متاح</p>
                           @endif
                         </td>
-                        <td>
+                        <td style="width: 50px">
                           <form action="{{ route('dashboard.states') }}" method="post">
                             @csrf
                             <input type="hidden" name="id" value="{{ $state->state_id }}" />
-                            <button type="submit" name="delete_btn" class="btn btn-danger"  > حذف الولاية </button>
+                            <button type="submit" name="delete_btn" class="btn btn-danger"  >
+                               <i class="fa fa-times-circle"></i>
+                             </button>
                             <!--
                             <button class="btn btn-info" type="submit">تعديل الصلاحية</button>
                           -->

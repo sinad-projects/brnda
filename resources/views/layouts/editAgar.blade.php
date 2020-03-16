@@ -72,9 +72,7 @@
 
             <div class="w3-margin-bottom">
                 <label for="agar_desc">الوصف</label>
-                <textarea id="agar_desc" name="agar_desc" class="w3-input"
-                          required>
-                          {{ $agar->agar_desc }}
+                <textarea id="agar_desc" name="agar_desc" class="w3-input" required>{{ $agar->agar_desc }}
                 </textarea>
             </div>
 

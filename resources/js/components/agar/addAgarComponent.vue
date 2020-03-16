@@ -2,16 +2,16 @@
   <div>
       <div class="w3-row-padding">
           <div class="w3-margin-bottom w3-third">
-              <label for="agar_name">الاسم</label>
+              <label for="agar_name">الاسم </label>
               <input id="agar_name"  name="agar_name" class="w3-input" type="text" placeholder="الاسم"
                      required>
           </div>
           <div class="w3-margin-bottom w3-third">
               <label for="type_id">نوع العقار</label>
-              <select id="type_id" class="w3-input" name="type_id">
+              <select id="type_id" @change="getFloor(type.type_id)" class="w3-input" name="type_id">
                 <option value=""></option>
-                <option v-for="type in types" required="required" id="type_id"
-                          :value="type.type_id" @click="getFloor(type.type_id)">{{ type.type_name }}</option>
+                <option @click="getFloor(type.type_id)" v-for="type in types" required="required" id="type_id"
+                          :value="type.type_id">{{ type.type_name }}</option>
               </select>
           </div>
           <div id="floor_container" class="w3-margin-bottom w3-third">
@@ -26,7 +26,7 @@
       <div class="w3-row-padding">
           <div class="w3-margin-bottom w3-third">
               <label for="state_id">الولاية</label>
-              <select id="state_id" class="w3-input" name="state_id">
+              <select id="state_id" @change="getCity(state.state_id)" class="w3-input" name="state_id">
                   <option value=""></option>
                   <option v-for="state in states" id="state_id"
                        :value="state.state_id" @click="getCity(state.state_id)">{{ state.state_name }}</option>

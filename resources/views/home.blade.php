@@ -5,6 +5,7 @@
     <title>برندة </title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet"  href="{{ asset('lib/lightslider-master/src/css/lightslider.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/w3.css') }}">
@@ -38,10 +39,9 @@
              <a class="nav-link w3-large w3-text-white w3-hover-text-grey dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                تصفح الموقع
              </a>
-             <div class="dropdown-menu text-right" aria-labelledby="navbarDropdown">
+             <div class="dropdown-menu text-right" aria-labelledby="navbarDropdown" style="border: 0px">
                <a class="dropdown-item text-right" href="{{ route('agars.agarsList') }}">العقارات</a>
                <a class="dropdown-item text-right" href="{{ route('agars.myAgars') }}">عقاراتي</a>
-               <div class="dropdown-divider"></div>
                <a class="dropdown-item text-right" href="{{ route('reservation.sent') }}">طلبات الايجار المرسلة</a>
                <a class="dropdown-item text-right" href="{{ route('reservation.index') }}"> طلبات الايجار على عقاراتي </a>
              </div>
@@ -73,8 +73,7 @@
           <h3 class="slogan w3-padding-48 w3-text-white">برندا دليل العقارات المفروشة في السودان</h3>
           <div class="row">
             <div class="col-md-12">
-              <form action="{{ route('home.search') }}" method="post">
-                @csrf
+              <form action="{{ route('home.search') }}" method="get">
                 <input style="position: relative;" class="form-control w3-padding-32 text-right" name="query" type="text" placeholder="ابحث عن عقار..">
                 <button type="submit" class="btn" style="position: absolute; top: 0px; left: 15px;padding: 21px 35px"> <i class="fa fa-search w3-large w3-text-grey"></i> </button>
               </form>
@@ -209,30 +208,17 @@
     </div>
     <div class="container w3-margin-top" id="places">
       <div class="row w3-white  text-right w3-text-black">
-        @foreach($citys as $city)
-          <div class="col-md-3 col-sm-2 w3-margin-bottom">
-            <div class="">
-              <a class="w3-button" href="#"> <span> {{$city->city_name }} </span> </a><br>
+          @foreach($citys as $city)
+            <div class="col-md-3 col-sm-2 w3-margin-bottom">
+              <div class="">
+                <a href="/home/search?query={{ $city->city_name }}" class="w3-button" > <span> {{ $city->city_name }} </span> </a>
+              </div>
             </div>
-          </div>
-        @endforeach
+          @endforeach
       </div>
     </div>
   </footer>
 
-<!--
-  <div class="container text-right w3-margin-top">
-    <h3> قم بتحميل التطبيق </h3>
-  </div>
-  <div class="container w3-margin-top">
-    <div class="w3-right">
-      <a href="#" class="">
-        <img src="{{ asset('images/google_play_icon.png') }}"  />
-      </a>
-    </div>
-  </div>
--->
-<!-- End page content -->
 </div>
 
 @include('layouts/footer')

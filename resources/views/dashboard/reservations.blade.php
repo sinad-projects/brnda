@@ -66,11 +66,13 @@
                             <p> تم التأكيد </p>
                           @endif
                         </td>
-                        <td>
+                        <td style="width: 50px">
                           <form action="{{ route('dashboard.reservations') }}" method="post">
                             @csrf
                             <input type="hidden" name="reservation_id" value="{{ $reservation->id }}" />
-                            <button type="submit" name="delete_btn" class="btn btn-danger" > حذف الطلب </button>
+                            <button type="submit" name="delete_btn" class="btn btn-danger" >
+                              <i class="fa fa-times-circle"></i>
+                             </button>
                             <!--
                             <button class="btn btn-info" type="submit">تعديل الصلاحية</button>
                           -->

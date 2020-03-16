@@ -50,7 +50,7 @@
                                               <a class="w3-text-blue" href="{{ route('agars.single',['agar_id' => $agar->id]) }}">
                                                  {{ $agar->agar_name }}
                                               </a>
-                                              @if($agar->admin_comments != '')
+                                              @if($agar->admin_comments != '' and $agar->status == 3)
                                                 <button class="w3-bar-item w3-btn w3-mobile" type="button" onclick="document.getElementById('admin_comments_{{ $agar->id }}').style.display = 'block'"></a>
                                                   <i class="fa fa-bullhorn w3-text-red"></i>
                                                 </button>

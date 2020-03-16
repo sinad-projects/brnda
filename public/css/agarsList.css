@@ -1,10 +1,15 @@
+
 .filter-header{
   background-color: #f1f1f1!important;
 }
 .filter-header p{
   margin-top: 20px;
 }
- 
+
+.filter_web_sidebar{
+
+}
+
 #filter_sidebar{
   width: 80%!important;
   position: absolute;

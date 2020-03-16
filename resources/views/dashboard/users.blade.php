@@ -61,11 +61,13 @@
                             <p>مستخدم عادي</p>
                           @endif
                         </td>
-                        <td>
+                        <td style="width: 50px">
                           <form action="{{ route('dashboard.users') }}" method="post">
                             @csrf
                             <input type="hidden" name="user_id" value="{{ $user->id }}" />
-                            <button type="submit" name="delete_btn" class="btn btn-danger" > حذف الحساب </button>
+                            <button type="submit" name="delete_btn" class="btn btn-danger" >
+                               <i class="fa fa-times-circle"></i>
+                             </button>
                             <!--
                             <button class="btn btn-info" type="submit">تعديل الصلاحية</button>
                           -->

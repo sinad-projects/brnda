@@ -9,16 +9,16 @@
     <link rel="stylesheet" href="{{ asset('lib/dropzone/dropzone.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/w3.css') }}">
     <link rel="stylesheet" href="{{ asset('css/w3-colors-windows.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/w3-colors-flat.css') }}">
     <link rel="stylesheet"
           href="{{ asset('lib/fontawesome-free-5.0.13/web-fonts-with-css/css/fontawesome-all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/w3-colors-flat.css') }}">
 
-
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 
-  <body class="" dir="rtl">
+  <body>
 
   <!-- sidebar menu -->
     @include('layouts/aside')
@@ -27,7 +27,7 @@
     <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
   <!-- !PAGE CONTENT! -->
-    <div class="wrapper"><!-- START view agar -->
+    <div class="wrapper" dir="rtl"><!-- START view agar -->
         <div class="w3-container w3-margin-top brnda-card-4">
             <header class="w3-bar w3-section w3-large"> <!-- START HEADER -->
                 <span class="w3-bar-item w3-right" style="padding-right: 0"><i class="fa fa-picture-o"></i> صور العقار</span>
@@ -105,7 +105,7 @@
                         </thead>
                         <tbody>
                           <tr class="w3-flat-clouds">
-                              <td class="w3-center">{{ $agar->agar_id }}</td>
+                              <td class="w3-center">{{ $agar->id }}</td>
                               <td class="w3-center">{{ $agar->agar_name }}</td>
                               <td class="w3-center">{{ $agar->type->type_name }}</td>
                               <td class="w3-center">{{ $agar->floor->floor_name }}</td>
@@ -119,9 +119,7 @@
                               <td class="w3-center">
                                   <div class="w3-center">
                                       <div class="w3-bar">
-                                          <a href="home-listing.php?agar_id=1"
-                                             class="w3-bar-item w3-btn w3-mobile"><i class="fa fa-info"></i></a>
-                                          <a href="view_agar.php?agar_id=1&action=edit"
+                                          <button type="button" onclick="document.getElementById('edit_agar_{{ $agar->id }}').style.display='block'"
                                              class="w3-bar-item w3-btn w3-mobile"><i class="fa fa-edit"></i></a>
                                           <button type="button" onclick="document.getElementById('delete_agar_confirm_{{ $agar->id }}').style.display='block'"
                                                   class="w3-bar-item w3-btn w3-mobile"><i class="fa fa-trash-o"></i></button>
@@ -357,7 +355,7 @@
                                             <div class="w3-section w3-left">
                                                 <button form="calendar_edit_form_{{ $calendar->id }}" type="submit" name="edit_calendar" value="حفظ" class="w3-button w3-white w3-border w3-border-gray w3-round w3-text-gray w3-hover-light-gray w3-hover-text-gray" style="padding: 7px 15px">
                                                 <i class="fa fa-save w3-margin-left-8 w3-text-gray"></i> حفظ</button>
-                                                <button class="w3-button w3-border w3-hover-light-gray w3-text-gray w3-round" style="padding: 7px 15px;"><a href="view_agar.php?agar_id=1" onclick="document.getElementById('CALENDAR_FORM').style.display='none'" class=""><i class="fa fa-close"></i> إلغاء</a></button>
+                                                <button class="w3-button w3-border w3-hover-light-gray w3-text-gray w3-round" style="padding: 7px 15px;"><a href="javascript::void()" onclick="document.getElementById('calendar_edit_{{$calendar->id}}').style.display='none'" class=""><i class="fa fa-close"></i> إلغاء</a></button>
                                             </div>
                                         </footer>
                                       </form>
@@ -371,8 +369,14 @@
             </div>
         </div><!-- END view agar -->
 
+
+      <!-- edit agar info -->
+      <div id="edit_agar_{{ $agar->id }}" class="w3-modal" style="display: none">
+        @include('layouts/editAgar')
+      </div> <!-- END edit agar info -->
+
     <!-- START Add Photo MODALS -->
-    <div id="AGAR_IMG_FORM" class="w3-modal" style="display: none;"><!-- START AGAR_IMG_FORM -->
+    <div id="AGAR_IMG_FORM" class="w3-modal" style="display: none;" dir="rtl"><!-- START AGAR_IMG_FORM -->
         <div class="w3-modal-content brnda-card-4 w3-animate-zoom" style="max-width:880px">
             <div class="brnda-card">
                 <header class="w3-container w3-padding brnda-card"><i class="glyphicon glyphicon-upload"></i>
@@ -390,7 +394,7 @@
                     </div>
                     <br>
                     <footer class="w3-margin-right">
-                      <a href="{{ route('agar.dashboard',['agar_id' => $agar->id]) }}" class="w3-button w3-white w3-border w3-border-gray w3-round w3-text-gray w3-hover-light-gray w3-hover-text-gray" id="upload_images" style="padding: 7px 15px"><i class="fa fa-check-square-o  w3-margin-left-8  w3-text-gray"></i> موافق</a>
+                      <button class="w3-button w3-white w3-border w3-border-gray w3-round w3-text-gray w3-hover-light-gray w3-hover-text-gray" id="upload_images" style="padding: 7px 15px"><i class="fa fa-check-square-o  w3-margin-left-8  w3-text-gray"></i> موافق</button>
                       <button type="button" onclick="document.getElementById('AGAR_IMG_FORM').style.display='none'"
                         class="w3-button w3-border w3-hover-light-gray w3-text-gray w3-round" style="padding: 7px 15px;"><i class="fa fa-arrow-right"></i> إلغاء</button>
                     </footer>
@@ -783,12 +787,12 @@
               parallelUploads: 20,
               maxFilesize: 2, // MB
               acceptedFiles: ".png, .jpeg, .jpg, .gif",
-              url: "http://localhost:8000/dropzone/store?agar_id={{ $agar->id }}",
+              url: "/dropzone/store?agar_id={{ $agar->id }}",
           });
       /* Add Files Script*/
       myDropzone.on("success", function(file, images){
-          $("#msg").html(images);
-          //setTimeout(function(){window.location.href="index.php"},800);
+          //$("#msg").html(images);
+          setTimeout(function(){window.location.href="/agar/dashboard/{{ $agar->id }}"},800);
          //$("#msg").html('<div class="alert alert-success">تم تحميل الصور بنجاح</div>');
         //document.getElementById('msg').style.display = 'block';
       });
